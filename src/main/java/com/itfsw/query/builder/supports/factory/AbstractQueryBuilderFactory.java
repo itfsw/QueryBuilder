@@ -16,6 +16,8 @@
 
 package com.itfsw.query.builder.supports.factory;
 
+import com.itfsw.query.builder.supports.AbstractBuilder;
+
 /**
  * ---------------------------------------------------------------------------
  *
@@ -24,5 +26,10 @@ package com.itfsw.query.builder.supports.factory;
  * @time:2017/10/30 15:39
  * ---------------------------------------------------------------------------
  */
-public class AbstractQueryBuilderFactory {
+public abstract class AbstractQueryBuilderFactory {
+    /**
+     * 获取构建对象
+     * @return
+     */
+    public abstract AbstractBuilder builder();
 }

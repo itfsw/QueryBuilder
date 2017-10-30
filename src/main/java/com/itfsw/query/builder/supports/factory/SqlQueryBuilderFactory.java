@@ -16,6 +16,9 @@
 
 package com.itfsw.query.builder.supports.factory;
 
+import com.itfsw.query.builder.config.SqlBuilderConfig;
+import com.itfsw.query.builder.supports.SqlBuilder;
+
 /**
  * ---------------------------------------------------------------------------
  *
@@ -25,4 +28,13 @@ package com.itfsw.query.builder.supports.factory;
  * ---------------------------------------------------------------------------
  */
 public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
+    private SqlBuilderConfig config;    // 配置
+
+    /**
+     * 获取构建对象
+     * @return
+     */
+    public SqlBuilder builder() {
+        return null;
+    }
 }
