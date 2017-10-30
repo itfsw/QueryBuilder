@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports;
-
-import com.itfsw.query.builder.model.Group;
+package com.itfsw.query.builder.supports.factory;
 
 /**
  * ---------------------------------------------------------------------------
- * 构造类
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:44
+ * @time:2017/10/30 16:23
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractBuilder {
-    private Group rule; // 规则
+public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
 }

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder;
+package com.itfsw.query.builder.supports.factory;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:39
+ * @time:2017/10/30 16:23
  * ---------------------------------------------------------------------------
  */
-public class QueryBuilderFactory {
+public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
 }
