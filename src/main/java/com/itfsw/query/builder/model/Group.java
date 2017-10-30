@@ -28,9 +28,16 @@ import java.util.List;
  */
 public class Group extends Rule {
     private String condition;
-    private Boolean valid;
     private Boolean not;
-    private List<Rule> rules;
+    private List<Group> rules;
+
+    /**
+     * 判断是否为group节点
+     * @return
+     */
+    public boolean isGroup(){
+        return condition != null;
+    }
 
     /**
      * Getter method for property <tt>condition</tt>.
@@ -48,24 +55,6 @@ public class Group extends Rule {
      */
     public void setCondition(String condition) {
         this.condition = condition;
-    }
-
-    /**
-     * Getter method for property <tt>valid</tt>.
-     * @return property value of valid
-     * @author hewei
-     */
-    public Boolean getValid() {
-        return valid;
-    }
-
-    /**
-     * Setter method for property <tt>valid</tt>.
-     * @param valid value to be assigned to property valid
-     * @author hewei
-     */
-    public void setValid(Boolean valid) {
-        this.valid = valid;
     }
 
     /**
@@ -91,7 +80,7 @@ public class Group extends Rule {
      * @return property value of rules
      * @author hewei
      */
-    public List<Rule> getRules() {
+    public List<Group> getRules() {
         return rules;
     }
 
@@ -100,7 +89,7 @@ public class Group extends Rule {
      * @param rules value to be assigned to property rules
      * @author hewei
      */
-    public void setRules(List<Rule> rules) {
+    public void setRules(List<Group> rules) {
         this.rules = rules;
     }
 }

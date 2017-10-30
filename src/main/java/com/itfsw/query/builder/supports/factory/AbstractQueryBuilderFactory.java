@@ -16,7 +16,12 @@
 
 package com.itfsw.query.builder.supports.factory;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itfsw.query.builder.model.Group;
 import com.itfsw.query.builder.supports.AbstractBuilder;
+
+import java.io.IOException;
 
 /**
  * ---------------------------------------------------------------------------
@@ -27,9 +32,28 @@ import com.itfsw.query.builder.supports.AbstractBuilder;
  * ---------------------------------------------------------------------------
  */
 public abstract class AbstractQueryBuilderFactory {
+    private static ObjectMapper mapper; // object mapper
+
+    static {
+        // object mapper
+        mapper = new ObjectMapper();
+
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
+
     /**
      * 获取构建对象
+     * @param query 查询信息
      * @return
      */
-    public abstract AbstractBuilder builder();
+    public abstract AbstractBuilder parse(String query) throws IOException;
+
+    /**
+     * 解析规则
+     * @param query
+     * @return
+     */
+    protected Group parseRule(String query) throws IOException {
+        return mapper.readValue(query, Group.class);
+    }
 }
