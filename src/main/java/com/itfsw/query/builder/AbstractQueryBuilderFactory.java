@@ -41,4 +41,65 @@ public abstract class AbstractQueryBuilderFactory {
      * @return
      */
     public abstract AbstractBuilder builder();
+
+    /**
+     * 添加filter
+     * @param filter
+     */
+    public void addFilter(IRuleFilter filter){
+        filters.add(filter);
+    }
+
+    /**
+     * 添加Filter
+     * @param filter
+     * @param index
+     */
+    public void addFilter(IRuleFilter filter, Integer index){
+        filters.add(index, filter);
+    }
+
+    /**
+     * 添加解析器
+     * @param parser
+     */
+    public void addRuleParser(IRuleParser parser){
+        ruleParsers.add(parser);
+    }
+
+    /**
+     * Setter method for property <tt>groupParser</tt>.
+     * @param groupParser value to be assigned to property groupParser
+     * @author hewei
+     */
+    public void setGroupParser(IGroupParser groupParser) {
+        this.groupParser = groupParser;
+    }
+
+    /**
+     * Getter method for property <tt>filters</tt>.
+     * @return property value of filters
+     * @author hewei
+     */
+    public List<IRuleFilter> getFilters() {
+        return filters;
+    }
+
+    /**
+     * Getter method for property <tt>ruleParsers</tt>.
+     * @return property value of ruleParsers
+     * @author hewei
+     */
+    public List<IRuleParser> getRuleParsers() {
+        return ruleParsers;
+    }
+
+    /**
+     * Getter method for property <tt>groupParser</tt>.
+     * @return property value of groupParser
+     * @author hewei
+     */
+    public IGroupParser getGroupParser() {
+        return groupParser;
+    }
 }
