@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.model;
+package com.itfsw.query.builder.supports.model;
 
 /**
  * ---------------------------------------------------------------------------

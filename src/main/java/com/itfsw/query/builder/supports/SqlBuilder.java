@@ -16,7 +16,7 @@
 
 package com.itfsw.query.builder.supports;
 
-import com.itfsw.query.builder.model.Group;
+import com.itfsw.query.builder.supports.model.Group;
 
 /**
  * ---------------------------------------------------------------------------

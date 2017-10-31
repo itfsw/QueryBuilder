@@ -17,7 +17,7 @@
 package com.itfsw.query.builder.supports.factory;
 
 import com.itfsw.query.builder.config.SqlBuilderConfig;
-import com.itfsw.query.builder.model.Group;
+import com.itfsw.query.builder.supports.model.Group;
 import com.itfsw.query.builder.supports.SqlBuilder;
 
 import java.io.IOException;
