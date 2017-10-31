@@ -21,33 +21,42 @@ import com.itfsw.query.builder.supports.filter.IRuleFilter;
 import com.itfsw.query.builder.supports.parser.IGroupParser;
 import com.itfsw.query.builder.supports.parser.IRuleParser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
- *
+ * 抽象构造工厂
  * ---------------------------------------------------------------------------
  * @author: hewei
  * @time:2017/10/30 15:39
  * ---------------------------------------------------------------------------
  */
 public abstract class AbstractQueryBuilderFactory {
-    private List<IRuleFilter> filters;   // 过滤器
-    private List<IRuleParser> ruleParsers;  // 解析器
-    private IGroupParser groupParser;   // group 解析器
+    protected List<IRuleFilter> filters;   // 过滤器
+    protected List<IRuleParser> ruleParsers;  // 解析器
+    protected IGroupParser groupParser;   // group 解析器
+
+    /**
+     * 构造函数
+     */
+    public AbstractQueryBuilderFactory() {
+        this.filters = new ArrayList<IRuleFilter>();
+        this.ruleParsers = new ArrayList<IRuleParser>();
+    }
 
     /**
      * 获取构建对象
-     * @param query
+     * @param queryStr
      * @return
      */
-    public abstract AbstractBuilder builder(String query);
+    public abstract AbstractBuilder builder(String queryStr);
 
     /**
      * 添加filter
      * @param filter
      */
-    public void addFilter(IRuleFilter filter){
+    public void addFilter(IRuleFilter filter) {
         filters.add(filter);
     }
 
@@ -56,7 +65,7 @@ public abstract class AbstractQueryBuilderFactory {
      * @param filter
      * @param index
      */
-    public void addFilter(IRuleFilter filter, Integer index){
+    public void addFilter(IRuleFilter filter, Integer index) {
         filters.add(index, filter);
     }
 
@@ -64,8 +73,17 @@ public abstract class AbstractQueryBuilderFactory {
      * 添加解析器
      * @param parser
      */
-    public void addRuleParser(IRuleParser parser){
+    public void addRuleParser(IRuleParser parser) {
         ruleParsers.add(parser);
+    }
+
+    /**
+     * 添加解析器
+     * @param parser
+     * @param index
+     */
+    public void addRuleParser(IRuleParser parser, Integer index) {
+        ruleParsers.add(index, parser);
     }
 
     /**

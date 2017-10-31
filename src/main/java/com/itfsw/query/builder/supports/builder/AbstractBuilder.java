@@ -19,7 +19,7 @@ package com.itfsw.query.builder.supports.builder;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.supports.model.JsonRule;
+import com.itfsw.query.builder.supports.filter.IRuleFilter;
 import com.itfsw.query.builder.supports.parser.IGroupParser;
 import com.itfsw.query.builder.supports.parser.IRuleParser;
 
@@ -35,8 +35,10 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public abstract class AbstractBuilder {
-    private String query;   // 查询字符串
     private static ObjectMapper mapper; // object mapper
+
+    private String queryStr;   // 查询字符串
+    protected List<IRuleFilter> filters;    // filters
     protected List<IRuleParser> ruleParsers;   // rule parser
     protected IGroupParser groupParser;
 
@@ -48,19 +50,22 @@ public abstract class AbstractBuilder {
     }
 
     /**
-     * 执行构建
-     * @param query
-     * @return
+     * 构造函数
+     * @param queryStr
+     * @param filters
+     * @param ruleParsers
+     * @param groupParser
      */
-    public boolean build(String query) throws IOException, ParserNotFoundException {
-        JsonRule rule = mapper.readValue(query, JsonRule.class);
-        return build(rule);
+    public AbstractBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
+        this.queryStr = queryStr;
+        this.filters = filters;
+        this.ruleParsers = ruleParsers;
+        this.groupParser = groupParser;
     }
 
     /**
-     * 构建
-     * @param rule
+     * 执行构建
      * @return
      */
-    protected abstract boolean build(JsonRule rule);
+    public abstract boolean build() throws IOException, ParserNotFoundException;
 }

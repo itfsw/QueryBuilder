@@ -16,9 +16,12 @@
 
 package com.itfsw.query.builder.supports.builder;
 
-import com.itfsw.query.builder.supports.model.JsonRule;
+import com.itfsw.query.builder.exception.ParserNotFoundException;
+import com.itfsw.query.builder.supports.filter.IRuleFilter;
+import com.itfsw.query.builder.supports.parser.IGroupParser;
+import com.itfsw.query.builder.supports.parser.IRuleParser;
 
-import java.sql.PreparedStatement;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,16 +33,19 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class SqlBuilder extends AbstractBuilder {
-    private String query;
-    private List<Object> params;
+
     /**
-     * 构建
-     * @param rule
-     * @return
+     * 构造函数
+     * @param queryStr
+     * @param filters
+     * @param ruleParsers
+     * @param groupParser
      */
-    @Override
-    protected boolean build(JsonRule rule) {
-        PreparedStatement ps = null;
+    public SqlBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
+        super(queryStr, filters, ruleParsers, groupParser);
+    }
+
+    public boolean build() throws IOException, ParserNotFoundException {
         return false;
     }
 }

@@ -16,19 +16,31 @@
 
 package com.itfsw.query.builder;
 
-import com.itfsw.query.builder.supports.builder.SqlBuilder;
+import com.itfsw.query.builder.supports.builder.AbstractBuilder;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 16:23
+ * @time:2017/10/31 17:03
  * ---------------------------------------------------------------------------
  */
 public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
+    /**
+     * 构造函数
+     */
+    public SqlQueryBuilderFactory() {
+        super();
 
-    public SqlBuilder builder(String query) {
+        // -------------------------- filter -----------------------------
+
+        // ---------------------- rule parser ----------------------------
+
+        // ---------------------- group parser ---------------------------
+    }
+
+    public AbstractBuilder builder(String queryStr) {
         return null;
     }
 }

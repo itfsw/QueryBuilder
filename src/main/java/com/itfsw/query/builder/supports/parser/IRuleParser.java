@@ -33,11 +33,4 @@ public interface IRuleParser {
      * @return
      */
     boolean canParse(IRule rule);
-
-    /**
-     * 解析
-     * @param rule
-     * @return
-     */
-    Object parse(IRule rule);
 }

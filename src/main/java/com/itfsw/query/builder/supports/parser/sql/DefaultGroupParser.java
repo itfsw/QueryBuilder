@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.builder;
+package com.itfsw.query.builder.supports.parser.sql;
 
-import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.parser.IGroupParser;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
+import com.itfsw.query.builder.supports.model.IGroup;
+import com.itfsw.query.builder.supports.model.enums.EnumCondition;
+import com.itfsw.query.builder.supports.model.sql.Operation;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,23 +27,26 @@ import java.util.List;
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:37
+ * @time:2017/10/31 18:21
  * ---------------------------------------------------------------------------
  */
-public class MongodbBuilder extends AbstractBuilder {
+public class DefaultGroupParser extends AbstractGroupParser {
 
-    /**
-     * 构造函数
-     * @param queryStr
-     * @param filters
-     * @param ruleParsers
-     * @param groupParser
-     */
-    public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
-        super(queryStr, filters, ruleParsers, groupParser);
+    public boolean canParse(IGroup group) {
+        for (EnumCondition condition : EnumCondition.values()){
+            if (condition.value().equals(group.getCondition())){
+                return true;
+            }
+        }
+        return false;
     }
 
-    public boolean build() throws IOException, ParserNotFoundException {
-        return false;
+    public Operation parse(IGroup group, List<Object> rules) {
+        // AND
+        if (EnumCondition.AND.value().equals(group.getCondition())){
+
+        }
+
+        return null;
     }
 }

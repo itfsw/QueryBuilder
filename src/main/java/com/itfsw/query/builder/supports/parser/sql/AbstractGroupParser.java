@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.builder;
+package com.itfsw.query.builder.supports.parser.sql;
 
-import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.supports.filter.IRuleFilter;
+import com.itfsw.query.builder.supports.model.IGroup;
+import com.itfsw.query.builder.supports.model.sql.Operation;
 import com.itfsw.query.builder.supports.parser.IGroupParser;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,23 +27,16 @@ import java.util.List;
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:37
+ * @time:2017/10/31 18:19
  * ---------------------------------------------------------------------------
  */
-public class MongodbBuilder extends AbstractBuilder {
+public abstract class AbstractGroupParser implements IGroupParser {
 
     /**
-     * 构造函数
-     * @param queryStr
-     * @param filters
-     * @param ruleParsers
-     * @param groupParser
+     * 解析
+     * @param group
+     * @param operations
+     * @return
      */
-    public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
-        super(queryStr, filters, ruleParsers, groupParser);
-    }
-
-    public boolean build() throws IOException, ParserNotFoundException {
-        return false;
-    }
+    public abstract Operation parse(IGroup group, List<Operation> operations);
 }

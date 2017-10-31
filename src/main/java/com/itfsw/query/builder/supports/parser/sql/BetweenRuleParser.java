@@ -14,38 +14,27 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.builder;
+package com.itfsw.query.builder.supports.parser.sql;
 
-import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.parser.IGroupParser;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
-
-import java.io.IOException;
-import java.util.List;
+import com.itfsw.query.builder.supports.model.IRule;
+import com.itfsw.query.builder.supports.model.enums.EnumOperator;
+import com.itfsw.query.builder.supports.model.sql.Operation;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:37
+ * @time:2017/10/31 17:25
  * ---------------------------------------------------------------------------
  */
-public class MongodbBuilder extends AbstractBuilder {
+public class BetweenRuleParser extends AbstractRuleParser {
 
-    /**
-     * 构造函数
-     * @param queryStr
-     * @param filters
-     * @param ruleParsers
-     * @param groupParser
-     */
-    public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
-        super(queryStr, filters, ruleParsers, groupParser);
+    public boolean canParse(IRule rule) {
+        return EnumOperator.BETWEEN.value().equals(rule.getOperator());
     }
 
-    public boolean build() throws IOException, ParserNotFoundException {
-        return false;
+    public Operation parse(IRule rule) {
+        return new Operation("BETWEEN(?, ?)", rule.getValue());
     }
 }

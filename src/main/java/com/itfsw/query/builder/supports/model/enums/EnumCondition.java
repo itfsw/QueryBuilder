@@ -14,38 +14,45 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.builder;
-
-import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.parser.IGroupParser;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
-
-import java.io.IOException;
-import java.util.List;
+package com.itfsw.query.builder.supports.model.enums;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:37
+ * @time:2017/10/31 18:22
  * ---------------------------------------------------------------------------
  */
-public class MongodbBuilder extends AbstractBuilder {
+public enum EnumCondition {
+    AND("AND"),
+    OR("OR");
+
+    private final String value;
 
     /**
      * 构造函数
-     * @param queryStr
-     * @param filters
-     * @param ruleParsers
-     * @param groupParser
+     * @param value
      */
-    public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
-        super(queryStr, filters, ruleParsers, groupParser);
+    EnumCondition(String value) {
+        this.value = value;
     }
 
-    public boolean build() throws IOException, ParserNotFoundException {
-        return false;
+    /**
+     * Getter method for property <tt>value</tt>.
+     * @return property value of value
+     * @author hewei
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * Getter method for property <tt>value</tt>.
+     * @return property value of value
+     * @author hewei
+     */
+    public String value() {
+        return value;
     }
 }

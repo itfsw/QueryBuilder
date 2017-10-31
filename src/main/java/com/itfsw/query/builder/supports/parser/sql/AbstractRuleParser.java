@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder;
+package com.itfsw.query.builder.supports.parser.sql;
 
-import com.itfsw.query.builder.supports.builder.AbstractBuilder;
+import com.itfsw.query.builder.supports.model.IRule;
+import com.itfsw.query.builder.supports.model.sql.Operation;
+import com.itfsw.query.builder.supports.parser.IRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 16:23
+ * @time:2017/10/31 18:06
  * ---------------------------------------------------------------------------
  */
-public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
-
-    public AbstractBuilder builder(String query) {
-        return null;
-    }
+public abstract class AbstractRuleParser implements IRuleParser {
+    /**
+     * 解析
+     * @param rule
+     * @return
+     */
+    public abstract Operation parse(IRule rule);
 }
