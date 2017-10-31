@@ -16,6 +16,8 @@
 
 package com.itfsw.query.builder.supports;
 
+import com.itfsw.query.builder.model.Group;
+
 /**
  * ---------------------------------------------------------------------------
  * sql 构造
@@ -25,4 +27,15 @@ package com.itfsw.query.builder.supports;
  * ---------------------------------------------------------------------------
  */
 public class SqlBuilder extends AbstractBuilder {
+    /**
+     * 构造函数
+     * @param rule
+     */
+    public SqlBuilder(Group rule) {
+        super(rule);
+    }
+
+    public boolean build() {
+        return false;
+    }
 }

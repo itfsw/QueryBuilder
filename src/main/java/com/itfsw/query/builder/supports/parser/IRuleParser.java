@@ -14,29 +14,16 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports;
-
-import com.itfsw.query.builder.model.Group;
+package com.itfsw.query.builder.supports.parser;
 
 /**
  * ---------------------------------------------------------------------------
- * Mongo DB
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:45
+ * @time:2017/10/30 20:32
  * ---------------------------------------------------------------------------
  */
-public class MongodbBuilder extends AbstractBuilder{
+public interface IRuleParser {
 
-    /**
-     * 构造函数
-     * @param rule
-     */
-    public MongodbBuilder(Group rule) {
-        super(rule);
-    }
-
-    public boolean build() {
-        return false;
-    }
 }

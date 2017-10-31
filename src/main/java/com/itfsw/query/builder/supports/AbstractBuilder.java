@@ -28,4 +28,18 @@ import com.itfsw.query.builder.model.Group;
  */
 public abstract class AbstractBuilder {
     private Group rule; // 规则
+
+    /**
+     * 构造函数
+     * @param rule
+     */
+    public AbstractBuilder(Group rule) {
+        this.rule = rule;
+    }
+
+    /**
+     * 执行构建
+     * @return
+     */
+    public abstract boolean build();
 }

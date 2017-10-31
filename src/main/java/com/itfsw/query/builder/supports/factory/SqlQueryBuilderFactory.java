@@ -42,6 +42,6 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
     public SqlBuilder parse(String query) throws IOException {
         // 1. 解析查询语句
         Group rule = parseRule(query);
-        return new SqlBuilder();
+        return new SqlBuilder(rule);
     }
 }
