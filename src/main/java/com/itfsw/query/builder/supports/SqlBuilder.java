@@ -38,4 +38,12 @@ public class SqlBuilder extends AbstractBuilder {
     public boolean build() {
         return false;
     }
+
+    /**
+     * 获取查询语句
+     * @return
+     */
+    public String getQuery(){
+        return null;
+    }
 }

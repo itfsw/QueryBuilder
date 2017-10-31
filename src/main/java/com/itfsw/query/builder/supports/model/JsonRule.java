@@ -40,6 +40,14 @@ public class JsonRule implements IGroup, IRule {
     private List<JsonRule> rules;
 
     /**
+     * 判断是否为group
+     * @return
+     */
+    public boolean isGroup(){
+        return condition != null;
+    }
+
+    /**
      * Setter method for property <tt>id</tt>.
      * @param id value to be assigned to property id
      * @author hewei
@@ -119,7 +127,6 @@ public class JsonRule implements IGroup, IRule {
     public void setRules(List<JsonRule> rules) {
         this.rules = rules;
     }
-
 
     /**
      * Getter method for property <tt>id</tt>.

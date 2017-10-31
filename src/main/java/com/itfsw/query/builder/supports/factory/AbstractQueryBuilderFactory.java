@@ -46,7 +46,7 @@ public abstract class AbstractQueryBuilderFactory {
      * @param query 查询信息
      * @return
      */
-    public abstract AbstractBuilder parse(String query) throws IOException;
+    public abstract AbstractBuilder builder(String query) throws IOException;
 
     /**
      * 解析规则

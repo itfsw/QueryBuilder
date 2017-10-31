@@ -39,7 +39,7 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
      * @return
      */
     @Override
-    public SqlBuilder parse(String query) throws IOException {
+    public SqlBuilder builder(String query) throws IOException {
         // 1. 解析查询语句
         JsonRule rule = parseRule(query);
         return new SqlBuilder(rule);

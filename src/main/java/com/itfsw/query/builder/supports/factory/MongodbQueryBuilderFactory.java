@@ -34,7 +34,7 @@ public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
      * @return
      */
     @Override
-    public MongodbBuilder parse(String query){
-        return new MongodbBuilder();
+    public MongodbBuilder builder(String query){
+        return null;
     }
 }

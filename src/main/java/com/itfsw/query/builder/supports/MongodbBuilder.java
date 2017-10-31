@@ -17,6 +17,8 @@
 package com.itfsw.query.builder.supports;
 
 import com.itfsw.query.builder.supports.model.JsonRule;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 /**
  * ---------------------------------------------------------------------------
@@ -38,5 +40,10 @@ public class MongodbBuilder extends AbstractBuilder{
 
     public boolean build() {
         return false;
+    }
+
+    public DBObject getQuery(){
+        DBObject dbObject = new BasicDBObject();
+        return null;
     }
 }
