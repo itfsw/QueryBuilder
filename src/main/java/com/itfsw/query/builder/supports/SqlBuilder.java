@@ -16,7 +16,9 @@
 
 package com.itfsw.query.builder.supports;
 
-import com.itfsw.query.builder.supports.model.JsonRule;
+import com.itfsw.query.builder.supports.model.Operation;
+
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -27,23 +29,15 @@ import com.itfsw.query.builder.supports.model.JsonRule;
  * ---------------------------------------------------------------------------
  */
 public class SqlBuilder extends AbstractBuilder {
+    private String query;
+    private List<Object> params;
     /**
-     * 构造函数
-     * @param rule
-     */
-    public SqlBuilder(JsonRule rule) {
-        super(rule);
-    }
-
-    public boolean build() {
-        return false;
-    }
-
-    /**
-     * 获取查询语句
+     * 构建
+     * @param operation
      * @return
      */
-    public String getQuery(){
-        return null;
+    @Override
+    protected boolean build(Operation operation) {
+        return false;
     }
 }

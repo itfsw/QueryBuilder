@@ -40,7 +40,7 @@ import java.util.List;
 public abstract class AbstractBuilder {
     private String query;   // 查询字符串
     private static ObjectMapper mapper; // object mapper
-    private List<IRuleParser> ruleParsers = new ArrayList<IRuleParser>();   // rule parser
+    private List<IRuleParser> ruleParsers;   // rule parser
     private IGroupParser groupParser;
 
     static {
@@ -51,22 +51,22 @@ public abstract class AbstractBuilder {
     }
 
     /**
-     * 构造函数
-     * @param query
-     */
-    public AbstractBuilder(String query) {
-        this.query = query;
-    }
-
-    /**
      * 执行构建
      * @param query
      * @return
      */
-    public boolean build(String query) throws IOException {
+    public boolean build(String query) throws IOException, ParserNotFoundException {
         JsonRule rule = mapper.readValue(query, JsonRule.class);
-        return false;
+        Operation operation = parse(rule);
+        return build(operation);
     }
+
+    /**
+     * 构建
+     * @param operation
+     * @return
+     */
+    protected abstract boolean build(Operation operation);
 
     /**
      * 解析操作
