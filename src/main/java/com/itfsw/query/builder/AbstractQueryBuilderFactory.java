@@ -38,9 +38,10 @@ public abstract class AbstractQueryBuilderFactory {
 
     /**
      * 获取构建对象
+     * @param query
      * @return
      */
-    public abstract AbstractBuilder builder();
+    public abstract AbstractBuilder builder(String query);
 
     /**
      * 添加filter

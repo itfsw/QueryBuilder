@@ -27,12 +27,8 @@ import com.itfsw.query.builder.supports.builder.SqlBuilder;
  * ---------------------------------------------------------------------------
  */
 public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
-    /**
-     * 获取构建对象
-     * @return
-     */
-    @Override
-    public SqlBuilder builder(){
+
+    public SqlBuilder builder(String query) {
         return null;
     }
 }

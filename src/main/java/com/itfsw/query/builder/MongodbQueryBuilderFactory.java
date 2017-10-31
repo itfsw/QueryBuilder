@@ -16,7 +16,7 @@
 
 package com.itfsw.query.builder;
 
-import com.itfsw.query.builder.supports.builder.MongodbBuilder;
+import com.itfsw.query.builder.supports.builder.AbstractBuilder;
 
 /**
  * ---------------------------------------------------------------------------
@@ -28,12 +28,7 @@ import com.itfsw.query.builder.supports.builder.MongodbBuilder;
  */
 public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
 
-    /**
-     * 获取构建对象
-     * @return
-     */
-    @Override
-    public MongodbBuilder builder() {
+    public AbstractBuilder builder(String query) {
         return null;
     }
 }
