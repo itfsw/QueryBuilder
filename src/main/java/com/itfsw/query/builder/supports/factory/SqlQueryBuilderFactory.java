@@ -17,10 +17,7 @@
 package com.itfsw.query.builder.supports.factory;
 
 import com.itfsw.query.builder.config.SqlBuilderConfig;
-import com.itfsw.query.builder.supports.model.JsonRule;
 import com.itfsw.query.builder.supports.SqlBuilder;
-
-import java.io.IOException;
 
 /**
  * ---------------------------------------------------------------------------
@@ -35,13 +32,10 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
 
     /**
      * 获取构建对象
-     * @param query 查询信息
      * @return
      */
     @Override
-    public SqlBuilder builder(String query) throws IOException {
-        // 1. 解析查询语句
-        JsonRule rule = parseRule(query);
-        return new SqlBuilder(rule);
+    public SqlBuilder builder(){
+        return null;
     }
 }

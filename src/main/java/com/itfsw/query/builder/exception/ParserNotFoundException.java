@@ -14,31 +14,22 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.parser;
-
-import com.itfsw.query.builder.supports.model.Operation;
-import com.itfsw.query.builder.supports.model.IRule;
+package com.itfsw.query.builder.exception;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 20:32
+ * @time:2017/10/31 14:06
  * ---------------------------------------------------------------------------
  */
-public interface IRuleParser {
+public class ParserNotFoundException extends Exception {
     /**
-     * 是否可以解析
-     * @param rule
-     * @return
+     * 构造函数
+     * @param message
      */
-    boolean canParse(IRule rule);
-
-    /**
-     * 解析
-     * @param rule
-     * @return
-     */
-    Operation parse(IRule rule);
+    public ParserNotFoundException(String message) {
+        super(message);
+    }
 }

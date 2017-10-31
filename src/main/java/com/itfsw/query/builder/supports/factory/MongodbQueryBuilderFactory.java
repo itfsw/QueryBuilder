@@ -30,11 +30,10 @@ public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
 
     /**
      * 获取构建对象
-     * @param query 查询信息
      * @return
      */
     @Override
-    public MongodbBuilder builder(String query){
+    public MongodbBuilder builder(){
         return null;
     }
 }

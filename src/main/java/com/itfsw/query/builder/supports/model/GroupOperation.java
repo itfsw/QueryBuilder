@@ -16,13 +16,24 @@
 
 package com.itfsw.query.builder.supports.model;
 
+import java.util.List;
+
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 11:37
+ * @time:2017/10/31 13:53
  * ---------------------------------------------------------------------------
  */
-public class DBOperation {
+public class GroupOperation extends Operation {
+
+    /**
+     * 重写getValue
+     * @return
+     */
+    @Override
+    public List<Operation> getValue() {
+        return (List<Operation>) super.getValue();
+    }
 }

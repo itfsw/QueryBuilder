@@ -16,7 +16,6 @@
 
 package com.itfsw.query.builder.supports.parser;
 
-import com.itfsw.query.builder.supports.model.DBOperation;
 import com.itfsw.query.builder.supports.model.IGroup;
 
 /**
@@ -24,21 +23,21 @@ import com.itfsw.query.builder.supports.model.IGroup;
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 20:32
+ * @time:2017/10/31 14:33
  * ---------------------------------------------------------------------------
  */
 public interface IGroupParser {
     /**
      * 是否可以解析
-     * @param rule
+     * @param group
      * @return
      */
-    boolean canParse(IGroup rule);
+    boolean canParse(IGroup group);
 
     /**
-     * 解析
-     * @param rule
+     * 获取运算符
+     * @param group
      * @return
      */
-    DBOperation parse(IGroup rule);
+    String operator(IGroup group);
 }
