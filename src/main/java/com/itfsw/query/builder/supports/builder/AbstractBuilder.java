@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports;
+package com.itfsw.query.builder.supports.builder;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.supports.model.GroupOperation;
 import com.itfsw.query.builder.supports.model.JsonRule;
-import com.itfsw.query.builder.supports.model.Operation;
 import com.itfsw.query.builder.supports.parser.IGroupParser;
 import com.itfsw.query.builder.supports.parser.IRuleParser;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +37,8 @@ import java.util.List;
 public abstract class AbstractBuilder {
     private String query;   // 查询字符串
     private static ObjectMapper mapper; // object mapper
-    private List<IRuleParser> ruleParsers;   // rule parser
-    private IGroupParser groupParser;
+    protected List<IRuleParser> ruleParsers;   // rule parser
+    protected IGroupParser groupParser;
 
     static {
         // object mapper
@@ -57,53 +54,13 @@ public abstract class AbstractBuilder {
      */
     public boolean build(String query) throws IOException, ParserNotFoundException {
         JsonRule rule = mapper.readValue(query, JsonRule.class);
-        Operation operation = parse(rule);
-        return build(operation);
+        return build(rule);
     }
 
     /**
      * 构建
-     * @param operation
-     * @return
-     */
-    protected abstract boolean build(Operation operation);
-
-    /**
-     * 解析操作
      * @param rule
      * @return
-     * @throws ParserNotFoundException
      */
-    private Operation parse(JsonRule rule) throws ParserNotFoundException {
-        // 解析group
-        if (rule.isGroup()) {
-            if (groupParser.canParse(rule)) {
-                GroupOperation operation = new GroupOperation();
-                operation.setOperator(groupParser.operator(rule));
-
-                // 递归解析
-                List<Operation> list = new ArrayList<Operation>();
-                for (JsonRule item : rule.getRules()) {
-                    list.add(parse(item));
-                }
-                operation.setValue(list);
-
-                return operation;
-            } else {
-                throw new ParserNotFoundException(
-                        "Can't found a group parser for condition:" + rule.getCondition()
-                                + (rule.getNot() != null ? " not:" + rule.getNot() : "") + "!"
-                );
-            }
-        } else {
-            // 解析rule
-            for (IRuleParser parser : ruleParsers) {
-                if (parser.canParse(rule)) {
-                    return parser.parse(rule);
-                }
-            }
-            // can not found rule parser
-            throw new ParserNotFoundException("Can't found a rule parser!");
-        }
-    }
+    protected abstract boolean build(JsonRule rule);
 }

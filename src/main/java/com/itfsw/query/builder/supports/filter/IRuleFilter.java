@@ -14,24 +14,15 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.factory;
-
-import com.itfsw.query.builder.supports.AbstractBuilder;
+package com.itfsw.query.builder.supports.filter;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:39
+ * @time:2017/10/31 16:31
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractQueryBuilderFactory {
-    /**
-     * 获取构建对象
-     * @return
-     */
-    public abstract AbstractBuilder builder();
-
-
+public interface IRuleFilter {
 }

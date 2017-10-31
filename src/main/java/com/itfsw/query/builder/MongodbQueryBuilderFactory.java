@@ -14,15 +14,26 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.config;
+package com.itfsw.query.builder;
+
+import com.itfsw.query.builder.supports.builder.MongodbBuilder;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 17:02
+ * @time:2017/10/30 16:23
  * ---------------------------------------------------------------------------
  */
-public class SqlBuilderConfig {
+public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
+
+    /**
+     * 获取构建对象
+     * @return
+     */
+    @Override
+    public MongodbBuilder builder() {
+        return null;
+    }
 }

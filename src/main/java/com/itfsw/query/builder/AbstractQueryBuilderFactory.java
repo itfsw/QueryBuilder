@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.model;
+package com.itfsw.query.builder;
+
+import com.itfsw.query.builder.supports.builder.AbstractBuilder;
+import com.itfsw.query.builder.supports.filter.IRuleFilter;
+import com.itfsw.query.builder.supports.parser.IGroupParser;
+import com.itfsw.query.builder.supports.parser.IRuleParser;
 
 import java.util.List;
 
@@ -23,17 +28,17 @@ import java.util.List;
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 13:53
+ * @time:2017/10/30 15:39
  * ---------------------------------------------------------------------------
  */
-public class GroupOperation extends Operation {
+public abstract class AbstractQueryBuilderFactory {
+    private List<IRuleFilter> filters;   // 过滤器
+    private List<IRuleParser> ruleParsers;  // 解析器
+    private IGroupParser groupParser;   // group 解析器
 
     /**
-     * 重写getValue
+     * 获取构建对象
      * @return
      */
-    @Override
-    public List<Operation> getValue() {
-        return (List<Operation>) super.getValue();
-    }
+    public abstract AbstractBuilder builder();
 }

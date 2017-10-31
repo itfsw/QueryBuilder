@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports;
+package com.itfsw.query.builder.supports.builder;
 
-import com.itfsw.query.builder.supports.model.Operation;
+import com.itfsw.query.builder.supports.model.JsonRule;
 
 /**
  * ---------------------------------------------------------------------------
- * Mongo DB
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:45
+ * @time:2017/10/31 16:37
  * ---------------------------------------------------------------------------
  */
-public class MongodbBuilder extends AbstractBuilder{
-
-    protected boolean build(Operation operation) {
+public class MongodbBuilder extends AbstractBuilder {
+    protected boolean build(JsonRule rule) {
         return false;
     }
 }

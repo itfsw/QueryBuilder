@@ -16,7 +16,6 @@
 
 package com.itfsw.query.builder.supports.parser;
 
-import com.itfsw.query.builder.supports.model.Operation;
 import com.itfsw.query.builder.supports.model.IRule;
 
 /**
@@ -40,5 +39,5 @@ public interface IRuleParser {
      * @param rule
      * @return
      */
-    Operation parse(IRule rule);
+    Object parse(IRule rule);
 }

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports;
+package com.itfsw.query.builder.supports.builder;
 
-import com.itfsw.query.builder.supports.model.Operation;
+import com.itfsw.query.builder.supports.model.JsonRule;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 /**
@@ -33,11 +34,12 @@ public class SqlBuilder extends AbstractBuilder {
     private List<Object> params;
     /**
      * 构建
-     * @param operation
+     * @param rule
      * @return
      */
     @Override
-    protected boolean build(Operation operation) {
+    protected boolean build(JsonRule rule) {
+        PreparedStatement ps = null;
         return false;
     }
 }

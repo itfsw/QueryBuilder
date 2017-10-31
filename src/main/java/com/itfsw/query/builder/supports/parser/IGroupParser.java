@@ -18,6 +18,8 @@ package com.itfsw.query.builder.supports.parser;
 
 import com.itfsw.query.builder.supports.model.IGroup;
 
+import java.util.List;
+
 /**
  * ---------------------------------------------------------------------------
  *
@@ -35,9 +37,10 @@ public interface IGroupParser {
     boolean canParse(IGroup group);
 
     /**
-     * 获取运算符
+     * 解析
      * @param group
+     * @param rules
      * @return
      */
-    String operator(IGroup group);
+    Object parse(IGroup group, List<Object>rules);
 }
