@@ -16,7 +16,7 @@
 
 package com.itfsw.query.builder.supports;
 
-import com.itfsw.query.builder.supports.model.Group;
+import com.itfsw.query.builder.supports.model.JsonRule;
 
 /**
  * ---------------------------------------------------------------------------
@@ -31,7 +31,7 @@ public class SqlBuilder extends AbstractBuilder {
      * 构造函数
      * @param rule
      */
-    public SqlBuilder(Group rule) {
+    public SqlBuilder(JsonRule rule) {
         super(rule);
     }
 

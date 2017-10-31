@@ -14,29 +14,50 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports;
-
-import com.itfsw.query.builder.supports.model.JsonRule;
+package com.itfsw.query.builder.supports.model;
 
 /**
  * ---------------------------------------------------------------------------
- * Mongo DB
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:45
+ * @time:2017/10/31 13:10
  * ---------------------------------------------------------------------------
  */
-public class MongodbBuilder extends AbstractBuilder{
+public interface IRule {
+    /**
+     * Getter method for property <tt>id</tt>.
+     * @return property value of id
+     */
+    String getId();
 
     /**
-     * 构造函数
-     * @param rule
+     * Getter method for property <tt>field</tt>.
+     * @return property value of field
      */
-    public MongodbBuilder(JsonRule rule) {
-        super(rule);
-    }
+    String getField();
 
-    public boolean build() {
-        return false;
-    }
+    /**
+     * Getter method for property <tt>type</tt>.
+     * @return property value of type
+     */
+    String getType();
+
+    /**
+     * Getter method for property <tt>input</tt>.
+     * @return property value of input
+     */
+    String getInput();
+
+    /**
+     * Getter method for property <tt>operator</tt>.
+     * @return property value of operator
+     */
+    String getOperator();
+
+    /**
+     * Getter method for property <tt>value</tt>.
+     * @return property value of value
+     */
+    Object getValue();
 }

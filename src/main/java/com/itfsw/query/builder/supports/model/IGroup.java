@@ -23,73 +23,25 @@ import java.util.List;
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 16:00
+ * @time:2017/10/31 13:10
  * ---------------------------------------------------------------------------
  */
-public class Group extends Rule {
-    private String condition;
-    private Boolean not;
-    private List<Group> rules;
-
-    /**
-     * 判断是否为group节点
-     * @return
-     */
-    public boolean isGroup(){
-        return condition != null;
-    }
-
+public interface IGroup {
     /**
      * Getter method for property <tt>condition</tt>.
      * @return property value of condition
-     * @author hewei
      */
-    public String getCondition() {
-        return condition;
-    }
-
-    /**
-     * Setter method for property <tt>condition</tt>.
-     * @param condition value to be assigned to property condition
-     * @author hewei
-     */
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
+    String getCondition();
 
     /**
      * Getter method for property <tt>not</tt>.
      * @return property value of not
-     * @author hewei
      */
-    public Boolean getNot() {
-        return not;
-    }
-
-    /**
-     * Setter method for property <tt>not</tt>.
-     * @param not value to be assigned to property not
-     * @author hewei
-     */
-    public void setNot(Boolean not) {
-        this.not = not;
-    }
+    Boolean getNot();
 
     /**
      * Getter method for property <tt>rules</tt>.
      * @return property value of rules
-     * @author hewei
      */
-    public List<Group> getRules() {
-        return rules;
-    }
-
-    /**
-     * Setter method for property <tt>rules</tt>.
-     * @param rules value to be assigned to property rules
-     * @author hewei
-     */
-    public void setRules(List<Group> rules) {
-        this.rules = rules;
-    }
+    List<JsonRule> getRules();
 }

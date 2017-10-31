@@ -16,6 +16,9 @@
 
 package com.itfsw.query.builder.supports.parser;
 
+import com.itfsw.query.builder.supports.model.DBOperation;
+import com.itfsw.query.builder.supports.model.IRule;
+
 /**
  * ---------------------------------------------------------------------------
  *
@@ -25,5 +28,17 @@ package com.itfsw.query.builder.supports.parser;
  * ---------------------------------------------------------------------------
  */
 public interface IRuleParser {
+    /**
+     * 是否可以解析
+     * @param rule
+     * @return
+     */
+    boolean canParse(IRule rule);
 
+    /**
+     * 解析
+     * @param rule
+     * @return
+     */
+    DBOperation parse(IRule rule);
 }

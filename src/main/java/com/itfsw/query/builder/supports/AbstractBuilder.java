@@ -16,7 +16,7 @@
 
 package com.itfsw.query.builder.supports;
 
-import com.itfsw.query.builder.supports.model.Group;
+import com.itfsw.query.builder.supports.model.JsonRule;
 
 /**
  * ---------------------------------------------------------------------------
@@ -27,13 +27,13 @@ import com.itfsw.query.builder.supports.model.Group;
  * ---------------------------------------------------------------------------
  */
 public abstract class AbstractBuilder {
-    private Group rule; // 规则
+    private JsonRule rule; // 规则
 
     /**
      * 构造函数
      * @param rule
      */
-    public AbstractBuilder(Group rule) {
+    public AbstractBuilder(JsonRule rule) {
         this.rule = rule;
     }
 

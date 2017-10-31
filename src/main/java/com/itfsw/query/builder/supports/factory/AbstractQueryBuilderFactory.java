@@ -18,7 +18,7 @@ package com.itfsw.query.builder.supports.factory;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itfsw.query.builder.supports.model.Group;
+import com.itfsw.query.builder.supports.model.JsonRule;
 import com.itfsw.query.builder.supports.AbstractBuilder;
 
 import java.io.IOException;
@@ -53,7 +53,7 @@ public abstract class AbstractQueryBuilderFactory {
      * @param query
      * @return
      */
-    protected Group parseRule(String query) throws IOException {
-        return mapper.readValue(query, Group.class);
+    protected JsonRule parseRule(String query) throws IOException {
+        return mapper.readValue(query, JsonRule.class);
     }
 }

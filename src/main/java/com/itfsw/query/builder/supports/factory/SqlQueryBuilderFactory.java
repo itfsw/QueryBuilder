@@ -17,7 +17,7 @@
 package com.itfsw.query.builder.supports.factory;
 
 import com.itfsw.query.builder.config.SqlBuilderConfig;
-import com.itfsw.query.builder.supports.model.Group;
+import com.itfsw.query.builder.supports.model.JsonRule;
 import com.itfsw.query.builder.supports.SqlBuilder;
 
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
     @Override
     public SqlBuilder parse(String query) throws IOException {
         // 1. 解析查询语句
-        Group rule = parseRule(query);
+        JsonRule rule = parseRule(query);
         return new SqlBuilder(rule);
     }
 }
