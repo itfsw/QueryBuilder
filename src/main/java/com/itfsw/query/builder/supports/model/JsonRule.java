@@ -16,6 +16,8 @@
 
 package com.itfsw.query.builder.supports.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.List;
 
 /**
@@ -43,7 +45,7 @@ public class JsonRule implements IGroup, IRule {
      * 判断是否为group
      * @return
      */
-    public boolean isGroup(){
+    public boolean isGroup() {
         return condition != null;
     }
 
@@ -51,7 +53,7 @@ public class JsonRule implements IGroup, IRule {
      * group
      * @return
      */
-    public IGroup toGroup(){
+    public IGroup toGroup() {
         return this;
     }
 
@@ -59,7 +61,7 @@ public class JsonRule implements IGroup, IRule {
      * rule
      * @return
      */
-    public IRule toRule(){
+    public IRule toRule() {
         return this;
     }
 
@@ -223,5 +225,19 @@ public class JsonRule implements IGroup, IRule {
      */
     public List<JsonRule> getRules() {
         return rules;
+    }
+
+    /**
+     * to String
+     * @return
+     */
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (Exception e) {
+            return super.toString();
+        }
     }
 }

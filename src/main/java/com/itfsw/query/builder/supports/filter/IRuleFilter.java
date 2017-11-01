@@ -30,8 +30,8 @@ import com.itfsw.query.builder.supports.model.JsonRule;
 public interface IRuleFilter {
     /**
      * 执行拦截器
-     * @param rule
+     * @param jsonRule
      * @throws FilterException
      */
-    void doFilter(JsonRule rule) throws FilterException;
+    void doFilter(JsonRule jsonRule) throws FilterException;
 }

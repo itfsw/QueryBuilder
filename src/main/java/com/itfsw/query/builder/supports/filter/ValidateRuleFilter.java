@@ -17,7 +17,12 @@
 package com.itfsw.query.builder.supports.filter;
 
 import com.itfsw.query.builder.exception.FilterException;
+import com.itfsw.query.builder.supports.model.IGroup;
+import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.JsonRule;
+import com.itfsw.query.builder.supports.model.enums.EnumOperator;
+
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -30,14 +35,37 @@ import com.itfsw.query.builder.supports.model.JsonRule;
 public class ValidateRuleFilter implements IRuleFilter {
     /**
      * 执行拦截器
-     * @param rule
+     * @param jsonRule
      * @throws FilterException
      */
-    public void doFilter(JsonRule rule) throws FilterException {
-        if (rule.isGroup()){
-
+    public void doFilter(JsonRule jsonRule) throws FilterException {
+        if (jsonRule.isGroup()) {
+            IGroup group = jsonRule.toGroup();
+            if (group.getRules().isEmpty()) {
+                throw new FilterException("group's rules can not be empty for: " + group + "!");
+            }
         } else {
+            IRule rule = jsonRule.toRule();
+            // field
+            if (rule.getField() == null || rule.getField().trim().equals("")) {
+                throw new FilterException("rule's field can not be empty for:" + rule + "!");
+            }
+            // must be list
+            if (EnumOperator.IN.equals(rule.getOperator()) || EnumOperator.NOT_IN.equals(rule.getOperator())
+                    || EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator())) {
+                // list
+                if (!(rule.getValue() instanceof List)) {
+                    throw new FilterException("rule's value must be Array for:" + rule + "!");
+                }
 
+                // size
+                if (EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator())) {
+                    List list = (List) rule.getValue();
+                    if (list.size() != 2) {
+                        throw new FilterException("rule's value size must be 2 for:" + rule + "!");
+                    }
+                }
+            }
         }
     }
 }

@@ -82,7 +82,7 @@ public class SqlBuilder extends AbstractBuilder {
      * 获取参数
      * @return
      */
-    public List<Object> getParams(){
+    public List<Object> getParams() {
         return (List<Object>) result.getValue();
     }
 
@@ -108,27 +108,27 @@ public class SqlBuilder extends AbstractBuilder {
         StringBuffer operate = new StringBuffer();
 
         // NOT
-        if (group.getNot() != null && group.getNot()){
+        if (group.getNot() != null && group.getNot()) {
             operate.append("( NOT ");
         }
 
-        if (group.getRules().size() > 0){
+        if (group.getRules().size() > 0) {
             operate.append("( ");
         }
 
         // rules
         List<Object> params = new ArrayList<Object>();
-        for (int i = 0; i < group.getRules().size(); i++){
+        for (int i = 0; i < group.getRules().size(); i++) {
             Operation operation = parse(group.getRules().get(i));
 
             // operate
             operate.append(operation.getOperate());
-            if (i < group.getRules().size() - 1){
+            if (i < group.getRules().size() - 1) {
                 operate.append(EnumCondition.AND.equals(group.getCondition()) ? " AND " : " OR ");
             }
             // params
-            if (operation.getHasValue()){
-                if (operation.getValue() instanceof List){
+            if (operation.getHasValue()) {
+                if (operation.getValue() instanceof List) {
                     params.addAll((Collection<?>) operation.getValue());
                 } else {
                     params.add(operation.getValue());
@@ -136,10 +136,10 @@ public class SqlBuilder extends AbstractBuilder {
             }
         }
 
-        if (group.getRules().size() > 0){
+        if (group.getRules().size() > 0) {
             operate.append(" )");
         }
-        if (group.getNot() != null && group.getNot()){
+        if (group.getNot() != null && group.getNot()) {
             operate.append(" )");
         }
 
@@ -153,13 +153,7 @@ public class SqlBuilder extends AbstractBuilder {
             }
         }
 
-        String ruleStr;
-        try {
-            ruleStr = mapper.writeValueAsString(rule);
-        } catch (Exception e) {
-            ruleStr = rule.toString();
-        }
-        throw new ParserNotFoundException("Can't found rule parser for:" +ruleStr+"!");
+        throw new ParserNotFoundException("Can't found rule parser for:" + rule + "!");
     }
 
     private void doFilter(JsonRule rule) {
