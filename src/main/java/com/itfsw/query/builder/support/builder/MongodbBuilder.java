@@ -17,8 +17,18 @@
 package com.itfsw.query.builder.support.builder;
 
 import com.itfsw.query.builder.exception.ParserNotFoundException;
+import com.itfsw.query.builder.support.filter.IRuleFilter;
+import com.itfsw.query.builder.support.model.IGroup;
+import com.itfsw.query.builder.support.model.IRule;
+import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.enums.EnumCondition;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,8 +39,82 @@ import java.io.IOException;
  * ---------------------------------------------------------------------------
  */
 public class MongodbBuilder extends AbstractBuilder {
+    protected String queryStr;   // 查询字符串
+    protected List<IRuleFilter> filters;    // filters
+    protected List<AbstractMongodbRuleParser> ruleParsers;   // rule parser
 
+    /**
+     * 构造函数
+     * @param queryStr
+     * @param filters
+     * @param ruleParsers
+     */
+    public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<AbstractMongodbRuleParser> ruleParsers) {
+        this.queryStr = queryStr;
+        this.filters = filters;
+        this.ruleParsers = ruleParsers;
+    }
+
+    /**
+     * 构建
+     * @return
+     * @throws IOException
+     * @throws ParserNotFoundException
+     */
     public void build() throws IOException, ParserNotFoundException {
+        JsonRule rule = mapper.readValue(queryStr, JsonRule.class);
+        parse(rule);
+    }
 
+    /**
+     * 解析
+     * @param rule
+     * @return
+     */
+    private DBObject parse(JsonRule rule) {
+        // filter
+        doFilter(rule);
+
+        // parse
+        if (rule.isGroup()) {
+            return parseGroup(rule);
+        } else {
+            return parseRule(rule);
+        }
+    }
+
+    private DBObject parseGroup(IGroup group) {
+
+        // rules
+        BasicDBList operates = new BasicDBList();
+        for (JsonRule rule : group.getRules()) {
+            operates.add(parse(rule));
+        }
+
+        // AND or OR
+        BasicDBObject andOrObj = new BasicDBObject();
+        andOrObj.append(EnumCondition.AND.equals(group.getCondition()) ? "$and" : "$or", operates);
+
+        // Not
+        if (group.getNot() != null && group.getNot()) {
+            return new BasicDBObject("$not", andOrObj);
+        }
+        return andOrObj;
+    }
+
+    private DBObject parseRule(IRule rule) {
+        for (AbstractMongodbRuleParser parser : ruleParsers) {
+            if (parser.canParse(rule)) {
+                return parser.parse(rule);
+            }
+        }
+
+        throw new ParserNotFoundException("Can't found rule parser for:" + rule + "!");
+    }
+
+    private void doFilter(JsonRule rule) {
+        for (IRuleFilter filter : filters) {
+            filter.doFilter(rule);
+        }
     }
 }
