@@ -46,10 +46,23 @@ public class SqlQueryBuilderFactory {
         // -------------------------- filter -----------------------------
 
         // ---------------------- rule parser ----------------------------
-        ruleParsers.add(new BetweenRuleParser());
-        ruleParsers.add(new NotBeginsWithRuleParser());
-        ruleParsers.add(new LessOrEqualRuleParser());
+        ruleParsers.add(new EqualRuleParser());
+        ruleParsers.add(new NotEqualRuleParser());
         ruleParsers.add(new INRuleParser());
+        ruleParsers.add(new NotInRuleParser());
+        ruleParsers.add(new LessRuleParser());
+        ruleParsers.add(new LessOrEqualRuleParser());
+        ruleParsers.add(new GreaterRuleParser());
+        ruleParsers.add(new GreaterOrEqualRuleParser());
+        ruleParsers.add(new BetweenRuleParser());
+        ruleParsers.add(new NotBetweenRuleParser());
+        ruleParsers.add(new BeginsWithRuleParser());
+        ruleParsers.add(new NotBeginsWithRuleParser());
+        ruleParsers.add(new ContainsRuleParser());
+        ruleParsers.add(new NotContainsRuleParser());
+        ruleParsers.add(new EndsWithRuleParser());
+        ruleParsers.add(new NotEndsWithRuleParser());
+
     }
 
     public SqlBuilder builder(String queryStr) {

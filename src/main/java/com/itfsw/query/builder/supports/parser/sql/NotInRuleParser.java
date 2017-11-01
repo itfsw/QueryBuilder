@@ -28,13 +28,17 @@ import java.util.List;
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/1 10:46
+ * @time:2017/11/1 16:12
  * ---------------------------------------------------------------------------
  */
-public class INRuleParser extends AbstractSqlRuleParser {
+public class NotInRuleParser extends AbstractSqlRuleParser {
+    public boolean canParse(IRule rule) {
+        return EnumOperator.NOT_IN.equals(rule.getOperator());
+    }
+
     public Operation parse(IRule rule) {
         StringBuffer operate = new StringBuffer(rule.getField());
-        operate.append(" IN(");
+        operate.append(" NOT IN(");
 
         List<Object> value = (List<Object>) rule.getValue();
 
@@ -48,9 +52,5 @@ public class INRuleParser extends AbstractSqlRuleParser {
         operate.append(")");
 
         return new Operation(operate, rule.getValue());
-    }
-
-    public boolean canParse(IRule rule) {
-        return EnumOperator.IN.value().equals(rule.getOperator());
     }
 }

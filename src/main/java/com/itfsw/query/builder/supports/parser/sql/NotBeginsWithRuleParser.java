@@ -35,6 +35,6 @@ public class NotBeginsWithRuleParser extends AbstractSqlRuleParser {
     }
 
     public boolean canParse(IRule rule) {
-        return EnumOperator.NOT_BEGINS_WITH.value().equals(rule.getOperator());
+        return EnumOperator.NOT_BEGINS_WITH.equals(rule.getOperator());
     }
 }
