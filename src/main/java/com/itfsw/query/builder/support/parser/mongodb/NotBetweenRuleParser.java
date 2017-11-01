@@ -18,8 +18,10 @@ package com.itfsw.query.builder.support.parser.mongodb;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
-import com.itfsw.query.builder.support.model.sql.Operation;
-import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBObject;
+
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,12 +31,16 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * @time:2017/11/1 16:32
  * ---------------------------------------------------------------------------
  */
-public class NotBetweenRuleParser extends AbstractSqlRuleParser {
+public class NotBetweenRuleParser extends AbstractMongodbRuleParser {
     public boolean canParse(IRule rule) {
         return EnumOperator.NOT_BETWEEN.equals(rule.getOperator());
     }
 
-    public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" NOT BETWEEN ? AND ?"), rule.getValue());
+    public BasicDBObject parse(IRule rule) {
+        List<Object> values = (List<Object>) rule.getValue();
+        BasicDBObject operate = new BasicDBObject();
+        operate.append("$lt", values.get(0));
+        operate.append("$gt", values.get(1));
+        return new BasicDBObject(rule.getField(), operate);
     }
 }

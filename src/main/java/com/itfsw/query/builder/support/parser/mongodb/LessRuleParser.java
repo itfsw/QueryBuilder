@@ -18,8 +18,9 @@ package com.itfsw.query.builder.support.parser.mongodb;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
-import com.itfsw.query.builder.support.model.sql.Operation;
-import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,12 +30,13 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * @time:2017/11/1 16:16
  * ---------------------------------------------------------------------------
  */
-public class LessRuleParser extends AbstractSqlRuleParser {
+public class LessRuleParser extends AbstractMongodbRuleParser {
     public boolean canParse(IRule rule) {
         return EnumOperator.LESS.equals(rule.getOperator());
     }
 
-    public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" < ?"), rule.getValue());
+    public DBObject parse(IRule rule) {
+        BasicDBObject operate = new BasicDBObject("$lt", rule.getValue());
+        return new BasicDBObject(rule.getField(), operate);
     }
 }

@@ -22,6 +22,8 @@ import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
+import java.util.List;
+
 /**
  * ---------------------------------------------------------------------------
  *
@@ -37,9 +39,10 @@ public class BetweenRuleParser extends AbstractMongodbRuleParser {
     }
 
     public DBObject parse(IRule rule) {
+        List<Object> values = (List<Object>) rule.getValue();
         BasicDBObject operate = new BasicDBObject();
-        operate.append("$gte", rule.getValue());
-        operate.append("$lte", rule.getValue());
-        return operate;
+        operate.append("$gte", values.get(0));
+        operate.append("$lte", values.get(1));
+        return new BasicDBObject(rule.getField(), operate);
     }
 }

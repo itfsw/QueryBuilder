@@ -18,8 +18,8 @@ package com.itfsw.query.builder.support.parser.mongodb;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
-import com.itfsw.query.builder.support.model.sql.Operation;
-import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBObject;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,12 +29,13 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * @time:2017/11/1 15:16
  * ---------------------------------------------------------------------------
  */
-public class NotEqualRuleParser extends AbstractSqlRuleParser {
+public class NotEqualRuleParser extends AbstractMongodbRuleParser {
     public boolean canParse(IRule rule) {
         return EnumOperator.NOT_EQUAL.equals(rule.getOperator());
     }
 
-    public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" != ?"), rule.getValue());
+    public BasicDBObject parse(IRule rule) {
+        BasicDBObject operate = new BasicDBObject("$ne", rule.getValue());
+        return new BasicDBObject(rule.getField(), operate);
     }
 }

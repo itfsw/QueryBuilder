@@ -38,6 +38,7 @@ public class BeginsWithRuleParser extends AbstractMongodbRuleParser {
     }
 
     public DBObject parse(IRule rule) {
-        return new BasicDBObject("$regex", Pattern.compile("^" + rule.getValue()));
+        BasicDBObject operate = new BasicDBObject("$regex", Pattern.compile("^" + rule.getValue()));
+        return new BasicDBObject(rule.getField(), operate);
     }
 }

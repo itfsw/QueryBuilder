@@ -18,8 +18,11 @@ package com.itfsw.query.builder.support.parser.mongodb;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
-import com.itfsw.query.builder.support.model.sql.Operation;
-import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
+import java.util.regex.Pattern;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,12 +32,13 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * @time:2017/11/1 10:40
  * ---------------------------------------------------------------------------
  */
-public class NotBeginsWithRuleParser extends AbstractSqlRuleParser {
-    public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" NOT LIKE(?)"), rule.getValue() + "%");
-    }
-
+public class NotBeginsWithRuleParser extends AbstractMongodbRuleParser {
     public boolean canParse(IRule rule) {
         return EnumOperator.NOT_BEGINS_WITH.equals(rule.getOperator());
+    }
+
+    public DBObject parse(IRule rule) {
+        BasicDBObject operate = new BasicDBObject("$regex", Pattern.compile("^(?!" + rule.getValue() + ")"));
+        return new BasicDBObject(rule.getField(), operate);
     }
 }

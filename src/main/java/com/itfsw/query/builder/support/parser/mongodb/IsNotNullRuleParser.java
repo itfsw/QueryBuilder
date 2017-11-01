@@ -18,8 +18,9 @@ package com.itfsw.query.builder.support.parser.mongodb;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
-import com.itfsw.query.builder.support.model.sql.Operation;
-import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,14 +30,13 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * @time:2017/11/1 17:18
  * ---------------------------------------------------------------------------
  */
-public class IsNotNullRuleParser extends AbstractSqlRuleParser {
+public class IsNotNullRuleParser extends AbstractMongodbRuleParser {
     public boolean canParse(IRule rule) {
         return EnumOperator.IS_NOT_NULL.equals(rule.getOperator());
     }
 
-    public Operation parse(IRule rule) {
-        Operation operation = new Operation(new StringBuffer(rule.getField()).append(" IS NOT NULL"), rule.getValue());
-        operation.setHasValue(false);
-        return operation;
+    public DBObject parse(IRule rule) {
+        BasicDBObject operate = new BasicDBObject("$ne", null);
+        return new BasicDBObject(rule.getField(), operate);
     }
 }

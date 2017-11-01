@@ -18,10 +18,9 @@ package com.itfsw.query.builder.support.parser.mongodb;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
-import com.itfsw.query.builder.support.model.sql.Operation;
-import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
-
-import java.util.List;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 /**
  * ---------------------------------------------------------------------------
@@ -31,26 +30,14 @@ import java.util.List;
  * @time:2017/11/1 10:46
  * ---------------------------------------------------------------------------
  */
-public class INRuleParser extends AbstractSqlRuleParser {
-    public Operation parse(IRule rule) {
-        StringBuffer operate = new StringBuffer(rule.getField());
-        operate.append(" IN(");
-
-        List<Object> value = (List<Object>) rule.getValue();
-
-        for (int i = 0; i < value.size(); i++){
-            operate.append("?");
-            if (i < value.size() - 1){
-                operate.append(", ");
-            }
-        }
-
-        operate.append(")");
-
-        return new Operation(operate, rule.getValue());
-    }
-
+public class INRuleParser extends AbstractMongodbRuleParser {
     public boolean canParse(IRule rule) {
-        return EnumOperator.IN.value().equals(rule.getOperator());
+        return EnumOperator.IN.equals(rule.getOperator());
     }
+
+    public DBObject parse(IRule rule) {
+        BasicDBObject operate = new BasicDBObject("$in", rule.getValue());
+        return new BasicDBObject(rule.getField(), operate);
+    }
+
 }
