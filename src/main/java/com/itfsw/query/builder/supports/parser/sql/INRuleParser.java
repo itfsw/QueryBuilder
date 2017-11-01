@@ -19,7 +19,9 @@ package com.itfsw.query.builder.supports.parser.sql;
 import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.enums.EnumOperator;
 import com.itfsw.query.builder.supports.model.sql.Operation;
-import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
+import com.itfsw.query.builder.supports.parser.AbstractSqlRuleParser;
+
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,9 +31,23 @@ import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
  * @time:2017/11/1 10:46
  * ---------------------------------------------------------------------------
  */
-public class INRuleParser extends AbstractRuleParser {
+public class INRuleParser extends AbstractSqlRuleParser {
     public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" IN (?)").toString(), rule.getValue());
+        StringBuffer operate = new StringBuffer(rule.getField());
+        operate.append(" IN (");
+
+        List<Object> value = (List<Object>) rule.getValue();
+
+        for (int i = 0; i < value.size(); i++){
+            operate.append("?");
+            if (i < value.size() - 1){
+                operate.append(", ");
+            }
+        }
+
+        operate.append(")");
+
+        return new Operation(operate, rule.getValue());
     }
 
     public boolean canParse(IRule rule) {

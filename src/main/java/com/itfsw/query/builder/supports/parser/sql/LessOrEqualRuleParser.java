@@ -19,7 +19,7 @@ package com.itfsw.query.builder.supports.parser.sql;
 import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.enums.EnumOperator;
 import com.itfsw.query.builder.supports.model.sql.Operation;
-import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
+import com.itfsw.query.builder.supports.parser.AbstractSqlRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,9 +29,9 @@ import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
  * @time:2017/11/1 10:48
  * ---------------------------------------------------------------------------
  */
-public class LessOrEqualRuleParser extends AbstractRuleParser {
+public class LessOrEqualRuleParser extends AbstractSqlRuleParser {
     public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" <= ?").toString(), rule.getValue());
+        return new Operation(new StringBuffer(rule.getField()).append(" <= ?"), rule.getValue());
     }
 
     public boolean canParse(IRule rule) {

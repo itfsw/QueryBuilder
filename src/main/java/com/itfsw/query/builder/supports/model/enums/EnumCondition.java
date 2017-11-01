@@ -55,4 +55,16 @@ public enum EnumCondition {
     public String value() {
         return value;
     }
+
+    /**
+     * 判断相等
+     * @param value
+     * @return
+     */
+    public boolean equals(String value){
+        if (value == null){
+            return false;
+        }
+        return this.value.equals(value);
+    }
 }

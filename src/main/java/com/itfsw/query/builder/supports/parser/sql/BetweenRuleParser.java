@@ -19,7 +19,7 @@ package com.itfsw.query.builder.supports.parser.sql;
 import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.enums.EnumOperator;
 import com.itfsw.query.builder.supports.model.sql.Operation;
-import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
+import com.itfsw.query.builder.supports.parser.AbstractSqlRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
@@ -29,13 +29,13 @@ import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
  * @time:2017/10/31 17:25
  * ---------------------------------------------------------------------------
  */
-public class BetweenRuleParser extends AbstractRuleParser {
+public class BetweenRuleParser extends AbstractSqlRuleParser {
 
     public boolean canParse(IRule rule) {
         return EnumOperator.BETWEEN.value().equals(rule.getOperator());
     }
 
     public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" BETWEEN ? AND ?").toString(), rule.getValue());
+        return new Operation(new StringBuffer(rule.getField()).append(" BETWEEN ? AND ?"), rule.getValue());
     }
 }

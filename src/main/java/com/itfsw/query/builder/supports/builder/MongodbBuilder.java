@@ -17,12 +17,8 @@
 package com.itfsw.query.builder.supports.builder;
 
 import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.parser.IGroupParser;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -33,17 +29,6 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class MongodbBuilder extends AbstractBuilder {
-
-    /**
-     * 构造函数
-     * @param queryStr
-     * @param filters
-     * @param ruleParsers
-     * @param groupParser
-     */
-    public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
-
-    }
 
     public void build() throws IOException, ParserNotFoundException {
 

@@ -16,32 +16,29 @@
 
 package com.itfsw.query.builder.supports.parser;
 
-import com.itfsw.query.builder.supports.model.IGroup;
+import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.sql.Operation;
-
-import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 18:19
+ * @time:2017/10/31 18:06
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractGroupParser{
+public abstract class AbstractSqlRuleParser {
     /**
      * 是否可以解析
-     * @param group
+     * @param rule
      * @return
      */
-    public abstract boolean canParse(IGroup group);
+    public abstract boolean canParse(IRule rule);
 
     /**
      * 解析
-     * @param group
-     * @param operations
+     * @param rule
      * @return
      */
-    public abstract Operation parse(IGroup group, List<Operation> operations);
+    public abstract Operation parse(IRule rule);
 }

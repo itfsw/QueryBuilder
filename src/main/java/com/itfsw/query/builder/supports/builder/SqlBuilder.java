@@ -21,12 +21,13 @@ import com.itfsw.query.builder.supports.filter.IRuleFilter;
 import com.itfsw.query.builder.supports.model.IGroup;
 import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.JsonRule;
+import com.itfsw.query.builder.supports.model.enums.EnumCondition;
 import com.itfsw.query.builder.supports.model.sql.Operation;
-import com.itfsw.query.builder.supports.parser.AbstractGroupParser;
-import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
+import com.itfsw.query.builder.supports.parser.AbstractSqlRuleParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,23 +41,19 @@ import java.util.List;
 public class SqlBuilder extends AbstractBuilder {
     protected String queryStr;   // 查询字符串
     protected List<IRuleFilter> filters;    // filters
-    protected List<AbstractRuleParser> ruleParsers;   // rule parser
-    protected AbstractGroupParser groupParser;
-
-    private Operation result;   // 结果
+    protected List<AbstractSqlRuleParser> ruleParsers;   // rule parser
+    private Operation result;
 
     /**
      * 构造函数
      * @param queryStr
      * @param filters
      * @param ruleParsers
-     * @param groupParser
      */
-    public SqlBuilder(String queryStr, List<IRuleFilter> filters, List<AbstractRuleParser> ruleParsers, AbstractGroupParser groupParser) {
+    public SqlBuilder(String queryStr, List<IRuleFilter> filters, List<AbstractSqlRuleParser> ruleParsers) {
         this.queryStr = queryStr;
         this.filters = filters;
         this.ruleParsers = ruleParsers;
-        this.groupParser = groupParser;
     }
 
     /**
@@ -75,7 +72,10 @@ public class SqlBuilder extends AbstractBuilder {
      * @return
      */
     public String getQuery() {
-        return null;
+        StringBuffer query = new StringBuffer(result.getOperate());
+        query.deleteCharAt(0);
+        query.deleteCharAt(query.length() - 1);
+        return query.toString();
     }
 
 
@@ -97,20 +97,44 @@ public class SqlBuilder extends AbstractBuilder {
     }
 
     private Operation parseGroup(IGroup group) {
-        List<Operation> operations = new ArrayList<Operation>();
-        for (JsonRule item : group.getRules()) {
-            operations.add(parse(item));
+        StringBuffer operate = new StringBuffer();
+
+        // NOT
+        if (group.getNot() != null && group.getNot()){
+            operate.append("NOT ");
         }
 
-        if (groupParser.canParse(group)) {
-            return groupParser.parse(group, operations);
-        } else {
-            throw new ParserNotFoundException("Can't found group parser!");
+        if (group.getRules().size() > 0){
+            operate.append("(");
         }
+
+        // rules
+        List<Object> params = new ArrayList<Object>();
+        for (int i = 0; i < group.getRules().size(); i++){
+            Operation operation = parse(group.getRules().get(i));
+
+            // operate
+            operate.append(operation.getOperate());
+            if (i < group.getRules().size() - 1){
+                operate.append(EnumCondition.AND.equals(group.getCondition()) ? " AND " : " OR ");
+            }
+            // params
+            if (operation.getValue() instanceof List){
+                params.addAll((Collection<?>) operation.getValue());
+            } else {
+                params.add(operation.getValue());
+            }
+        }
+
+        if (group.getRules().size() > 0){
+            operate.append(")");
+        }
+
+        return new Operation(operate, params);
     }
 
     private Operation parseRule(IRule rule) {
-        for (AbstractRuleParser parser : ruleParsers) {
+        for (AbstractSqlRuleParser parser : ruleParsers) {
             if (parser.canParse(rule)) {
                 return parser.parse(rule);
             }

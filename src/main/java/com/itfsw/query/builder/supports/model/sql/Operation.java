@@ -25,6 +25,52 @@ package com.itfsw.query.builder.supports.model.sql;
  * ---------------------------------------------------------------------------
  */
 public class Operation {
-    private String operate;
+    private StringBuffer operate;
     private Object value;
+
+    /**
+     * 构造函数
+     * @param operate
+     * @param value
+     */
+    public Operation(StringBuffer operate, Object value) {
+        this.operate = operate;
+        this.value = value;
+    }
+
+    /**
+     * Getter method for property <tt>operate</tt>.
+     * @return property value of operate
+     * @author hewei
+     */
+    public StringBuffer getOperate() {
+        return operate;
+    }
+
+    /**
+     * Setter method for property <tt>operate</tt>.
+     * @param operate value to be assigned to property operate
+     * @author hewei
+     */
+    public void setOperate(StringBuffer operate) {
+        this.operate = operate;
+    }
+
+    /**
+     * Getter method for property <tt>value</tt>.
+     * @return property value of value
+     * @author hewei
+     */
+    public Object getValue() {
+        return value;
+    }
+
+    /**
+     * Setter method for property <tt>value</tt>.
+     * @param value value to be assigned to property value
+     * @author hewei
+     */
+    public void setValue(Object value) {
+        this.value = value;
+    }
 }

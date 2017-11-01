@@ -18,8 +18,7 @@ package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.supports.builder.SqlBuilder;
 import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.parser.AbstractGroupParser;
-import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
+import com.itfsw.query.builder.supports.parser.AbstractSqlRuleParser;
 import com.itfsw.query.builder.supports.parser.sql.*;
 
 import java.util.ArrayList;
@@ -35,14 +34,13 @@ import java.util.List;
  */
 public class SqlQueryBuilderFactory {
     protected List<IRuleFilter> filters;    // filters
-    protected List<AbstractRuleParser> ruleParsers;   // rule parser
-    protected AbstractGroupParser groupParser;
+    protected List<AbstractSqlRuleParser> ruleParsers;   // rule parser
 
     /**
      * 构造函数
      */
     public SqlQueryBuilderFactory() {
-        ruleParsers = new ArrayList<AbstractRuleParser>();
+        ruleParsers = new ArrayList<AbstractSqlRuleParser>();
         filters = new ArrayList<IRuleFilter>();
 
         // -------------------------- filter -----------------------------
@@ -52,11 +50,9 @@ public class SqlQueryBuilderFactory {
         ruleParsers.add(new NotBeginsWithRuleParser());
         ruleParsers.add(new LessOrEqualRuleParser());
         ruleParsers.add(new INRuleParser());
-        // ---------------------- group parser ---------------------------
-        groupParser = new DefaultGroupParser();
     }
 
     public SqlBuilder builder(String queryStr) {
-        return new SqlBuilder(queryStr, filters, ruleParsers, groupParser);
+        return new SqlBuilder(queryStr, filters, ruleParsers);
     }
 }
