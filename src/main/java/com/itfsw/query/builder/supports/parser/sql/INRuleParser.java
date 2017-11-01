@@ -30,7 +30,7 @@ import com.itfsw.query.builder.supports.model.sql.Operation;
  */
 public class INRuleParser extends AbstractRuleParser {
     public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append("IN(?)").toString(), rule.getValue());
+        return new Operation(new StringBuffer(rule.getField()).append(" IN (?)").toString(), rule.getValue());
     }
 
     public boolean canParse(IRule rule) {

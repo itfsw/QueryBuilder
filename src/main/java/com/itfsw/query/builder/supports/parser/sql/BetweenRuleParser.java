@@ -35,6 +35,6 @@ public class BetweenRuleParser extends AbstractRuleParser {
     }
 
     public Operation parse(IRule rule) {
-        return new Operation("BETWEEN(?, ?)", rule.getValue());
+        return new Operation(new StringBuffer(rule.getField()).append(" BETWEEN ? AND ?").toString(), rule.getValue());
     }
 }
