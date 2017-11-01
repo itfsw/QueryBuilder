@@ -43,9 +43,8 @@ public enum EnumOperator {
     NOT_ENDS_WITH("not_ends_with"),
     IS_EMPTY("is_empty"),
     IS_NOT_EMPTY("is_not_empty"),
-    IS_NULL("is_null")
-
-    ;
+    IS_NULL("is_null"),
+    IS_NOT_NULL("is_not_null");
 
 
     private final String value;
