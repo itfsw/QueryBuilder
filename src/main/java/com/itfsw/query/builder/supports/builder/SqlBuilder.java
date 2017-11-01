@@ -78,6 +78,14 @@ public class SqlBuilder extends AbstractBuilder {
         return query.toString();
     }
 
+    /**
+     * 获取参数
+     * @return
+     */
+    public List<Object> getParams(){
+        return (List<Object>) result.getValue();
+    }
+
 
     /**
      * 解析
