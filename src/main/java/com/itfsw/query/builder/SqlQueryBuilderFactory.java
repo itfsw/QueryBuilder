@@ -18,7 +18,8 @@ package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.supports.builder.SqlBuilder;
 import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
+import com.itfsw.query.builder.supports.parser.AbstractGroupParser;
+import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
 import com.itfsw.query.builder.supports.parser.sql.*;
 
 import java.util.ArrayList;
@@ -56,14 +57,6 @@ public class SqlQueryBuilderFactory {
     }
 
     public SqlBuilder builder(String queryStr) {
-        List<AbstractRuleParser> parsers = new ArrayList<AbstractRuleParser>();
-
-        for (IRuleParser parser: ruleParsers) {
-            if (parser instanceof AbstractRuleParser){
-                parsers.add((AbstractRuleParser) parser);
-            }
-        }
-
-        return new SqlBuilder(queryStr, filters, parsers, groupParser);
+        return new SqlBuilder(queryStr, filters, ruleParsers, groupParser);
     }
 }

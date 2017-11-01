@@ -14,25 +14,34 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.parser.sql;
+package com.itfsw.query.builder.supports.parser;
 
-import com.itfsw.query.builder.supports.model.IRule;
+import com.itfsw.query.builder.supports.model.IGroup;
 import com.itfsw.query.builder.supports.model.sql.Operation;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
+
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 18:06
+ * @time:2017/10/31 18:19
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractRuleParser implements IRuleParser {
+public abstract class AbstractGroupParser{
     /**
-     * 解析
-     * @param rule
+     * 是否可以解析
+     * @param group
      * @return
      */
-    public abstract Operation parse(IRule rule);
+    public abstract boolean canParse(IGroup group);
+
+    /**
+     * 解析
+     * @param group
+     * @param operations
+     * @return
+     */
+    public abstract Operation parse(IGroup group, List<Operation> operations);
 }

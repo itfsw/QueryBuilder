@@ -19,6 +19,7 @@ package com.itfsw.query.builder.supports.parser.sql;
 import com.itfsw.query.builder.supports.model.IGroup;
 import com.itfsw.query.builder.supports.model.enums.EnumCondition;
 import com.itfsw.query.builder.supports.model.sql.Operation;
+import com.itfsw.query.builder.supports.parser.AbstractGroupParser;
 
 import java.util.ArrayList;
 import java.util.Collection;

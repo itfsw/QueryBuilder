@@ -18,10 +18,12 @@ package com.itfsw.query.builder.supports.builder;
 
 import com.itfsw.query.builder.exception.ParserNotFoundException;
 import com.itfsw.query.builder.supports.filter.IRuleFilter;
+import com.itfsw.query.builder.supports.model.IGroup;
+import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.JsonRule;
 import com.itfsw.query.builder.supports.model.sql.Operation;
-import com.itfsw.query.builder.supports.parser.sql.AbstractGroupParser;
-import com.itfsw.query.builder.supports.parser.sql.AbstractRuleParser;
+import com.itfsw.query.builder.supports.parser.AbstractGroupParser;
+import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,8 +74,8 @@ public class SqlBuilder extends AbstractBuilder {
      * 获取查询语句
      * @return
      */
-    public String getQuery(){
-        return result.getQuery();
+    public String getQuery() {
+        return null;
     }
 
 
@@ -83,25 +85,43 @@ public class SqlBuilder extends AbstractBuilder {
      * @return
      */
     private Operation parse(JsonRule rule) {
+        // filter
+        doFilter(rule);
+
+        // parse
         if (rule.isGroup()) {
-            List<Operation> operations = new ArrayList<Operation>();
-            for (JsonRule item : rule.getRules()) {
-                operations.add(parse(item));
-            }
-
-            if (groupParser.canParse(rule)) {
-                return groupParser.parse(rule, operations);
-            } else {
-                throw new ParserNotFoundException("Can't found group parser!");
-            }
+            return parseGroup(rule);
         } else {
-            for (AbstractRuleParser parser : ruleParsers) {
-                if (parser.canParse(rule)) {
-                    return parser.parse(rule);
-                }
-            }
+            return parseRule(rule);
+        }
+    }
 
-            throw new ParserNotFoundException("Can't found rule parser!");
+    private Operation parseGroup(IGroup group) {
+        List<Operation> operations = new ArrayList<Operation>();
+        for (JsonRule item : group.getRules()) {
+            operations.add(parse(item));
+        }
+
+        if (groupParser.canParse(group)) {
+            return groupParser.parse(group, operations);
+        } else {
+            throw new ParserNotFoundException("Can't found group parser!");
+        }
+    }
+
+    private Operation parseRule(IRule rule) {
+        for (AbstractRuleParser parser : ruleParsers) {
+            if (parser.canParse(rule)) {
+                return parser.parse(rule);
+            }
+        }
+
+        throw new ParserNotFoundException("Can't found rule parser!");
+    }
+
+    private void doFilter(JsonRule rule) {
+        for (IRuleFilter filter : filters) {
+            filter.doFilter(rule);
         }
     }
 }

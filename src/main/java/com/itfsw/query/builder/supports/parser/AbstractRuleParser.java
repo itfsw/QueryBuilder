@@ -17,20 +17,28 @@
 package com.itfsw.query.builder.supports.parser;
 
 import com.itfsw.query.builder.supports.model.IRule;
+import com.itfsw.query.builder.supports.model.sql.Operation;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 20:32
+ * @time:2017/10/31 18:06
  * ---------------------------------------------------------------------------
  */
-public interface IRuleParser {
+public abstract class AbstractRuleParser {
     /**
      * 是否可以解析
      * @param rule
      * @return
      */
-    boolean canParse(IRule rule);
+    public abstract boolean canParse(IRule rule);
+
+    /**
+     * 解析
+     * @param rule
+     * @return
+     */
+    public abstract Operation parse(IRule rule);
 }

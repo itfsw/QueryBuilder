@@ -48,6 +48,22 @@ public class JsonRule implements IGroup, IRule {
     }
 
     /**
+     * group
+     * @return
+     */
+    public IGroup toGroup(){
+        return this;
+    }
+
+    /**
+     * rule
+     * @return
+     */
+    public IRule toRule(){
+        return this;
+    }
+
+    /**
      * Setter method for property <tt>id</tt>.
      * @param id value to be assigned to property id
      * @author hewei

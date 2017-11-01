@@ -19,6 +19,7 @@ package com.itfsw.query.builder.supports.parser.sql;
 import com.itfsw.query.builder.supports.model.IRule;
 import com.itfsw.query.builder.supports.model.enums.EnumOperator;
 import com.itfsw.query.builder.supports.model.sql.Operation;
+import com.itfsw.query.builder.supports.parser.AbstractRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
