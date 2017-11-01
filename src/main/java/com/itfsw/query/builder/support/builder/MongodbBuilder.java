@@ -39,31 +39,29 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class MongodbBuilder extends AbstractBuilder {
-    protected String queryStr;   // 查询字符串
     protected List<IRuleFilter> filters;    // filters
     protected List<AbstractMongodbRuleParser> ruleParsers;   // rule parser
 
     /**
      * 构造函数
-     * @param queryStr
      * @param filters
      * @param ruleParsers
      */
-    public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<AbstractMongodbRuleParser> ruleParsers) {
-        this.queryStr = queryStr;
+    public MongodbBuilder(List<IRuleFilter> filters, List<AbstractMongodbRuleParser> ruleParsers) {
         this.filters = filters;
         this.ruleParsers = ruleParsers;
     }
 
     /**
      * 构建
+     * @param query
      * @return
      * @throws IOException
      * @throws ParserNotFoundException
      */
-    public void build() throws IOException, ParserNotFoundException {
-        JsonRule rule = mapper.readValue(queryStr, JsonRule.class);
-        parse(rule);
+    public DBObject build(String query) throws IOException, ParserNotFoundException {
+        JsonRule rule = mapper.readValue(query, JsonRule.class);
+        return parse(rule);
     }
 
     /**

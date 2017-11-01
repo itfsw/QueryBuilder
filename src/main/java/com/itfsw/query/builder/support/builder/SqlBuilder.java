@@ -21,6 +21,7 @@ import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.SqlQueryResult;
 import com.itfsw.query.builder.support.model.enums.EnumCondition;
 import com.itfsw.query.builder.support.model.sql.Operation;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
@@ -39,53 +40,37 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class SqlBuilder extends AbstractBuilder {
-    protected String queryStr;   // 查询字符串
     protected List<IRuleFilter> filters;    // filters
     protected List<AbstractSqlRuleParser> ruleParsers;   // rule parser
-    private Operation result;
 
     /**
      * 构造函数
-     * @param queryStr
      * @param filters
      * @param ruleParsers
      */
-    public SqlBuilder(String queryStr, List<IRuleFilter> filters, List<AbstractSqlRuleParser> ruleParsers) {
-        this.queryStr = queryStr;
+    public SqlBuilder(List<IRuleFilter> filters, List<AbstractSqlRuleParser> ruleParsers) {
         this.filters = filters;
         this.ruleParsers = ruleParsers;
     }
 
     /**
      * 构建
+     * @param query
      * @return
      * @throws IOException
      * @throws ParserNotFoundException
      */
-    public void build() throws IOException, ParserNotFoundException {
-        JsonRule rule = mapper.readValue(queryStr, JsonRule.class);
-        result = parse(rule);
-    }
+    public SqlQueryResult build(String query) throws IOException, ParserNotFoundException {
+        JsonRule rule = mapper.readValue(query, JsonRule.class);
+        Operation result = parse(rule);
 
-    /**
-     * 获取查询语句
-     * @return
-     */
-    public String getQuery() {
-        StringBuffer query = new StringBuffer(result.getOperate());
-        query.delete(0, 2);
-        query.delete(query.length() - 2, query.length());
-        return query.toString();
-    }
+        // sql
+        StringBuffer sql = new StringBuffer(result.getOperate());
+        sql.delete(0, 2);
+        sql.delete(query.length() - 2, query.length());
 
-    /**
-     * 获取参数
-     * @return
-     */
-    public List<Object> getParams() {
-        return (List<Object>) result.getValue();
+        return new SqlQueryResult(sql.toString(), (List<Object>) result.getValue());
     }
-
 
     /**
      * 解析

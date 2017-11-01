@@ -16,6 +16,15 @@
 
 package com.itfsw.query.builder;
 
+import com.itfsw.query.builder.support.builder.MongodbBuilder;
+import com.itfsw.query.builder.support.filter.IRuleFilter;
+import com.itfsw.query.builder.support.filter.ValidateRuleFilter;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.mongodb.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ---------------------------------------------------------------------------
  *
@@ -25,4 +34,44 @@ package com.itfsw.query.builder;
  * ---------------------------------------------------------------------------
  */
 public class MongodbQueryBuilderFactory {
+    protected List<IRuleFilter> filters;    // filters
+    protected List<AbstractMongodbRuleParser> ruleParsers;   // rule parser
+
+    /**
+     * 构造函数
+     */
+    public MongodbQueryBuilderFactory() {
+        ruleParsers = new ArrayList<AbstractMongodbRuleParser>();
+        filters = new ArrayList<IRuleFilter>();
+
+        // -------------------------- filter -----------------------------
+        filters.add(new ValidateRuleFilter());
+
+        // ---------------------- rule parser ----------------------------
+        ruleParsers.add(new EqualRuleParser());
+        ruleParsers.add(new NotEqualRuleParser());
+        ruleParsers.add(new INRuleParser());
+        ruleParsers.add(new NotInRuleParser());
+        ruleParsers.add(new LessRuleParser());
+        ruleParsers.add(new LessOrEqualRuleParser());
+        ruleParsers.add(new GreaterRuleParser());
+        ruleParsers.add(new GreaterOrEqualRuleParser());
+        ruleParsers.add(new BetweenRuleParser());
+        ruleParsers.add(new NotBetweenRuleParser());
+        ruleParsers.add(new BeginsWithRuleParser());
+        ruleParsers.add(new NotBeginsWithRuleParser());
+        ruleParsers.add(new ContainsRuleParser());
+        ruleParsers.add(new NotContainsRuleParser());
+        ruleParsers.add(new EndsWithRuleParser());
+        ruleParsers.add(new NotEndsWithRuleParser());
+        ruleParsers.add(new IsEmptyRuleParser());
+        ruleParsers.add(new IsNotEmptyRuleParser());
+        ruleParsers.add(new IsNullRuleParser());
+        ruleParsers.add(new IsNotNullRuleParser());
+
+    }
+
+    public MongodbBuilder builder() {
+        return new MongodbBuilder(filters, ruleParsers);
+    }
 }

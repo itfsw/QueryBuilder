@@ -42,7 +42,8 @@ public abstract class AbstractBuilder {
 
     /**
      * 执行构建
+     * @param query
      * @return
      */
-    public abstract void build() throws IOException, ParserNotFoundException;
+    public abstract Object build(String query) throws IOException, ParserNotFoundException;
 }
