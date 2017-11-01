@@ -73,8 +73,8 @@ public class SqlBuilder extends AbstractBuilder {
      */
     public String getQuery() {
         StringBuffer query = new StringBuffer(result.getOperate());
-        query.deleteCharAt(0);
-        query.deleteCharAt(query.length() - 1);
+        query.delete(0, 2);
+        query.delete(query.length() - 2, query.length());
         return query.toString();
     }
 
@@ -109,11 +109,11 @@ public class SqlBuilder extends AbstractBuilder {
 
         // NOT
         if (group.getNot() != null && group.getNot()){
-            operate.append("NOT ");
+            operate.append("( NOT ");
         }
 
         if (group.getRules().size() > 0){
-            operate.append("(");
+            operate.append("( ");
         }
 
         // rules
@@ -137,7 +137,10 @@ public class SqlBuilder extends AbstractBuilder {
         }
 
         if (group.getRules().size() > 0){
-            operate.append(")");
+            operate.append(" )");
+        }
+        if (group.getNot() != null && group.getNot()){
+            operate.append(" )");
         }
 
         return new Operation(operate, params);
@@ -150,7 +153,13 @@ public class SqlBuilder extends AbstractBuilder {
             }
         }
 
-        throw new ParserNotFoundException("Can't found rule parser!");
+        String ruleStr;
+        try {
+            ruleStr = mapper.writeValueAsString(rule);
+        } catch (Exception e) {
+            ruleStr = rule.toString();
+        }
+        throw new ParserNotFoundException("Can't found rule parser for:" +ruleStr+"!");
     }
 
     private void doFilter(JsonRule rule) {

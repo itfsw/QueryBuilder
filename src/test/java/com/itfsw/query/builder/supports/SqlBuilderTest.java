@@ -16,8 +16,6 @@
 
 package com.itfsw.query.builder.supports;
 
-import com.itfsw.query.builder.SqlQueryBuilderFactory;
-import com.itfsw.query.builder.supports.builder.SqlBuilder;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -34,10 +32,5 @@ public class SqlBuilderTest {
 
     @Test
     public void test() throws IOException {
-        SqlQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        SqlBuilder builder = factory.builder("{\"condition\":\"OR\",\"rules\":[{\"id\":\"name\",\"field\":\"username\",\"type\":\"string\",\"input\":\"text\",\"operator\":\"not_begins_with\",\"value\":\"Mistic\"},{\"id\":\"price\",\"field\":\"price\",\"type\":\"double\",\"input\":\"number\",\"operator\":\"between\",\"value\":[\"100\",\"200\"],\"data\":{\"class\":\"com.example.PriceTag\"}},{\"condition\":\"AND\",\"rules\":[{\"id\":\"category\",\"field\":\"category\",\"type\":\"integer\",\"input\":\"checkbox\",\"operator\":\"in\",\"value\":[\"1\",\"2\"]},{\"id\":\"rate\",\"field\":\"rate\",\"type\":\"integer\",\"input\":\"number\",\"operator\":\"less_or_equal\",\"value\":\"2\"}],\"not\":true}],\"not\":false,\"valid\":true}");
-        builder.build();
-        System.out.println(builder.getQuery());
-        System.out.println(builder.getParams());
     }
 }

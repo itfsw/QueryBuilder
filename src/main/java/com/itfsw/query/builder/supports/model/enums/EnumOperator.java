@@ -25,7 +25,7 @@ package com.itfsw.query.builder.supports.model.enums;
  * ---------------------------------------------------------------------------
  */
 public enum EnumOperator {
-    EQUAL("equals"),
+    EQUAL("equal"),
     NOT_EQUAL("not_equal"),
     IN("in"),
     NOT_IN("not_in"),
