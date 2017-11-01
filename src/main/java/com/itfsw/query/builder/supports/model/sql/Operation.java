@@ -27,6 +27,7 @@ package com.itfsw.query.builder.supports.model.sql;
 public class Operation {
     private StringBuffer operate;
     private Object value;
+    private Boolean hasValue = true;
 
     /**
      * 构造函数
@@ -36,6 +37,24 @@ public class Operation {
     public Operation(StringBuffer operate, Object value) {
         this.operate = operate;
         this.value = value;
+    }
+
+    /**
+     * Getter method for property <tt>hasValue</tt>.
+     * @return property value of hasValue
+     * @author hewei
+     */
+    public Boolean getHasValue() {
+        return hasValue;
+    }
+
+    /**
+     * Setter method for property <tt>hasValue</tt>.
+     * @param hasValue value to be assigned to property hasValue
+     * @author hewei
+     */
+    public void setHasValue(Boolean hasValue) {
+        this.hasValue = hasValue;
     }
 
     /**

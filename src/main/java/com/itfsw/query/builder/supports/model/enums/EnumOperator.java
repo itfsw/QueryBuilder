@@ -40,6 +40,8 @@ public enum EnumOperator {
     NOT_CONTAINS("not_contains"),
     ENDS_WITH("ends_with"),
     NOT_ENDS_WITH("not_ends_with"),
+    IS_EMPTY("is_empty"),
+    IS_NOT_EMPTY("is_not_empty"),
 
     IN("in");
 

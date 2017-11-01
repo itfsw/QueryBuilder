@@ -127,10 +127,12 @@ public class SqlBuilder extends AbstractBuilder {
                 operate.append(EnumCondition.AND.equals(group.getCondition()) ? " AND " : " OR ");
             }
             // params
-            if (operation.getValue() instanceof List){
-                params.addAll((Collection<?>) operation.getValue());
-            } else {
-                params.add(operation.getValue());
+            if (operation.getHasValue()){
+                if (operation.getValue() instanceof List){
+                    params.addAll((Collection<?>) operation.getValue());
+                } else {
+                    params.add(operation.getValue());
+                }
             }
         }
 
