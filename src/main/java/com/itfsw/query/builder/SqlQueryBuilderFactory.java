@@ -16,11 +16,11 @@
 
 package com.itfsw.query.builder;
 
-import com.itfsw.query.builder.supports.builder.SqlBuilder;
-import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.filter.ValidateRuleFilter;
-import com.itfsw.query.builder.supports.parser.AbstractSqlRuleParser;
-import com.itfsw.query.builder.supports.parser.sql.*;
+import com.itfsw.query.builder.support.builder.SqlBuilder;
+import com.itfsw.query.builder.support.filter.IRuleFilter;
+import com.itfsw.query.builder.support.filter.ValidateRuleFilter;
+import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.sql.*;
 
 import java.util.ArrayList;
 import java.util.List;
