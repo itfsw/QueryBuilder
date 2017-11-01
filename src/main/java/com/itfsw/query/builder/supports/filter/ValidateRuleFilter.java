@@ -21,17 +21,23 @@ import com.itfsw.query.builder.supports.model.JsonRule;
 
 /**
  * ---------------------------------------------------------------------------
- * 拦截器
+ * 验证数据
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:31
+ * @time:2017/11/1 11:32
  * ---------------------------------------------------------------------------
  */
-public interface IRuleFilter {
+public class ValidateRuleFilter implements IRuleFilter {
     /**
      * 执行拦截器
      * @param rule
      * @throws FilterException
      */
-    void doFilter(JsonRule rule) throws FilterException;
+    public void doFilter(JsonRule rule) throws FilterException {
+        if (rule.isGroup()){
+
+        } else {
+
+        }
+    }
 }

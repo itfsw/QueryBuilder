@@ -25,52 +25,6 @@ package com.itfsw.query.builder.supports.model.sql;
  * ---------------------------------------------------------------------------
  */
 public class Operation {
-    private String query;
+    private String operate;
     private Object value;
-
-    /**
-     * 构造函数
-     * @param query
-     * @param value
-     */
-    public Operation(String query, Object value) {
-        this.query = query;
-        this.value = value;
-    }
-
-    /**
-     * Getter method for property <tt>query</tt>.
-     * @return property value of query
-     * @author hewei
-     */
-    public String getQuery() {
-        return query;
-    }
-
-    /**
-     * Setter method for property <tt>query</tt>.
-     * @param query value to be assigned to property query
-     * @author hewei
-     */
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    /**
-     * Getter method for property <tt>value</tt>.
-     * @return property value of value
-     * @author hewei
-     */
-    public Object getValue() {
-        return value;
-    }
-
-    /**
-     * Setter method for property <tt>value</tt>.
-     * @param value value to be assigned to property value
-     * @author hewei
-     */
-    public void setValue(Object value) {
-        this.value = value;
-    }
 }

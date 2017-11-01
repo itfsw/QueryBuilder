@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.filter;
-
-import com.itfsw.query.builder.exception.FilterException;
-import com.itfsw.query.builder.supports.model.JsonRule;
+package com.itfsw.query.builder.exception;
 
 /**
  * ---------------------------------------------------------------------------
- * 拦截器
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:31
+ * @time:2017/11/1 11:34
  * ---------------------------------------------------------------------------
  */
-public interface IRuleFilter {
-    /**
-     * 执行拦截器
-     * @param rule
-     * @throws FilterException
-     */
-    void doFilter(JsonRule rule) throws FilterException;
+public class FilterException extends RuntimeException {
+    public FilterException(String message) {
+        super(message);
+    }
 }

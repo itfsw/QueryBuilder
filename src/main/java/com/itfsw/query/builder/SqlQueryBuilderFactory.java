@@ -17,6 +17,7 @@
 package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.supports.builder.SqlBuilder;
+import com.itfsw.query.builder.supports.filter.IRuleFilter;
 import com.itfsw.query.builder.supports.parser.IRuleParser;
 import com.itfsw.query.builder.supports.parser.sql.*;
 
@@ -31,12 +32,17 @@ import java.util.List;
  * @time:2017/10/31 17:03
  * ---------------------------------------------------------------------------
  */
-public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
+public class SqlQueryBuilderFactory {
+    protected List<IRuleFilter> filters;    // filters
+    protected List<AbstractRuleParser> ruleParsers;   // rule parser
+    protected AbstractGroupParser groupParser;
+
     /**
      * 构造函数
      */
     public SqlQueryBuilderFactory() {
-        super();
+        ruleParsers = new ArrayList<AbstractRuleParser>();
+        filters = new ArrayList<IRuleFilter>();
 
         // -------------------------- filter -----------------------------
 
@@ -51,12 +57,13 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
 
     public SqlBuilder builder(String queryStr) {
         List<AbstractRuleParser> parsers = new ArrayList<AbstractRuleParser>();
+
         for (IRuleParser parser: ruleParsers) {
             if (parser instanceof AbstractRuleParser){
                 parsers.add((AbstractRuleParser) parser);
             }
         }
 
-        return new SqlBuilder(queryStr, filters, parsers, (AbstractGroupParser) groupParser);
+        return new SqlBuilder(queryStr, filters, parsers, groupParser);
     }
 }
