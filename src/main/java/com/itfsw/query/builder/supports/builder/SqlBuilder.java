@@ -18,10 +18,13 @@ package com.itfsw.query.builder.supports.builder;
 
 import com.itfsw.query.builder.exception.ParserNotFoundException;
 import com.itfsw.query.builder.supports.filter.IRuleFilter;
-import com.itfsw.query.builder.supports.parser.IGroupParser;
-import com.itfsw.query.builder.supports.parser.IRuleParser;
+import com.itfsw.query.builder.supports.model.JsonRule;
+import com.itfsw.query.builder.supports.model.sql.Operation;
+import com.itfsw.query.builder.supports.parser.sql.AbstractGroupParser;
+import com.itfsw.query.builder.supports.parser.sql.AbstractRuleParser;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +36,12 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class SqlBuilder extends AbstractBuilder {
+    protected String queryStr;   // 查询字符串
+    protected List<IRuleFilter> filters;    // filters
+    protected List<AbstractRuleParser> ruleParsers;   // rule parser
+    protected AbstractGroupParser groupParser;
+
+    private Operation result;   // 结果
 
     /**
      * 构造函数
@@ -41,11 +50,58 @@ public class SqlBuilder extends AbstractBuilder {
      * @param ruleParsers
      * @param groupParser
      */
-    public SqlBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
-        super(queryStr, filters, ruleParsers, groupParser);
+    public SqlBuilder(String queryStr, List<IRuleFilter> filters, List<AbstractRuleParser> ruleParsers, AbstractGroupParser groupParser) {
+        this.queryStr = queryStr;
+        this.filters = filters;
+        this.ruleParsers = ruleParsers;
+        this.groupParser = groupParser;
     }
 
-    public boolean build() throws IOException, ParserNotFoundException {
-        return false;
+    /**
+     * 构建
+     * @return
+     * @throws IOException
+     * @throws ParserNotFoundException
+     */
+    public void build() throws IOException, ParserNotFoundException {
+        JsonRule rule = mapper.readValue(queryStr, JsonRule.class);
+        result = parse(rule);
+    }
+
+    /**
+     * 获取查询语句
+     * @return
+     */
+    public String getQuery(){
+        return result.getQuery();
+    }
+
+
+    /**
+     * 解析
+     * @param rule
+     * @return
+     */
+    private Operation parse(JsonRule rule) {
+        if (rule.isGroup()) {
+            List<Operation> operations = new ArrayList<Operation>();
+            for (JsonRule item : rule.getRules()) {
+                operations.add(parse(item));
+            }
+
+            if (groupParser.canParse(rule)) {
+                return groupParser.parse(rule, operations);
+            } else {
+                throw new ParserNotFoundException("Can't found group parser!");
+            }
+        } else {
+            for (AbstractRuleParser parser : ruleParsers) {
+                if (parser.canParse(rule)) {
+                    return parser.parse(rule);
+                }
+            }
+
+            throw new ParserNotFoundException("Can't found rule parser!");
+        }
     }
 }

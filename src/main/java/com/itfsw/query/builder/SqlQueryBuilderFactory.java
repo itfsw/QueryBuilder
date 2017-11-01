@@ -16,7 +16,12 @@
 
 package com.itfsw.query.builder;
 
-import com.itfsw.query.builder.supports.builder.AbstractBuilder;
+import com.itfsw.query.builder.supports.builder.SqlBuilder;
+import com.itfsw.query.builder.supports.parser.IRuleParser;
+import com.itfsw.query.builder.supports.parser.sql.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -36,11 +41,22 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
         // -------------------------- filter -----------------------------
 
         // ---------------------- rule parser ----------------------------
-
+        ruleParsers.add(new BetweenRuleParser());
+        ruleParsers.add(new NotBeginsWithRuleParser());
+        ruleParsers.add(new LessOrEqualRuleParser());
+        ruleParsers.add(new INRuleParser());
         // ---------------------- group parser ---------------------------
+        groupParser = new DefaultGroupParser();
     }
 
-    public AbstractBuilder builder(String queryStr) {
-        return null;
+    public SqlBuilder builder(String queryStr) {
+        List<AbstractRuleParser> parsers = new ArrayList<AbstractRuleParser>();
+        for (IRuleParser parser: ruleParsers) {
+            if (parser instanceof AbstractRuleParser){
+                parsers.add((AbstractRuleParser) parser);
+            }
+        }
+
+        return new SqlBuilder(queryStr, filters, parsers, (AbstractGroupParser) groupParser);
     }
 }

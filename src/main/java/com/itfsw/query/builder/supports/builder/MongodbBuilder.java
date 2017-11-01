@@ -42,10 +42,10 @@ public class MongodbBuilder extends AbstractBuilder {
      * @param groupParser
      */
     public MongodbBuilder(String queryStr, List<IRuleFilter> filters, List<IRuleParser> ruleParsers, IGroupParser groupParser) {
-        super(queryStr, filters, ruleParsers, groupParser);
+
     }
 
-    public boolean build() throws IOException, ParserNotFoundException {
-        return false;
+    public void build() throws IOException, ParserNotFoundException {
+
     }
 }

@@ -20,6 +20,8 @@ import com.itfsw.query.builder.supports.model.IGroup;
 import com.itfsw.query.builder.supports.model.enums.EnumCondition;
 import com.itfsw.query.builder.supports.model.sql.Operation;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,12 +43,49 @@ public class DefaultGroupParser extends AbstractGroupParser {
         return false;
     }
 
-    public Operation parse(IGroup group, List<Object> rules) {
+    public Operation parse(IGroup group, List<Operation> operations) {
+        StringBuffer sb = new StringBuffer("(");
+        List<Object> params = new ArrayList<Object>();
         // AND
         if (EnumCondition.AND.value().equals(group.getCondition())){
-
+            for (int i = 0; i < operations.size(); i++){
+                // 操作
+                Operation operation = operations.get(i);
+                sb.append(operation.getQuery());
+                if (i <= operations.size() - 1){
+                    sb.append(" AND ");
+                }
+                // 参数
+                if (operation.getValue() instanceof List){
+                    params.addAll((Collection<?>) operation.getValue());
+                } else {
+                    params.add(operation.getValue());
+                }
+            }
+            sb.append(")");
+        } else if (EnumCondition.OR.value().equals(group.getCondition())){
+            for (int i = 0; i < operations.size(); i++){
+                // 操作
+                Operation operation = operations.get(i);
+                sb.append(operation.getQuery());
+                if (i <= operations.size() - 1){
+                    sb.append(" OR ");
+                }
+                // 参数
+                if (operation.getValue() instanceof List){
+                    params.addAll((Collection<?>) operation.getValue());
+                } else {
+                    params.add(operation.getValue());
+                }
+            }
+            sb.append(")");
         }
 
-        return null;
+        // not
+        if (group.getNot() != null && group.getNot() == true){
+            sb.insert(0, "NOT ");
+        }
+
+        return new Operation(sb.toString(), params);
     }
 }

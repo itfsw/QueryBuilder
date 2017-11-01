@@ -25,7 +25,10 @@ package com.itfsw.query.builder.supports.model.enums;
  * ---------------------------------------------------------------------------
  */
 public enum EnumOperator {
-    BETWEEN("between");
+    BETWEEN("between"),
+    NOT_BEGINS_WITH("not_begins_with"),
+    LESS_OR_EQUAL("less_or_equal"),
+    IN("in");
 
     private final String value;
 

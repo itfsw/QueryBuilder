@@ -14,35 +14,26 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.supports.builder;
+package com.itfsw.query.builder.supports.parser.sql;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itfsw.query.builder.exception.ParserNotFoundException;
-
-import java.io.IOException;
+import com.itfsw.query.builder.supports.model.IRule;
+import com.itfsw.query.builder.supports.model.enums.EnumOperator;
+import com.itfsw.query.builder.supports.model.sql.Operation;
 
 /**
  * ---------------------------------------------------------------------------
- * 构造类
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:44
+ * @time:2017/11/1 10:40
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractBuilder {
-    protected static ObjectMapper mapper; // object mapper
-
-    static {
-        // object mapper
-        mapper = new ObjectMapper();
-
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+public class NotBeginsWithRuleParser extends AbstractRuleParser {
+    public Operation parse(IRule rule) {
+        return new Operation(new StringBuffer(rule.getField()).append("NOT LIKE(?)").toString(), rule.getValue() + "%");
     }
 
-    /**
-     * 执行构建
-     * @return
-     */
-    public abstract void build() throws IOException, ParserNotFoundException;
+    public boolean canParse(IRule rule) {
+        return EnumOperator.NOT_BEGINS_WITH.value().equals(rule.getOperator());
+    }
 }
