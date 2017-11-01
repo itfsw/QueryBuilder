@@ -64,6 +64,7 @@ public class SqlQueryBuilderFactory {
         ruleParsers.add(new NotEndsWithRuleParser());
         ruleParsers.add(new IsEmptyRuleParser());
         ruleParsers.add(new IsNotEmptyRuleParser());
+        ruleParsers.add(new IsNullRuleParser());
 
     }
 

@@ -27,6 +27,7 @@ package com.itfsw.query.builder.supports.model.enums;
 public enum EnumOperator {
     EQUAL("equals"),
     NOT_EQUAL("not_equal"),
+    IN("in"),
     NOT_IN("not_in"),
     LESS("less"),
     LESS_OR_EQUAL("less_or_equal"),
@@ -42,8 +43,10 @@ public enum EnumOperator {
     NOT_ENDS_WITH("not_ends_with"),
     IS_EMPTY("is_empty"),
     IS_NOT_EMPTY("is_not_empty"),
+    IS_NULL("is_null")
 
-    IN("in");
+    ;
+
 
     private final String value;
 
