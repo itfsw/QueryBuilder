@@ -7,15 +7,25 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>QueryBuilder</name>
-    <url>http://maven.apache.org</url>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Mybatis Generator Plugins</description>
+    <url>https://github.com/itfsw/QueryBuilder</url>
 
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ license ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++项目properties配置++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++依赖管理++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <dependencies>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -27,7 +37,7 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver</artifactId>
             <version>3.5.0</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- junit -->
@@ -38,4 +48,151 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++profiles++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.4</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <additionalparam>${javadoc.opts}</additionalparam>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- gpg 签名插件 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- java 8 以后 doclint 导致maven-javadoc-plugin报错 -->
+        <profile>
+            <id>java8-doclint-disabled</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <javadoc.opts>-Xdoclint:none</javadoc.opts>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++build++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <build>
+        <plugins>
+            <!-- 发布中央仓库用 -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <!-- release -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
+        </plugins>
+        <!-- 配置java版本 不配置的话默认父类配置的是1.6-->
+        <pluginManagement>
+            <plugins>
+                <!-- 由于历史原因 maven-compiler只支持编译Java 1.3 所以要自己手动配置其支持1.5 不然跑test的时候不能使用
+				@Test 注解！！ -->
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++developers++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <developers>
+        <developer>
+            <name>hewei</name>
+            <email>hewei@itfsw.com</email>
+            <organization>itfsw</organization>
+            <organizationUrl>http://blog.itfsw.com</organizationUrl>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++scm++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <scm>
+        <connection>scm:git:https://github.com/itfsw/QueryBuilder.git</connection>
+        <developerConnection>scm:git:https://github.com/itfsw/QueryBuilder.git</developerConnection>
+        <url>https://github.com/itfsw/QueryBuilder</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++distribution++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!--
+        参考：http://central.sonatype.org/pages/apache-maven.html#deploying-to-ossrh-with-apache-maven-introduction
+        http://central.sonatype.org/pages/working-with-pgp-signatures.html
+        http://www.cnblogs.com/gaoxing/p/4359795.html
+        http://blog.csdn.net/ssrc0604hx/article/details/51513414
+        http://www.trinea.cn/dev-tools/upload-java-jar-or-android-aar-to-maven-center-repository/
+    -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
 </project>
