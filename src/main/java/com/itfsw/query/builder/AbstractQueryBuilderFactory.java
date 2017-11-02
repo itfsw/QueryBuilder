@@ -36,14 +36,14 @@ import java.util.List;
  */
 public abstract class AbstractQueryBuilderFactory {
     protected List<IRuleFilter> filters;    // filters
-    protected List<IRuleParser> ruleParsers;   // rule parser
+    protected List<IRuleParser> parsers;   // rule parser
 
     /**
      * 构造函数
      */
     public AbstractQueryBuilderFactory() {
         this.filters = new ArrayList<>();
-        this.ruleParsers = new ArrayList<>();
+        this.parsers = new ArrayList<>();
 
         // -------------------------- filter -----------------------------
         filters.add(new ValidateFilter());
@@ -58,6 +58,93 @@ public abstract class AbstractQueryBuilderFactory {
     public abstract AbstractBuilder builder();
 
     /**
+     * add filter
+     * @param filter
+     */
+    public void addFilter(IRuleFilter filter) {
+        this.filters.add(filter);
+    }
+
+    /**
+     * add filter before
+     * @param filter
+     * @param beforeFilter
+     */
+    public void addFilterBefore(IRuleFilter filter, Class<? extends IRuleFilter> beforeFilter) {
+        int index = getIndexOfClass(filters, beforeFilter);
+        filters.add(index == -1 ? 0 : index, filter);
+    }
+
+    /**
+     * add filter after
+     * @param filter
+     * @param afterFilter
+     */
+    public void addFilterAfter(IRuleFilter filter, Class<? extends IRuleFilter> afterFilter) {
+        int index = getIndexOfClass(filters, afterFilter);
+        filters.add(index == -1 ? filters.size() : index, filter);
+    }
+
+    /**
+     * replace filter
+     * @param filter
+     * @param atFilter
+     */
+    public void addFilterAt(IRuleFilter filter, Class<? extends IRuleFilter> atFilter) {
+        int index = getIndexOfClass(filters, atFilter);
+        if (index >= 0) {
+            filters.remove(index);
+            filters.add(index, filter);
+        } else {
+            filters.add(filter);
+        }
+    }
+
+    /**
+     * add parser
+     * @param parser
+     */
+    public void addParser(IRuleParser parser) {
+        this.parsers.add(parser);
+    }
+
+    /**
+     * add parser before
+     * @param parser
+     * @param beforeParser
+     */
+    public void addParserBefore(IRuleParser parser, Class<? extends IRuleParser> beforeParser) {
+        int index = getIndexOfClass(parsers, beforeParser);
+        parsers.add(index == -1 ? 0 : index, parser);
+    }
+
+    /**
+     * add parser after
+     * @param parser
+     * @param afterParser
+     */
+    public void addParserAfter(IRuleParser parser, Class<? extends IRuleParser> afterParser) {
+        int index = getIndexOfClass(parsers, afterParser);
+        parsers.add(index == -1 ? parsers.size() : index, parser);
+    }
+
+    /**
+     * replace parser
+     * @param parser
+     * @param atParser
+     */
+    public void addParserAt(IRuleParser parser, Class<? extends IRuleParser> atParser) {
+        int index = getIndexOfClass(parsers, atParser);
+        if (index >= 0) {
+            parsers.remove(index);
+            parsers.add(index, parser);
+        } else {
+            parsers.add(parser);
+        }
+    }
+
+
+    /**
      * Getter method for property <tt>filters</tt>.
      * @return property value of filters
      * @author hewei
@@ -67,11 +154,26 @@ public abstract class AbstractQueryBuilderFactory {
     }
 
     /**
-     * Getter method for property <tt>ruleParsers</tt>.
-     * @return property value of ruleParsers
+     * Getter method for property <tt>parsers</tt>.
+     * @return property value of parsers
      * @author hewei
      */
-    public List<IRuleParser> getRuleParsers() {
-        return ruleParsers;
+    public List<IRuleParser> getParsers() {
+        return parsers;
+    }
+
+    /**
+     * get class index of list
+     * @param list
+     * @param cls
+     * @return
+     */
+    private int getIndexOfClass(List list, Class cls) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getClass().equals(cls)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

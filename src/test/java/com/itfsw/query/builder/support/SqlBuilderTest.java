@@ -19,6 +19,8 @@ package com.itfsw.query.builder.support;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -32,5 +34,15 @@ public class SqlBuilderTest {
 
     @Test
     public void test() throws IOException {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 100; i < 110; i++) {
+            list.add(i);
+        }
+
+
+        list.remove(9);
+      list.add(9, 999999);
+
+        System.out.println(list);
     }
 }
