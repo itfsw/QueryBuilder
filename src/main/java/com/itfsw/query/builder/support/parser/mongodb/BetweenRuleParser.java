@@ -35,7 +35,7 @@ import java.util.List;
 public class BetweenRuleParser extends AbstractMongodbRuleParser {
 
     public boolean canParse(IRule rule) {
-        return EnumOperator.BETWEEN.value().equals(rule.getOperator());
+        return EnumOperator.BETWEEN.equals(rule.getOperator());
     }
 
     public DBObject parse(IRule rule) {

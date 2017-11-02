@@ -30,11 +30,11 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * ---------------------------------------------------------------------------
  */
 public class LessOrEqualRuleParser extends AbstractSqlRuleParser {
-    public Operation parse(IRule rule) {
-        return new Operation(new StringBuffer(rule.getField()).append(" <= ?"), rule.getValue());
+    public boolean canParse(IRule rule) {
+        return EnumOperator.LESS_OR_EQUAL.equals(rule.getOperator());
     }
 
-    public boolean canParse(IRule rule) {
-        return EnumOperator.LESS_OR_EQUAL.value().equals(rule.getOperator());
+    public Operation parse(IRule rule) {
+        return new Operation(new StringBuffer(rule.getField()).append(" <= ?"), rule.getValue());
     }
 }

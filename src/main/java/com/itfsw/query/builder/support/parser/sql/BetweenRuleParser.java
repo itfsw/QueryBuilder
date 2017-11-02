@@ -32,7 +32,7 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
 public class BetweenRuleParser extends AbstractSqlRuleParser {
 
     public boolean canParse(IRule rule) {
-        return EnumOperator.BETWEEN.value().equals(rule.getOperator());
+        return EnumOperator.BETWEEN.equals(rule.getOperator());
     }
 
     public Operation parse(IRule rule) {

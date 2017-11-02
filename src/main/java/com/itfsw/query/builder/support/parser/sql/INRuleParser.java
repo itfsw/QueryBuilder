@@ -32,6 +32,10 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class INRuleParser extends AbstractSqlRuleParser {
+    public boolean canParse(IRule rule) {
+        return EnumOperator.IN.equals(rule.getOperator());
+    }
+
     public Operation parse(IRule rule) {
         StringBuffer operate = new StringBuffer(rule.getField());
         operate.append(" IN(");
@@ -48,9 +52,5 @@ public class INRuleParser extends AbstractSqlRuleParser {
         operate.append(")");
 
         return new Operation(operate, rule.getValue());
-    }
-
-    public boolean canParse(IRule rule) {
-        return EnumOperator.IN.value().equals(rule.getOperator());
     }
 }
