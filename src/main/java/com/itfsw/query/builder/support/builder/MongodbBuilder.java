@@ -22,6 +22,7 @@ import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
 import com.itfsw.query.builder.support.model.enums.EnumCondition;
+import com.itfsw.query.builder.support.model.result.MongodbResult;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -59,8 +60,8 @@ public class MongodbBuilder extends AbstractBuilder {
      * @throws ParserNotFoundException
      */
     @Override
-    public DBObject build(String query) throws IOException, ParserNotFoundException {
-        return (DBObject) super.build(query);
+    public MongodbResult build(String query) throws IOException, ParserNotFoundException {
+        return new MongodbResult((DBObject) super.build(query));
     }
 
     /**
@@ -82,7 +83,9 @@ public class MongodbBuilder extends AbstractBuilder {
 
         // Not
         if (group.getNot() != null && group.getNot()) {
-            return new BasicDBObject("$not", andOrObj);
+            BasicDBList list = new BasicDBList();
+            list.add(andOrObj);
+            return new BasicDBObject("$nor", list);
         }
         return andOrObj;
     }
@@ -100,6 +103,6 @@ public class MongodbBuilder extends AbstractBuilder {
             }
         }
 
-        throw new ParserNotFoundException("Can't found rule parser for:" + rule + "!");
+        throw new ParserNotFoundException("Can't found rule parser for:" + rule);
     }
 }

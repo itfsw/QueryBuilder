@@ -44,35 +44,46 @@ public class ValidateFilter implements IRuleFilter {
         if (jsonRule.isGroup()) {
             IGroup group = jsonRule.toGroup();
             if (CollectionUtils.isEmpty(group.getRules())) {
-                throw new FilterException("group's rules can not be empty for: " + group + "!");
+                throw new FilterException("group's rules can not be empty for: " + group);
             }
         } else {
             IRule rule = jsonRule.toRule();
             // field
             if (StringUtils.isEmpty(rule.getField())) {
-                throw new FilterException("rule's field can not be empty for:" + rule + "!");
+                throw new FilterException("rule's field can not be empty for:" + rule);
             }
             // operator
             if (StringUtils.isEmpty(rule.getOperator())) {
-                throw new FilterException("rule's operator can not be empty for:" + rule + "!");
+                throw new FilterException("rule's operator can not be empty for:" + rule);
             }
             // type
             if (StringUtils.isEmpty(rule.getType())) {
-                throw new FilterException("rule's type can not be empty for:" + rule + "!");
+                throw new FilterException("rule's type can not be empty for:" + rule);
             }
+            // equal
+            if (EnumOperator.EQUAL.equals(rule.getOperator())) {
+                if (rule.getValue() instanceof List) {
+                    List<Object> list = (List<Object>) rule.getValue();
+                    if (list.size() > 1) {
+                        throw new FilterException("Operator \"equal\" cannot accept multiple values for:" + rule);
+                    }
+                    rule.setValue(list.get(0));
+                }
+            }
+
             // must be list
             if (EnumOperator.IN.equals(rule.getOperator()) || EnumOperator.NOT_IN.equals(rule.getOperator())
                     || EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator())) {
                 // list
                 if (!(rule.getValue() instanceof List)) {
-                    throw new FilterException("rule's value must be Array for:" + rule + "!");
+                    throw new FilterException("rule's value must be Array for:" + rule);
                 }
 
                 // size
                 if (EnumOperator.BETWEEN.equals(rule.getOperator()) || EnumOperator.NOT_BETWEEN.equals(rule.getOperator())) {
                     List list = (List) rule.getValue();
                     if (list.size() != 2) {
-                        throw new FilterException("rule's value size must be 2 for:" + rule + "!");
+                        throw new FilterException("rule's value size must be 2 for:" + rule);
                     }
                 }
             }

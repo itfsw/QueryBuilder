@@ -105,7 +105,7 @@ public class DatetimeConvertFilter implements IRuleFilter {
                         rule.setValue(convert(rule.getValue(), rule.getType()));
                     }
                 } catch (Exception e) {
-                    throw new FilterException(e.getMessage() + " for:" + rule + "!");
+                    throw new FilterException(e.getMessage() + " for:" + rule );
                 }
             }
         }

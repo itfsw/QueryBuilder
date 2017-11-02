@@ -14,30 +14,29 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support.model;
+package com.itfsw.query.builder.support.model.result;
 
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.DBObject;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/1 20:34
+ * @time:2017/11/2 16:46
  * ---------------------------------------------------------------------------
  */
-public class SqlQueryResult {
-    private String query;
-    private List<Object> params;
+public class MongodbResult extends AbstractResult {
+    private DBObject query;
 
     /**
      * 构造函数
      * @param query
-     * @param params
      */
-    public SqlQueryResult(String query, List<Object> params) {
+    public MongodbResult(DBObject query) {
         this.query = query;
-        this.params = params;
     }
 
     /**
@@ -45,7 +44,8 @@ public class SqlQueryResult {
      * @return property value of query
      * @author hewei
      */
-    public String getQuery() {
+    @Override
+    public DBObject getQuery() {
         return query;
     }
 
@@ -54,25 +54,22 @@ public class SqlQueryResult {
      * @param query value to be assigned to property query
      * @author hewei
      */
-    public void setQuery(String query) {
+    public void setQuery(DBObject query) {
         this.query = query;
     }
 
     /**
-     * Getter method for property <tt>params</tt>.
-     * @return property value of params
-     * @author hewei
+     * to string
+     * @return
      */
-    public List<Object> getParams() {
-        return params;
-    }
-
-    /**
-     * Setter method for property <tt>params</tt>.
-     * @param params value to be assigned to property params
-     * @author hewei
-     */
-    public void setParams(List<Object> params) {
-        this.params = params;
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

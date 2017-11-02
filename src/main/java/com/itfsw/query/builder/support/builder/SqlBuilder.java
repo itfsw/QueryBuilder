@@ -20,7 +20,7 @@ import com.itfsw.query.builder.exception.ParserNotFoundException;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
-import com.itfsw.query.builder.support.model.SqlQueryResult;
+import com.itfsw.query.builder.support.model.result.SqlQueryResult;
 import com.itfsw.query.builder.support.model.enums.EnumCondition;
 import com.itfsw.query.builder.support.model.sql.Operation;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
@@ -131,6 +131,6 @@ public class SqlBuilder extends AbstractBuilder {
             }
         }
 
-        throw new ParserNotFoundException("Can't found rule parser for:" + rule + "!");
+        throw new ParserNotFoundException("Can't found rule parser for:" + rule );
     }
 }
