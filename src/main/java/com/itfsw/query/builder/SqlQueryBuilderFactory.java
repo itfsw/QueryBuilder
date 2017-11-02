@@ -17,6 +17,8 @@
 package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.support.builder.SqlBuilder;
+import com.itfsw.query.builder.support.filter.DatetimeConvertFilter;
+import com.itfsw.query.builder.support.filter.DefaultValueConvertFilter;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.filter.ValidateFilter;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
@@ -46,6 +48,8 @@ public class SqlQueryBuilderFactory {
 
         // -------------------------- filter -----------------------------
         filters.add(new ValidateFilter());
+        filters.add(new DefaultValueConvertFilter());
+        filters.add(new DatetimeConvertFilter());
 
         // ---------------------- rule parser ----------------------------
         ruleParsers.add(new EqualRuleParser());

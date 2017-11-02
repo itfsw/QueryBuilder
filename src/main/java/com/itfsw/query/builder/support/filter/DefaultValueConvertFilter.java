@@ -19,6 +19,7 @@ package com.itfsw.query.builder.support.filter;
 import com.itfsw.query.builder.exception.FilterException;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.enums.EnumRuleType;
 import com.itfsw.query.builder.support.utils.spring.NumberUtils;
 
 import java.util.ArrayList;
@@ -45,6 +46,9 @@ public class DefaultValueConvertFilter implements IRuleFilter {
                         for (Object value : (List) rule.getValue()) {
                             list.add(convert(value, rule.getType()));
                         }
+                        rule.setValue(list);
+                    } else {
+                        rule.setValue(convert(rule.getValue(), rule.getType()));
                     }
                 } catch (Exception e) {
                     throw new FilterException(e.getMessage() + " for:" + rule + "!");
@@ -60,34 +64,26 @@ public class DefaultValueConvertFilter implements IRuleFilter {
      * @return
      */
     private Object convert(Object value, String type) {
-        switch (type) {
-            case "string":
-                if (!(value instanceof String)) {
-                    return String.valueOf(value);
+        if (EnumRuleType.STRING.equals(type)) {
+            if (!(value instanceof String)) {
+                return String.valueOf(value);
+            }
+        } else if (EnumRuleType.DOUBLE.equals(type)) {
+            if (!(value instanceof Double)) {
+                if (value instanceof Number) {
+                    return NumberUtils.convertNumberToTargetClass((Number) value, Double.class);
+                } else {
+                    return NumberUtils.parseNumber(value.toString(), Double.class);
                 }
-                break;
-            case "double":
-                if (!(value instanceof Double)) {
-                    if (value instanceof String) {
-                        return NumberUtils.parseNumber((String) value, Double.class);
-                    } else if (value instanceof Number) {
-                        return NumberUtils.convertNumberToTargetClass((Number) value, Double.class);
-                    } else {
-                        throw new FilterException("rule's value can not be convert to double");
-                    }
+            }
+        } else if (EnumRuleType.INTEGER.equals(type)) {
+            if (!(value instanceof Integer)) {
+                if (value instanceof Number) {
+                    return NumberUtils.convertNumberToTargetClass((Number) value, Integer.class);
+                } else {
+                    return NumberUtils.parseNumber(value.toString(), Integer.class);
                 }
-                break;
-            case "integer":
-                if (!(value instanceof Integer)) {
-                    if (value instanceof String) {
-                        return NumberUtils.parseNumber((String) value, Integer.class);
-                    } else if (value instanceof Number) {
-                        return NumberUtils.convertNumberToTargetClass((Number) value, Integer.class);
-                    } else {
-                        throw new FilterException("rule's value can not be convert to integer");
-                    }
-                }
-                break;
+            }
         }
         return value;
     }
