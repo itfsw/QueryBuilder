@@ -66,8 +66,8 @@ public class SqlBuilder extends AbstractBuilder {
 
         // sql
         StringBuffer sql = new StringBuffer(result.getOperate());
+        sql.delete(sql.length() - 2, sql.length());
         sql.delete(0, 2);
-        sql.delete(query.length() - 2, query.length());
 
         return new SqlQueryResult(sql.toString(), (List<Object>) result.getValue());
     }

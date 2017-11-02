@@ -18,7 +18,7 @@ package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.support.builder.SqlBuilder;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
-import com.itfsw.query.builder.support.filter.ValidateRuleFilter;
+import com.itfsw.query.builder.support.filter.ValidateFilter;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
 import com.itfsw.query.builder.support.parser.sql.*;
 
@@ -41,11 +41,11 @@ public class SqlQueryBuilderFactory {
      * 构造函数
      */
     public SqlQueryBuilderFactory() {
-        ruleParsers = new ArrayList<AbstractSqlRuleParser>();
-        filters = new ArrayList<IRuleFilter>();
+        ruleParsers = new ArrayList<>();
+        filters = new ArrayList<>();
 
         // -------------------------- filter -----------------------------
-        filters.add(new ValidateRuleFilter());
+        filters.add(new ValidateFilter());
 
         // ---------------------- rule parser ----------------------------
         ruleParsers.add(new EqualRuleParser());
@@ -71,7 +71,7 @@ public class SqlQueryBuilderFactory {
 
     }
 
-    public SqlBuilder builder(String queryStr) {
-        return new SqlBuilder(queryStr, filters, ruleParsers);
+    public SqlBuilder builder() {
+        return new SqlBuilder(filters, ruleParsers);
     }
 }

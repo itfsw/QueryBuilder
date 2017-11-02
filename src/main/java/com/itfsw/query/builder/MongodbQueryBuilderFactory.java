@@ -18,7 +18,7 @@ package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.support.builder.MongodbBuilder;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
-import com.itfsw.query.builder.support.filter.ValidateRuleFilter;
+import com.itfsw.query.builder.support.filter.ValidateFilter;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
 import com.itfsw.query.builder.support.parser.mongodb.*;
 
@@ -41,11 +41,11 @@ public class MongodbQueryBuilderFactory {
      * 构造函数
      */
     public MongodbQueryBuilderFactory() {
-        ruleParsers = new ArrayList<AbstractMongodbRuleParser>();
-        filters = new ArrayList<IRuleFilter>();
+        ruleParsers = new ArrayList<>();
+        filters = new ArrayList<>();
 
         // -------------------------- filter -----------------------------
-        filters.add(new ValidateRuleFilter());
+        filters.add(new ValidateFilter());
 
         // ---------------------- rule parser ----------------------------
         ruleParsers.add(new EqualRuleParser());

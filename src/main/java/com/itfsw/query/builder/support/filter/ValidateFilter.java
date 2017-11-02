@@ -32,7 +32,7 @@ import java.util.List;
  * @time:2017/11/1 11:32
  * ---------------------------------------------------------------------------
  */
-public class ValidateRuleFilter implements IRuleFilter {
+public class ValidateFilter implements IRuleFilter {
     /**
      * 执行拦截器
      * @param jsonRule
