@@ -20,7 +20,6 @@ import com.itfsw.query.builder.MongodbQueryBuilderFactory;
 import com.itfsw.query.builder.other.FileHelper;
 import com.itfsw.query.builder.support.model.result.MongodbQueryResult;
 import com.itfsw.query.builder.support.utils.spring.StringUtils;
-import com.mongodb.DBObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,7 +51,23 @@ public class MongodbBuilderTest {
         String json = FileHelper.getStringFrom("tasks/operator-between.json");
         MongodbQueryResult result = builder.build(json);
 
-        DBObject query =result.getQuery();
-        Assert.assertEquals("{\"age\":{\"$gte\":5,\"$lte\":10}}",  StringUtils.trimAllWhitespace(query.toString()));
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$gte\":5,\"$lte\":10}}"
+        );
+    }
+
+    /**
+     * equal 操作
+     */
+    @Test
+    public void testOperatorEqual() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-equal.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"username\":\"xiaoxiao\"}"
+        );
     }
 }

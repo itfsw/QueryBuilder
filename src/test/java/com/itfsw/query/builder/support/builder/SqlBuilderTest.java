@@ -54,4 +54,16 @@ public class SqlBuilderTest {
         Assert.assertEquals(5, result.getParams().get(0));
         Assert.assertEquals(10, result.getParams().get(1));
     }
+
+    /**
+     * equal 操作
+     */
+    @Test
+    public void testOperatorEqual() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-equal.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username = ?", result.getQuery());
+        Assert.assertEquals("xiaoxiao", result.getParams().get(0));
+    }
 }
