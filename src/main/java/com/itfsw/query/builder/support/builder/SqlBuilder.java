@@ -67,7 +67,7 @@ public class SqlBuilder extends AbstractBuilder {
         sql.delete(sql.length() - 2, sql.length());
         sql.delete(0, 2);
 
-        return new SqlQueryResult(sql.toString(), (List<Object>) result.getValue());
+        return new SqlQueryResult(query, sql.toString(), (List<Object>) result.getValue());
     }
 
     /**
@@ -131,6 +131,6 @@ public class SqlBuilder extends AbstractBuilder {
             }
         }
 
-        throw new ParserNotFoundException("Can't found rule parser for:" + rule );
+        throw new ParserNotFoundException("Can't found rule parser for:" + rule);
     }
 }

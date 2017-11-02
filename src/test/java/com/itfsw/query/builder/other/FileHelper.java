@@ -14,36 +14,38 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support.model.result;
+package com.itfsw.query.builder.other;
+
+import java.io.*;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/2 16:44
+ * @time:2017/11/2 18:02
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractResult {
-    protected String queryJson;    // 原始数据
-    /**
-     * 获取query
-     * @return
-     */
-    public abstract Object getQuery();
+public class FileHelper {
 
     /**
-     * to String
+     * 读取字符串
+     * @param file
      * @return
+     * @throws IOException
      */
-    public abstract String toString();
-
-    /**
-     * Getter method for property <tt>queryJson</tt>.
-     * @return property value of queryJson
-     * @author hewei
-     */
-    public String getQueryJson() {
-        return queryJson;
+    public static String getStringFrom(String file) throws IOException {
+       InputStream inputStream = FileHelper.class.getClassLoader().getResourceAsStream(file);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        StringBuffer sb = new StringBuffer();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            sb.append(line);
+        }
+        bufferedReader.close();
+        inputStreamReader.close();
+        inputStream.close();
+        return sb.toString();
     }
 }

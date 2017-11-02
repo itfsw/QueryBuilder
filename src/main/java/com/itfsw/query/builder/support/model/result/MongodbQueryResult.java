@@ -33,9 +33,11 @@ public class MongodbQueryResult extends AbstractResult {
 
     /**
      * 构造函数
+     * @param queryJson
      * @param query
      */
-    public MongodbQueryResult(DBObject query) {
+    public MongodbQueryResult(String queryJson, DBObject query) {
+        this.queryJson = queryJson;
         this.query = query;
     }
 
@@ -47,15 +49,6 @@ public class MongodbQueryResult extends AbstractResult {
     @Override
     public DBObject getQuery() {
         return query;
-    }
-
-    /**
-     * Setter method for property <tt>query</tt>.
-     * @param query value to be assigned to property query
-     * @author hewei
-     */
-    public void setQuery(DBObject query) {
-        this.query = query;
     }
 
     /**

@@ -32,10 +32,12 @@ public class SqlQueryResult extends AbstractResult {
 
     /**
      * 构造函数
+     * @param queryJson
      * @param query
      * @param params
      */
-    public SqlQueryResult(String query, List<Object> params) {
+    public SqlQueryResult(String queryJson, String query, List<Object> params) {
+        this.queryJson = queryJson;
         this.query = query;
         this.params = params;
     }
@@ -51,15 +53,6 @@ public class SqlQueryResult extends AbstractResult {
     }
 
     /**
-     * Setter method for property <tt>query</tt>.
-     * @param query value to be assigned to property query
-     * @author hewei
-     */
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    /**
      * Getter method for property <tt>params</tt>.
      * @return property value of params
      * @author hewei
@@ -69,25 +62,16 @@ public class SqlQueryResult extends AbstractResult {
     }
 
     /**
-     * Setter method for property <tt>params</tt>.
-     * @param params value to be assigned to property params
-     * @author hewei
-     */
-    public void setParams(List<Object> params) {
-        this.params = params;
-    }
-
-    /**
      * to string
      * @return
      */
     @Override
     public String toString() {
         StringBuffer sql = new StringBuffer(query);
-        for (Object param : params){
+        for (Object param : params) {
             int index = sql.indexOf("?");
             String str = param.toString();
-            if (!(param instanceof Number)){
+            if (!(param instanceof Number)) {
                 str = "'" + str + "'";
             }
             sql.replace(index, index + 1, str);
