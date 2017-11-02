@@ -112,4 +112,60 @@ public class MongodbBuilderTest {
                 "{\"age\":{\"$nin\":[1,5,10]}}"
         );
     }
+
+    /**
+     * less 操作
+     */
+    @Test
+    public void testOperatorLess() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-less.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$lt\":50}}"
+        );
+    }
+
+    /**
+     * less or equal 操作
+     */
+    @Test
+    public void testOperatorLessOrEqual() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-less-or-equal.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$lte\":50}}"
+        );
+    }
+
+    /**
+     * greater 操作
+     */
+    @Test
+    public void testOperatorGreater() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-greater.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$gt\":50}}"
+        );
+    }
+
+    /**
+     * greater or equal 操作
+     */
+    @Test
+    public void testOperatorGreaterOrEqual() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-greater-or-equal.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$gte\":50}}"
+        );
+    }
 }

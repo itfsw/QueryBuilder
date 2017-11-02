@@ -1,0 +1,15 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "age",
+      "field": "age",
+      "type": "integer",
+      "input": "text",
+      "operator": "greater",
+      "value": "50"
+    }
+  ],
+  "not": false,
+  "valid": true
+}
