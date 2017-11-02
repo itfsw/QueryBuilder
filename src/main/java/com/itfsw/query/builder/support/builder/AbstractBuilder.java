@@ -19,8 +19,13 @@ package com.itfsw.query.builder.support.builder;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itfsw.query.builder.exception.ParserNotFoundException;
+import com.itfsw.query.builder.support.filter.IRuleFilter;
+import com.itfsw.query.builder.support.model.IGroup;
+import com.itfsw.query.builder.support.model.IRule;
+import com.itfsw.query.builder.support.model.JsonRule;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
@@ -31,7 +36,8 @@ import java.io.IOException;
  * ---------------------------------------------------------------------------
  */
 public abstract class AbstractBuilder {
-    protected static ObjectMapper mapper; // object mapper
+    private static ObjectMapper mapper; // object mapper
+    protected List<IRuleFilter> filters;    // filters
 
     static {
         // object mapper
@@ -45,5 +51,49 @@ public abstract class AbstractBuilder {
      * @param query
      * @return
      */
-    public abstract Object build(String query) throws IOException, ParserNotFoundException;
+    public Object build(String query) throws IOException, ParserNotFoundException{
+        JsonRule rule = mapper.readValue(query, JsonRule.class);
+        return parse(rule);
+    }
+
+    /**
+     * 构建
+     * @param rule
+     * @return
+     */
+    protected Object parse(JsonRule rule){
+        // filter
+        doFilter(rule);
+
+        // parse
+        if (rule.isGroup()) {
+            return parseGroup(rule);
+        } else {
+            return parseRule(rule);
+        }
+    }
+
+    /**
+     * 构建group
+     * @param group
+     * @return
+     */
+    protected abstract Object parseGroup(IGroup group);
+
+    /**
+     * 构建
+     * @param rule
+     * @return
+     */
+    protected abstract Object parseRule(IRule rule);
+
+    /**
+     * 执行过滤
+     * @param rule
+     */
+    private void doFilter(JsonRule rule) {
+        for (IRuleFilter filter : filters) {
+            filter.doFilter(rule);
+        }
+    }
 }

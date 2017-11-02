@@ -39,17 +39,16 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class MongodbBuilder extends AbstractBuilder {
-    protected List<IRuleFilter> filters;    // filters
-    protected List<AbstractMongodbRuleParser> ruleParsers;   // rule parser
+    private List<AbstractMongodbRuleParser> parsers;   // rule parser
 
     /**
      * 构造函数
      * @param filters
-     * @param ruleParsers
+     * @param parsers
      */
-    public MongodbBuilder(List<IRuleFilter> filters, List<AbstractMongodbRuleParser> ruleParsers) {
+    public MongodbBuilder(List<IRuleFilter> filters, List<AbstractMongodbRuleParser> parsers) {
         this.filters = filters;
-        this.ruleParsers = ruleParsers;
+        this.parsers = parsers;
     }
 
     /**
@@ -59,30 +58,18 @@ public class MongodbBuilder extends AbstractBuilder {
      * @throws IOException
      * @throws ParserNotFoundException
      */
+    @Override
     public DBObject build(String query) throws IOException, ParserNotFoundException {
-        JsonRule rule = mapper.readValue(query, JsonRule.class);
-        return parse(rule);
+        return (DBObject) super.build(query);
     }
 
     /**
-     * 解析
-     * @param rule
+     * group
+     * @param group
      * @return
      */
-    private DBObject parse(JsonRule rule) {
-        // filter
-        doFilter(rule);
-
-        // parse
-        if (rule.isGroup()) {
-            return parseGroup(rule);
-        } else {
-            return parseRule(rule);
-        }
-    }
-
-    private DBObject parseGroup(IGroup group) {
-
+    @Override
+    protected Object parseGroup(IGroup group) {
         // rules
         BasicDBList operates = new BasicDBList();
         for (JsonRule rule : group.getRules()) {
@@ -100,19 +87,19 @@ public class MongodbBuilder extends AbstractBuilder {
         return andOrObj;
     }
 
-    private DBObject parseRule(IRule rule) {
-        for (AbstractMongodbRuleParser parser : ruleParsers) {
+    /**
+     * rule
+     * @param rule
+     * @return
+     */
+    @Override
+    protected Object parseRule(IRule rule) {
+        for (AbstractMongodbRuleParser parser : parsers) {
             if (parser.canParse(rule)) {
                 return parser.parse(rule);
             }
         }
 
         throw new ParserNotFoundException("Can't found rule parser for:" + rule + "!");
-    }
-
-    private void doFilter(JsonRule rule) {
-        for (IRuleFilter filter : filters) {
-            filter.doFilter(rule);
-        }
     }
 }

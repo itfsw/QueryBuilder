@@ -70,9 +70,9 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
      */
     public SqlBuilder builder() {
         List<AbstractSqlRuleParser> sqlRuleParsers = new ArrayList<>();
-        for (IRuleParser ruleParser : parsers){
-            if (ruleParser instanceof AbstractSqlRuleParser){
-                sqlRuleParsers.add((AbstractSqlRuleParser) ruleParser);
+        for (IRuleParser parser : parsers){
+            if (parser instanceof AbstractSqlRuleParser){
+                sqlRuleParsers.add((AbstractSqlRuleParser) parser);
             }
         }
 

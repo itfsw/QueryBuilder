@@ -20,7 +20,6 @@ import com.itfsw.query.builder.exception.ParserNotFoundException;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
-import com.itfsw.query.builder.support.model.JsonRule;
 import com.itfsw.query.builder.support.model.SqlQueryResult;
 import com.itfsw.query.builder.support.model.enums.EnumCondition;
 import com.itfsw.query.builder.support.model.sql.Operation;
@@ -40,17 +39,16 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class SqlBuilder extends AbstractBuilder {
-    protected List<IRuleFilter> filters;    // filters
-    protected List<AbstractSqlRuleParser> ruleParsers;   // rule parser
+    private List<AbstractSqlRuleParser> parsers;   // rule parser
 
     /**
      * 构造函数
      * @param filters
-     * @param ruleParsers
+     * @param parsers
      */
-    public SqlBuilder(List<IRuleFilter> filters, List<AbstractSqlRuleParser> ruleParsers) {
+    public SqlBuilder(List<IRuleFilter> filters, List<AbstractSqlRuleParser> parsers) {
         this.filters = filters;
-        this.ruleParsers = ruleParsers;
+        this.parsers = parsers;
     }
 
     /**
@@ -60,9 +58,9 @@ public class SqlBuilder extends AbstractBuilder {
      * @throws IOException
      * @throws ParserNotFoundException
      */
+    @Override
     public SqlQueryResult build(String query) throws IOException, ParserNotFoundException {
-        JsonRule rule = mapper.readValue(query, JsonRule.class);
-        Operation result = parse(rule);
+        Operation result = (Operation) super.build(query);
 
         // sql
         StringBuffer sql = new StringBuffer(result.getOperate());
@@ -73,23 +71,12 @@ public class SqlBuilder extends AbstractBuilder {
     }
 
     /**
-     * 解析
-     * @param rule
+     * group
+     * @param group
      * @return
      */
-    private Operation parse(JsonRule rule) {
-        // filter
-        doFilter(rule);
-
-        // parse
-        if (rule.isGroup()) {
-            return parseGroup(rule);
-        } else {
-            return parseRule(rule);
-        }
-    }
-
-    private Operation parseGroup(IGroup group) {
+    @Override
+    protected Object parseGroup(IGroup group) {
         StringBuffer operate = new StringBuffer();
 
         // NOT
@@ -104,7 +91,7 @@ public class SqlBuilder extends AbstractBuilder {
         // rules
         List<Object> params = new ArrayList<Object>();
         for (int i = 0; i < group.getRules().size(); i++) {
-            Operation operation = parse(group.getRules().get(i));
+            Operation operation = (Operation) parse(group.getRules().get(i));
 
             // operate
             operate.append(operation.getOperate());
@@ -131,19 +118,19 @@ public class SqlBuilder extends AbstractBuilder {
         return new Operation(operate, params);
     }
 
-    private Operation parseRule(IRule rule) {
-        for (AbstractSqlRuleParser parser : ruleParsers) {
+    /**
+     * rule
+     * @param rule
+     * @return
+     */
+    @Override
+    protected Object parseRule(IRule rule) {
+        for (AbstractSqlRuleParser parser : parsers) {
             if (parser.canParse(rule)) {
                 return parser.parse(rule);
             }
         }
 
         throw new ParserNotFoundException("Can't found rule parser for:" + rule + "!");
-    }
-
-    private void doFilter(JsonRule rule) {
-        for (IRuleFilter filter : filters) {
-            filter.doFilter(rule);
-        }
     }
 }

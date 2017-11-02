@@ -70,9 +70,9 @@ public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
      */
     public MongodbBuilder builder() {
         List<AbstractMongodbRuleParser> mongodbRuleParsers = new ArrayList<>();
-        for (IRuleParser ruleParser : parsers) {
-            if (ruleParser instanceof AbstractMongodbRuleParser) {
-                mongodbRuleParsers.add((AbstractMongodbRuleParser) ruleParser);
+        for (IRuleParser parser : parsers) {
+            if (parser instanceof AbstractMongodbRuleParser) {
+                mongodbRuleParsers.add((AbstractMongodbRuleParser) parser);
             }
         }
         return new MongodbBuilder(filters, mongodbRuleParsers);
