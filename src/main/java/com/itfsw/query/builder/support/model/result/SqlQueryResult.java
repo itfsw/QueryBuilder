@@ -90,7 +90,7 @@ public class SqlQueryResult extends AbstractResult {
             if (!(param instanceof Number)){
                 str = "'" + str + "'";
             }
-            sql.replace(index, index, str);
+            sql.replace(index, index + 1, str);
         }
         return sql.toString();
     }

@@ -28,14 +28,14 @@ import com.mongodb.DBObject;
  * @time:2017/11/2 16:46
  * ---------------------------------------------------------------------------
  */
-public class MongodbResult extends AbstractResult {
+public class MongodbQueryResult extends AbstractResult {
     private DBObject query;
 
     /**
      * 构造函数
      * @param query
      */
-    public MongodbResult(DBObject query) {
+    public MongodbQueryResult(DBObject query) {
         this.query = query;
     }
 
@@ -66,7 +66,7 @@ public class MongodbResult extends AbstractResult {
     public String toString() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(this);
+            return mapper.writeValueAsString(query);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

@@ -22,7 +22,7 @@ import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
 import com.itfsw.query.builder.support.model.enums.EnumCondition;
-import com.itfsw.query.builder.support.model.result.MongodbResult;
+import com.itfsw.query.builder.support.model.result.MongodbQueryResult;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -60,8 +60,8 @@ public class MongodbBuilder extends AbstractBuilder {
      * @throws ParserNotFoundException
      */
     @Override
-    public MongodbResult build(String query) throws IOException, ParserNotFoundException {
-        return new MongodbResult((DBObject) super.build(query));
+    public MongodbQueryResult build(String query) throws IOException, ParserNotFoundException {
+        return new MongodbQueryResult((DBObject) super.build(query));
     }
 
     /**
