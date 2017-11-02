@@ -108,4 +108,18 @@ public interface IRule {
      * @author hewei
      */
     void setValue(Object value);
+
+    /**
+     * Getter method for property <tt>data</tt>.
+     * @return property value of value
+     * @author hewei
+     */
+    Object getData();
+
+    /**
+     * Setter method for property <tt>data</tt>.
+     * @param value value to be assigned to property value
+     * @author hewei
+     */
+    void setData(Object value);
 }

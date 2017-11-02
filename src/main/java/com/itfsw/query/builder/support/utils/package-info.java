@@ -14,27 +14,12 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support.filter;
-
-import com.itfsw.query.builder.exception.FilterException;
-import com.itfsw.query.builder.support.model.IRule;
-import com.itfsw.query.builder.support.model.JsonRule;
-
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/2 10:03
+ * @time:2017/11/2 11:23
  * ---------------------------------------------------------------------------
  */
-public class ValueConvertFilter implements IRuleFilter {
-    @Override
-    public void doFilter(JsonRule jsonRule) throws FilterException {
-        if (!jsonRule.isGroup()) {
-            IRule rule = jsonRule.toRule();
-
-
-        }
-    }
-}
+package com.itfsw.query.builder.support.utils;

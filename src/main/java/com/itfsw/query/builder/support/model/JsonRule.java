@@ -36,6 +36,7 @@ public class JsonRule implements IGroup, IRule {
     private String input;
     private String operator;
     private Object value;
+    private Object data;
     // --------------------------- Group --------------------------------------
     private String condition;
     private Boolean not;
@@ -197,6 +198,26 @@ public class JsonRule implements IGroup, IRule {
     @Override
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    /**
+     * Getter method for property <tt>data</tt>.
+     * @return property value of data
+     * @author hewei
+     */
+    @Override
+    public Object getData() {
+        return data;
+    }
+
+    /**
+     * Setter method for property <tt>data</tt>.
+     * @param data value to be assigned to property data
+     * @author hewei
+     */
+    @Override
+    public void setData(Object data) {
+        this.data = data;
     }
 
     /**

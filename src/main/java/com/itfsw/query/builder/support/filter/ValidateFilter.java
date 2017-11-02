@@ -21,6 +21,8 @@ import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
+import com.itfsw.query.builder.support.utils.spring.CollectionUtils;
+import com.itfsw.query.builder.support.utils.spring.StringUtils;
 
 import java.util.List;
 
@@ -41,14 +43,22 @@ public class ValidateFilter implements IRuleFilter {
     public void doFilter(JsonRule jsonRule) throws FilterException {
         if (jsonRule.isGroup()) {
             IGroup group = jsonRule.toGroup();
-            if (group.getRules().isEmpty()) {
+            if (CollectionUtils.isEmpty(group.getRules())) {
                 throw new FilterException("group's rules can not be empty for: " + group + "!");
             }
         } else {
             IRule rule = jsonRule.toRule();
             // field
-            if (rule.getField() == null || rule.getField().trim().equals("")) {
+            if (StringUtils.isEmpty(rule.getField())) {
                 throw new FilterException("rule's field can not be empty for:" + rule + "!");
+            }
+            // operator
+            if (StringUtils.isEmpty(rule.getOperator())) {
+                throw new FilterException("rule's operator can not be empty for:" + rule + "!");
+            }
+            // type
+            if (StringUtils.isEmpty(rule.getType())) {
+                throw new FilterException("rule's type can not be empty for:" + rule + "!");
             }
             // must be list
             if (EnumOperator.IN.equals(rule.getOperator()) || EnumOperator.NOT_IN.equals(rule.getOperator())
