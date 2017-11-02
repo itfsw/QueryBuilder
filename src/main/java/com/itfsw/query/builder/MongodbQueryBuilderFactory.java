@@ -17,11 +17,8 @@
 package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.support.builder.MongodbBuilder;
-import com.itfsw.query.builder.support.filter.DatetimeConvertFilter;
-import com.itfsw.query.builder.support.filter.DefaultValueConvertFilter;
-import com.itfsw.query.builder.support.filter.IRuleFilter;
-import com.itfsw.query.builder.support.filter.ValidateFilter;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.IRuleParser;
 import com.itfsw.query.builder.support.parser.mongodb.*;
 
 import java.util.ArrayList;
@@ -35,21 +32,13 @@ import java.util.List;
  * @time:2017/11/1 18:31
  * ---------------------------------------------------------------------------
  */
-public class MongodbQueryBuilderFactory {
-    protected List<IRuleFilter> filters;    // filters
-    protected List<AbstractMongodbRuleParser> ruleParsers;   // rule parser
+public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
 
     /**
      * 构造函数
      */
     public MongodbQueryBuilderFactory() {
-        ruleParsers = new ArrayList<>();
-        filters = new ArrayList<>();
-
-        // -------------------------- filter -----------------------------
-        filters.add(new ValidateFilter());
-        filters.add(new DefaultValueConvertFilter());
-        filters.add(new DatetimeConvertFilter());
+        super();
 
         // ---------------------- rule parser ----------------------------
         ruleParsers.add(new EqualRuleParser());
@@ -75,7 +64,17 @@ public class MongodbQueryBuilderFactory {
 
     }
 
+    /**
+     * 获取builder
+     * @return
+     */
     public MongodbBuilder builder() {
-        return new MongodbBuilder(filters, ruleParsers);
+        List<AbstractMongodbRuleParser> mongodbRuleParsers = new ArrayList<>();
+        for (IRuleParser ruleParser : ruleParsers) {
+            if (ruleParser instanceof AbstractMongodbRuleParser) {
+                mongodbRuleParsers.add((AbstractMongodbRuleParser) ruleParser);
+            }
+        }
+        return new MongodbBuilder(filters, mongodbRuleParsers);
     }
 }

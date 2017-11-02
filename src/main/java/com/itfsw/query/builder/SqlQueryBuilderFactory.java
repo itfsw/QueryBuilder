@@ -17,11 +17,8 @@
 package com.itfsw.query.builder;
 
 import com.itfsw.query.builder.support.builder.SqlBuilder;
-import com.itfsw.query.builder.support.filter.DatetimeConvertFilter;
-import com.itfsw.query.builder.support.filter.DefaultValueConvertFilter;
-import com.itfsw.query.builder.support.filter.IRuleFilter;
-import com.itfsw.query.builder.support.filter.ValidateFilter;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.IRuleParser;
 import com.itfsw.query.builder.support.parser.sql.*;
 
 import java.util.ArrayList;
@@ -35,21 +32,13 @@ import java.util.List;
  * @time:2017/10/31 17:03
  * ---------------------------------------------------------------------------
  */
-public class SqlQueryBuilderFactory {
-    protected List<IRuleFilter> filters;    // filters
-    protected List<AbstractSqlRuleParser> ruleParsers;   // rule parser
+public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
 
     /**
      * 构造函数
      */
     public SqlQueryBuilderFactory() {
-        ruleParsers = new ArrayList<>();
-        filters = new ArrayList<>();
-
-        // -------------------------- filter -----------------------------
-        filters.add(new ValidateFilter());
-        filters.add(new DefaultValueConvertFilter());
-        filters.add(new DatetimeConvertFilter());
+        super();
 
         // ---------------------- rule parser ----------------------------
         ruleParsers.add(new EqualRuleParser());
@@ -75,7 +64,18 @@ public class SqlQueryBuilderFactory {
 
     }
 
+    /**
+     * 获取builder
+     * @return
+     */
     public SqlBuilder builder() {
-        return new SqlBuilder(filters, ruleParsers);
+        List<AbstractSqlRuleParser> sqlRuleParsers = new ArrayList<>();
+        for (IRuleParser ruleParser : ruleParsers){
+            if (ruleParser instanceof AbstractSqlRuleParser){
+                sqlRuleParsers.add((AbstractSqlRuleParser) ruleParser);
+            }
+        }
+
+        return new SqlBuilder(filters, sqlRuleParsers);
     }
 }

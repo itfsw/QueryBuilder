@@ -27,7 +27,7 @@ import com.mongodb.DBObject;
  * @time:2017/11/1 18:35
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractMongodbRuleParser {
+public abstract class AbstractMongodbRuleParser implements IRuleParser {
     /**
      * 是否可以解析
      * @param rule
