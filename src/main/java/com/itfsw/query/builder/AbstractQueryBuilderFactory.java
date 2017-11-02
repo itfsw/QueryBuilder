@@ -82,7 +82,7 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addFilterAfter(IRuleFilter filter, Class<? extends IRuleFilter> afterFilter) {
         int index = getIndexOfClass(filters, afterFilter);
-        filters.add(index == -1 ? filters.size() : index, filter);
+        filters.add(index == -1 ? filters.size() : index + 1, filter);
     }
 
     /**
@@ -125,7 +125,7 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addParserAfter(IRuleParser parser, Class<? extends IRuleParser> afterParser) {
         int index = getIndexOfClass(parsers, afterParser);
-        parsers.add(index == -1 ? parsers.size() : index, parser);
+        parsers.add(index == -1 ? parsers.size() : index + 1, parser);
     }
 
     /**

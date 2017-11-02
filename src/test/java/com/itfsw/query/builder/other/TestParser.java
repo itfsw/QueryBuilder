@@ -14,35 +14,27 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support;
+package com.itfsw.query.builder.other;
 
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.itfsw.query.builder.support.model.IRule;
+import com.itfsw.query.builder.support.parser.IRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 17:22
+ * @time:2017/11/2 17:49
  * ---------------------------------------------------------------------------
  */
-public class SqlBuilderTest {
+public class TestParser implements IRuleParser {
+    @Override
+    public boolean canParse(IRule rule) {
+        return false;
+    }
 
-    @Test
-    public void test() throws IOException {
-        List<Integer> list = new ArrayList<>();
-        for (int i = 100; i < 110; i++) {
-            list.add(i);
-        }
-
-
-        list.remove(9);
-      list.add(9, 999999);
-
-        System.out.println(list);
+    @Override
+    public Object parse(IRule rule) {
+        return null;
     }
 }
