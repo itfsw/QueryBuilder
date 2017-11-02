@@ -66,4 +66,44 @@ public class SqlBuilderTest {
         Assert.assertEquals("username = ?", result.getQuery());
         Assert.assertEquals("xiaoxiao", result.getParams().get(0));
     }
+
+    /**
+     * not equal 操作
+     */
+    @Test
+    public void testOperatorNotEqual() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-equal.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username != ?", result.getQuery());
+        Assert.assertEquals("xiaoxiao", result.getParams().get(0));
+    }
+
+    /**
+     * in 操作
+     */
+    @Test
+    public void testOperatorIn() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-in.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("age IN(?, ?, ?)", result.getQuery());
+        Assert.assertEquals(1, result.getParams().get(0));
+        Assert.assertEquals(5, result.getParams().get(1));
+        Assert.assertEquals(10, result.getParams().get(2));
+    }
+
+    /**
+     * not in 操作
+     */
+    @Test
+    public void testOperatorNotIn() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-in.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("age NOT IN(?, ?, ?)", result.getQuery());
+        Assert.assertEquals(1, result.getParams().get(0));
+        Assert.assertEquals(5, result.getParams().get(1));
+        Assert.assertEquals(10, result.getParams().get(2));
+    }
 }

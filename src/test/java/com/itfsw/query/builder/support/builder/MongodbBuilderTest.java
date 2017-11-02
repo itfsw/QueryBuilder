@@ -70,4 +70,46 @@ public class MongodbBuilderTest {
                 "{\"username\":\"xiaoxiao\"}"
         );
     }
+
+    /**
+     * not equal 操作
+     */
+    @Test
+    public void testOperatorNotEqual() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-equal.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"username\":{\"$ne\":\"xiaoxiao\"}}"
+        );
+    }
+
+    /**
+     * in 操作
+     */
+    @Test
+    public void testOperatorIn() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-in.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$in\":[1,5,10]}}"
+        );
+    }
+
+    /**
+     * not in 操作
+     */
+    @Test
+    public void testOperatorNotIn() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-in.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$nin\":[1,5,10]}}"
+        );
+    }
 }

@@ -1,0 +1,15 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "name",
+      "field": "username",
+      "type": "string",
+      "input": "text",
+      "operator": "not_equal",
+      "value": "xiaoxiao"
+    }
+  ],
+  "not": false,
+  "valid": true
+}
