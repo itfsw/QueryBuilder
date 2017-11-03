@@ -30,7 +30,6 @@ import com.mongodb.DBObject;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * ---------------------------------------------------------------------------
@@ -63,19 +62,6 @@ public class MongodbBuilder extends AbstractBuilder {
     @Override
     public MongodbQueryResult build(String query) throws IOException, ParserNotFoundException {
         DBObject result = (DBObject) super.build(query);
-
-        // 移除外层
-        Set<String> keys = result.keySet();
-        if (keys.size() == 1){
-            String key = keys.iterator().next();
-            if ("$and".equals(key) || "$or".equals(key)){
-                Object item = result.get(key);
-                if (((BasicDBList) item).size() == 1){
-                    result = (DBObject) ((BasicDBList) item).get(0);
-                }
-            }
-        }
-
         return new MongodbQueryResult(query, result);
     }
 

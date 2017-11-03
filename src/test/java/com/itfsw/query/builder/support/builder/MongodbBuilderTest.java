@@ -53,7 +53,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":\"Mistic\"}"
+                "{\"$or\":[{\"username\":\"Mistic\"}]}"
         );
     }
 
@@ -67,7 +67,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$ne\":\"Mistic\"}}"
+                "{\"$or\":[{\"username\":{\"$ne\":\"Mistic\"}}]}"
         );
     }
 
@@ -81,7 +81,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$in\":[1,5,10]}}"
+                "{\"$or\":[{\"age\":{\"$in\":[1,5,10]}}]}"
         );
     }
 
@@ -95,7 +95,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$nin\":[1,5,10]}}"
+                "{\"$or\":[{\"age\":{\"$nin\":[1,5,10]}}]}"
         );
     }
 
@@ -109,7 +109,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$lt\":50}}"
+                "{\"$or\":[{\"age\":{\"$lt\":50}}]}"
         );
     }
 
@@ -123,7 +123,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$lte\":50}}"
+                "{\"$or\":[{\"age\":{\"$lte\":50}}]}"
         );
     }
 
@@ -137,7 +137,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$gt\":50}}"
+                "{\"$or\":[{\"age\":{\"$gt\":50}}]}"
         );
     }
 
@@ -151,7 +151,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$gte\":50}}"
+                "{\"$or\":[{\"age\":{\"$gte\":50}}]}"
         );
     }
 
@@ -165,7 +165,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$gte\":5,\"$lte\":10}}"
+                "{\"$or\":[{\"age\":{\"$gte\":5,\"$lte\":10}}]}"
         );
     }
 
@@ -179,7 +179,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"age\":{\"$lt\":5,\"$gt\":10}}"
+                "{\"$or\":[{\"age\":{\"$lt\":5,\"$gt\":10}}]}"
         );
     }
 
@@ -194,7 +194,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$regex\":\"^Mistic\"}}"
+                "{\"$or\":[{\"username\":{\"$regex\":\"^Mistic\"}}]}"
         );
     }
 
@@ -208,7 +208,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$regex\":\"^(?!Mistic)\"}}"
+                "{\"$or\":[{\"username\":{\"$regex\":\"^(?!Mistic)\"}}]}"
         );
     }
 
@@ -222,7 +222,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$regex\":\"Mistic\"}}"
+                "{\"$or\":[{\"username\":{\"$regex\":\"Mistic\"}}]}"
         );
     }
 
@@ -236,7 +236,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$regex\":\"^((?!Mistic).)*$\",\"$options\":\"s\"}}"
+                "{\"$or\":[{\"username\":{\"$regex\":\"^((?!Mistic).)*$\",\"$options\":\"s\"}}]}"
         );
     }
 
@@ -250,7 +250,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$regex\":\"Mistic$\"}}"
+                "{\"$or\":[{\"username\":{\"$regex\":\"Mistic$\"}}]}"
         );
     }
 
@@ -264,7 +264,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$regex\":\"(?<!Mistic)$\"}}"
+                "{\"$or\":[{\"username\":{\"$regex\":\"(?<!Mistic)$\"}}]}"
         );
     }
 
@@ -278,7 +278,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":\"\"}"
+                "{\"$or\":[{\"username\":\"\"}]}"
         );
     }
 
@@ -292,7 +292,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$ne\":\"\"}}"
+                "{\"$or\":[{\"username\":{\"$ne\":\"\"}}]}"
         );
     }
 
@@ -306,7 +306,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":null}"
+                "{\"$or\":[{\"username\":null}]}"
         );
     }
 
@@ -320,7 +320,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":{\"$ne\":null}}"
+                "{\"$or\":[{\"username\":{\"$ne\":null}}]}"
         );
     }
 
@@ -334,7 +334,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":\"Mistic\"}"
+                "{\"$and\":[{\"username\":\"Mistic\"}]}"
         );
 
         json = FileHelper.getStringFrom("tasks/condition-and-more.json");
@@ -356,7 +356,7 @@ public class MongodbBuilderTest {
 
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
-                "{\"username\":\"Mistic\"}"
+                "{\"$or\":[{\"username\":\"Mistic\"}]}"
         );
 
         json = FileHelper.getStringFrom("tasks/condition-or-more.json");
@@ -365,6 +365,28 @@ public class MongodbBuilderTest {
         Assert.assertEquals(
                 StringUtils.trimAllWhitespace(result.toString()),
                 "{\"$or\":[{\"username\":\"Mistic\"},{\"age\":10}]}"
+        );
+    }
+
+    /**
+     * not 操作
+     */
+    @Test
+    public void testConditionNot() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/condition-not-and-1.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"$nor\":[{\"$and\":[{\"username\":\"Mistic\"}]}]}"
+        );
+
+        json = FileHelper.getStringFrom("tasks/condition-not-and-more.json");
+        result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"$nor\":[{\"$and\":[{\"username\":\"Mistic\"},{\"age\":10}]}]}"
         );
     }
 }

@@ -1,15 +1,15 @@
 {
-  "condition": "OR",
+  "condition": "AND",
   "rules": [
     {
       "id": "name",
       "field": "username",
       "type": "string",
       "input": "text",
-      "operator": "is_not_empty",
-      "value": null
+      "operator": "equal",
+      "value": "Mistic"
     }
   ],
-  "not": false,
+  "not": true,
   "valid": true
 }

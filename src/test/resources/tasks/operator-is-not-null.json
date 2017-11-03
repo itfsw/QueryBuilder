@@ -1,5 +1,5 @@
 {
-  "condition": "AND",
+  "condition": "OR",
   "rules": [
     {
       "id": "name",
