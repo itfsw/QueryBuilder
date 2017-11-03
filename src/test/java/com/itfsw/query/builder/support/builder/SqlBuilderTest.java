@@ -255,4 +255,56 @@ public class SqlBuilderTest {
         Assert.assertEquals("%Mistic", result.getParams().get(0));
         Assert.assertEquals("username NOT LIKE('%Mistic')", result.getQuery(true));
     }
+
+    /**
+     * is empty 操作
+     */
+    @Test
+    public void testOperatorIsEmpty() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-empty.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username = ''", result.getQuery());
+        Assert.assertEquals(0, result.getParams().size());
+        Assert.assertEquals("username = ''", result.getQuery(true));
+    }
+
+    /**
+     * is not empty 操作
+     */
+    @Test
+    public void testOperatorIsNotEmpty() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-not-empty.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username != ''", result.getQuery());
+        Assert.assertEquals(0, result.getParams().size());
+        Assert.assertEquals("username != ''", result.getQuery(true));
+    }
+
+    /**
+     * is null 操作
+     */
+    @Test
+    public void testOperatorIsNull() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-null.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username IS NULL", result.getQuery());
+        Assert.assertEquals(0, result.getParams().size());
+        Assert.assertEquals("username IS NULL", result.getQuery(true));
+    }
+
+    /**
+     * is not null 操作
+     */
+    @Test
+    public void testOperatorIsNotNull() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-not-null.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username IS NOT NULL", result.getQuery());
+        Assert.assertEquals(0, result.getParams().size());
+        Assert.assertEquals("username IS NOT NULL", result.getQuery(true));
+    }
 }

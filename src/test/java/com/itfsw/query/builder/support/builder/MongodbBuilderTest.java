@@ -267,4 +267,60 @@ public class MongodbBuilderTest {
                 "{\"username\":{\"$regex\":\"(?<!Mistic)$\"}}"
         );
     }
+
+    /**
+     * is empty 操作
+     */
+    @Test
+    public void testOperatorIsEmpty() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-empty.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":\"\"}"
+        );
+    }
+
+    /**
+     * is not empty 操作
+     */
+    @Test
+    public void testOperatorIsNotEmpty() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-not-empty.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$ne\":\"\"}}"
+        );
+    }
+
+    /**
+     * is null 操作
+     */
+    @Test
+    public void testOperatorIsNull() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-null.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":null}"
+        );
+    }
+
+    /**
+     * is not null 操作
+     */
+    @Test
+    public void testOperatorIsNotNull() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-is-not-null.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$ne\":null}}"
+        );
+    }
 }
