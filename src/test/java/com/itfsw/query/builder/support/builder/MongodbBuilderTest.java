@@ -323,4 +323,48 @@ public class MongodbBuilderTest {
                 "{\"username\":{\"$ne\":null}}"
         );
     }
+
+    /**
+     * and 操作
+     */
+    @Test
+    public void testConditionAnd() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/condition-and-1.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":\"Mistic\"}"
+        );
+
+        json = FileHelper.getStringFrom("tasks/condition-and-more.json");
+        result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"$and\":[{\"username\":\"Mistic\"},{\"age\":10}]}"
+        );
+    }
+
+    /**
+     * or 操作
+     */
+    @Test
+    public void testConditionOr() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/condition-or-1.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":\"Mistic\"}"
+        );
+
+        json = FileHelper.getStringFrom("tasks/condition-or-more.json");
+        result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"$or\":[{\"username\":\"Mistic\"},{\"age\":10}]}"
+        );
+    }
 }

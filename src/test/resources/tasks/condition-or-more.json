@@ -1,0 +1,23 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "name",
+      "field": "username",
+      "type": "string",
+      "input": "text",
+      "operator": "equal",
+      "value": "Mistic"
+    },
+    {
+      "id": "age",
+      "field": "age",
+      "type": "integer",
+      "input": "text",
+      "operator": "equal",
+      "value": "10"
+    }
+  ],
+  "not": false,
+  "valid": true
+}

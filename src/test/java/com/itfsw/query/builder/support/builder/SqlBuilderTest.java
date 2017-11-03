@@ -307,4 +307,46 @@ public class SqlBuilderTest {
         Assert.assertEquals(0, result.getParams().size());
         Assert.assertEquals("username IS NOT NULL", result.getQuery(true));
     }
+
+    /**
+     * and 操作
+     */
+    @Test
+    public void testConditionAnd() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/condition-and-1.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username = ?", result.getQuery());
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals("username = 'Mistic'", result.getQuery(true));
+
+        json = FileHelper.getStringFrom("tasks/condition-and-more.json");
+        result = builder.build(json);
+
+        Assert.assertEquals("username = ? AND age = ?", result.getQuery());
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals(10, result.getParams().get(1));
+        Assert.assertEquals("username = 'Mistic' AND age = 10", result.getQuery(true));
+    }
+
+    /**
+     * or 操作
+     */
+    @Test
+    public void testConditionOr() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/condition-or-1.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username = ?", result.getQuery());
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals("username = 'Mistic'", result.getQuery(true));
+
+        json = FileHelper.getStringFrom("tasks/condition-or-more.json");
+        result = builder.build(json);
+
+        Assert.assertEquals("username = ? OR age = ?", result.getQuery());
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals(10, result.getParams().get(1));
+        Assert.assertEquals("username = 'Mistic' OR age = 10", result.getQuery(true));
+    }
 }
