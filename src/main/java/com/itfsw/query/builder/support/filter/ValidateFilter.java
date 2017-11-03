@@ -20,6 +20,7 @@ import com.itfsw.query.builder.exception.FilterException;
 import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.utils.spring.CollectionUtils;
 import com.itfsw.query.builder.support.utils.spring.StringUtils;
@@ -40,7 +41,7 @@ public class ValidateFilter implements IRuleFilter {
      * @param jsonRule
      * @throws FilterException
      */
-    public void doFilter(JsonRule jsonRule) throws FilterException {
+    public void doFilter(JsonRule jsonRule, EnumBuilderType type) throws FilterException {
         if (jsonRule.isGroup()) {
             IGroup group = jsonRule.toGroup();
             if (CollectionUtils.isEmpty(group.getRules())) {

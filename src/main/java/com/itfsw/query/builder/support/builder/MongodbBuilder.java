@@ -21,6 +21,7 @@ import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.model.IGroup;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
 import com.itfsw.query.builder.support.model.enums.EnumCondition;
 import com.itfsw.query.builder.support.model.result.MongodbQueryResult;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
@@ -105,5 +106,16 @@ public class MongodbBuilder extends AbstractBuilder {
         }
 
         throw new ParserNotFoundException("Can't found rule parser for:" + rule);
+    }
+
+    /**
+     * 执行过滤
+     * @param rule
+     */
+    @Override
+    protected void doFilter(JsonRule rule) {
+        for (IRuleFilter filter : filters) {
+            filter.doFilter(rule, EnumBuilderType.MONGODB);
+        }
     }
 }

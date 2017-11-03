@@ -14,26 +14,30 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support.filter;
+package com.itfsw.query.builder.other;
 
-import com.itfsw.query.builder.exception.FilterException;
-import com.itfsw.query.builder.support.model.JsonRule;
-import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
+import com.itfsw.query.builder.support.model.IRule;
+import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 /**
  * ---------------------------------------------------------------------------
- * 拦截器
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:31
+ * @time:2017/11/3 13:57
  * ---------------------------------------------------------------------------
  */
-public interface IRuleFilter {
-    /**
-     * 执行拦截器
-     * @param jsonRule
-     * @param type
-     * @throws FilterException
-     */
-    void doFilter(JsonRule jsonRule, EnumBuilderType type) throws FilterException;
+public class CustomMongodbParser extends AbstractMongodbRuleParser {
+    @Override
+    public boolean canParse(IRule rule) {
+        return "custom".equals(rule.getOperator());
+    }
+
+    @Override
+    public DBObject parse(IRule rule) {
+        BasicDBObject operate = new BasicDBObject("$ne", rule.getValue());
+        return new BasicDBObject(rule.getField(), operate);
+    }
 }

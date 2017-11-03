@@ -28,7 +28,7 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * @time:2017/11/3 13:57
  * ---------------------------------------------------------------------------
  */
-public class CustomParser extends AbstractSqlRuleParser {
+public class CustomSqlParser extends AbstractSqlRuleParser {
     @Override
     public boolean canParse(IRule rule) {
         return "custom".equals(rule.getOperator());

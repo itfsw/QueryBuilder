@@ -349,4 +349,25 @@ public class SqlBuilderTest {
         Assert.assertEquals(10, result.getParams().get(1));
         Assert.assertEquals("username = 'Mistic' OR age = 10", result.getQuery(true));
     }
+
+    /**
+     * not 操作
+     */
+    @Test
+    public void testConditionNot() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/condition-not-and-1.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("NOT ( username = ? )", result.getQuery());
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals("NOT ( username = 'Mistic' )", result.getQuery(true));
+
+        json = FileHelper.getStringFrom("tasks/condition-not-and-more.json");
+        result = builder.build(json);
+
+        Assert.assertEquals("NOT ( username = ? AND age = ? )", result.getQuery());
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals(10, result.getParams().get(1));
+        Assert.assertEquals("NOT ( username = 'Mistic' AND age = 10 )", result.getQuery(true));
+    }
 }

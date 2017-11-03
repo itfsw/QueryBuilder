@@ -16,13 +16,17 @@
 
 package com.itfsw.query.builder.exception;
 
+import com.itfsw.query.builder.MongodbQueryBuilderFactory;
 import com.itfsw.query.builder.SqlQueryBuilderFactory;
-import com.itfsw.query.builder.other.CustomParser;
+import com.itfsw.query.builder.other.CustomMongodbParser;
+import com.itfsw.query.builder.other.CustomSqlParser;
 import com.itfsw.query.builder.other.FileHelper;
+import com.itfsw.query.builder.support.builder.MongodbBuilder;
 import com.itfsw.query.builder.support.builder.SqlBuilder;
+import com.itfsw.query.builder.support.model.result.MongodbQueryResult;
 import com.itfsw.query.builder.support.model.result.SqlQueryResult;
+import com.itfsw.query.builder.support.utils.spring.StringUtils;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -36,30 +40,25 @@ import java.io.IOException;
  * ---------------------------------------------------------------------------
  */
 public class ParserNotFoundExceptionTest {
-    private SqlBuilder builder;
-
-    @Before
-    public void init() {
-        SqlQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        builder = factory.builder();
-    }
-
     /**
-     * 测试parser 找不到
+     * 测试parser-sql 找不到
      */
     @Test(expected = ParserNotFoundException.class)
-    public void testParserNotFound() throws IOException {
+    public void testSqlParserNotFound() throws IOException {
+        SqlQueryBuilderFactory factory = new SqlQueryBuilderFactory();
+        SqlBuilder builder = factory.builder();
+
         String json = FileHelper.getStringFrom("tasks/custom-operator.json");
         builder.build(json);
     }
 
     /**
-     * 测试parser 找不到(添加自定义)
+     * 测试parser-sql 找不到(添加自定义)
      */
     @Test
-    public void testParserNotFoundAndAdd() throws IOException {
+    public void testSqlParserNotFoundAndAdd() throws IOException {
         SqlQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParser(new CustomParser());
+        factory.addParser(new CustomSqlParser());
         SqlBuilder builder = factory.builder();
 
         String json = FileHelper.getStringFrom("tasks/custom-operator.json");
@@ -67,5 +66,35 @@ public class ParserNotFoundExceptionTest {
         Assert.assertEquals("username <> ?", result.getQuery());
         Assert.assertEquals("Mistic", result.getParams().get(0));
         Assert.assertEquals("username <> 'Mistic'", result.getQuery(true));
+    }
+
+    /**
+     * 测试parser-mongodb 找不到
+     */
+    @Test(expected = ParserNotFoundException.class)
+    public void testMongodbParserNotFound() throws IOException {
+        MongodbQueryBuilderFactory factory = new MongodbQueryBuilderFactory();
+        MongodbBuilder builder = factory.builder();
+
+        String json = FileHelper.getStringFrom("tasks/custom-operator.json");
+        builder.build(json);
+    }
+
+    /**
+     * 测试parser-mongodb 找不到(添加自定义)
+     */
+    @Test
+    public void testMongodbParserNotFoundAndAdd() throws IOException {
+        MongodbQueryBuilderFactory factory = new MongodbQueryBuilderFactory();
+        factory.addParser(new CustomMongodbParser());
+        MongodbBuilder builder = factory.builder();
+
+        String json = FileHelper.getStringFrom("tasks/custom-operator.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"$or\":[{\"username\":{\"$ne\":\"Mistic\"}}]}"
+        );
     }
 }

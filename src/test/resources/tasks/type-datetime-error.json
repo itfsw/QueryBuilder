@@ -1,0 +1,31 @@
+{
+  "condition": "AND",
+  "rules": [
+    {
+      "id": "datetime",
+      "field": "datetime",
+      "type": "datetime",
+      "input": "text",
+      "operator": "equal",
+      "value": "2017-11-03 14:25:12"
+    },
+    {
+      "id": "date",
+      "field": "date",
+      "type": "date",
+      "input": "text",
+      "operator": "equal",
+      "value": "2017-11-15"
+    },
+    {
+      "id": "time",
+      "field": "time",
+      "type": "time",
+      "input": "text",
+      "operator": "equal",
+      "value": "asdfasdf14:30:00"
+    }
+  ],
+  "not": false,
+  "valid": true
+}

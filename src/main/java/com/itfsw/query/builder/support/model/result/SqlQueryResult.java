@@ -16,6 +16,9 @@
 
 package com.itfsw.query.builder.support.model.result;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,12 +60,23 @@ public class SqlQueryResult extends AbstractResult {
      * @param withParams
      * @return
      */
-    public String getQuery(boolean withParams){
-        if (withParams){
+    public String getQuery(boolean withParams) {
+        if (withParams) {
             StringBuffer sql = new StringBuffer(query);
             for (Object param : params) {
                 int index = sql.indexOf("?");
-                StringBuffer str = new StringBuffer(param.toString());
+
+                // 日期
+                StringBuffer str;
+                if (param instanceof Time) {
+                    str = new StringBuffer(new SimpleDateFormat("HH:mm:ss").format(param));
+                } else if (param instanceof Date || param instanceof java.sql.Date) {
+                    str = new StringBuffer(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(param));
+                } else {
+                    str = new StringBuffer(param.toString());
+                }
+
+                // 非数字
                 if (!(param instanceof Number)) {
                     str.insert(0, "'");
                     str.append("'");
@@ -90,6 +104,6 @@ public class SqlQueryResult extends AbstractResult {
      */
     @Override
     public String toString() {
-       return getQuery(true);
+        return getQuery(true);
     }
 }

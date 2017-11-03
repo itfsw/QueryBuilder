@@ -19,8 +19,10 @@ package com.itfsw.query.builder.support.filter;
 import com.itfsw.query.builder.exception.FilterException;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
 import com.itfsw.query.builder.support.model.enums.EnumRuleType;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,7 +87,7 @@ public class DatetimeConvertFilter implements IRuleFilter {
     }
 
     @Override
-    public void doFilter(JsonRule jsonRule) throws FilterException {
+    public void doFilter(JsonRule jsonRule, EnumBuilderType type) throws FilterException {
         if (!jsonRule.isGroup()) {
             IRule rule = jsonRule.toRule();
 
@@ -98,11 +100,11 @@ public class DatetimeConvertFilter implements IRuleFilter {
                     if (rule.getValue() instanceof List) {
                         List<Object> list = new ArrayList<>();
                         for (Object value : (List) rule.getValue()) {
-                            list.add(convert(value, rule.getType()));
+                            list.add(convert(value, rule.getType(), type));
                         }
                         rule.setValue(list);
                     } else {
-                        rule.setValue(convert(rule.getValue(), rule.getType()));
+                        rule.setValue(convert(rule.getValue(), rule.getType(), type));
                     }
                 } catch (Exception e) {
                     throw new FilterException(e.getMessage() + " for:" + rule );
@@ -111,14 +113,35 @@ public class DatetimeConvertFilter implements IRuleFilter {
         }
     }
 
-    private Object convert(Object value, String type) throws ParseException {
+    private Object convert(Object value, String type, EnumBuilderType builderType) throws ParseException {
         if (!(value instanceof Date)) {
             if (EnumRuleType.DATETIME.equals(type)) {
-                return datetimeFormat.parse(value.toString());
+                Date date = datetimeFormat.parse(value.toString());
+
+                // sql
+                if (EnumBuilderType.SQL.equals(builderType)){
+                    return new java.sql.Date(date.getTime());
+                }
+
+                return date;
             } else if (EnumRuleType.DATE.equals(type)) {
-                return dateFormat.parse(value.toString());
+                Date date =  dateFormat.parse(value.toString());
+
+                // sql
+                if (EnumBuilderType.SQL.equals(builderType)){
+                    return new java.sql.Date(date.getTime());
+                }
+
+                return date;
             } else if (EnumRuleType.TIME.equals(type)) {
-                return timeFormat.parse(value.toString());
+                Date date =  timeFormat.parse(value.toString());
+
+                // sql
+                if (EnumBuilderType.SQL.equals(builderType)){
+                    return new Time(date.getTime());
+                }
+
+                return date;
             }
         }
         return value;

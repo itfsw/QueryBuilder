@@ -19,6 +19,7 @@ package com.itfsw.query.builder.support.filter;
 import com.itfsw.query.builder.exception.FilterException;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
 import com.itfsw.query.builder.support.model.enums.EnumRuleType;
 import com.itfsw.query.builder.support.utils.spring.NumberUtils;
 
@@ -35,7 +36,7 @@ import java.util.List;
  */
 public class DefaultValueConvertFilter implements IRuleFilter {
     @Override
-    public void doFilter(JsonRule jsonRule) throws FilterException {
+    public void doFilter(JsonRule jsonRule, EnumBuilderType type) throws FilterException {
         if (!jsonRule.isGroup()) {
             IRule rule = jsonRule.toRule();
 

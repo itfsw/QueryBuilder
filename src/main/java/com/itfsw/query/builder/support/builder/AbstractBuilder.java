@@ -91,9 +91,5 @@ public abstract class AbstractBuilder {
      * 执行过滤
      * @param rule
      */
-    private void doFilter(JsonRule rule) {
-        for (IRuleFilter filter : filters) {
-            filter.doFilter(rule);
-        }
-    }
+    protected abstract void doFilter(JsonRule rule);
 }

@@ -14,26 +14,17 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support.filter;
-
-import com.itfsw.query.builder.exception.FilterException;
-import com.itfsw.query.builder.support.model.JsonRule;
-import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
+package com.itfsw.query.builder.support.model.enums;
 
 /**
  * ---------------------------------------------------------------------------
- * 拦截器
+ *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/31 16:31
+ * @time:2017/11/3 14:38
  * ---------------------------------------------------------------------------
  */
-public interface IRuleFilter {
-    /**
-     * 执行拦截器
-     * @param jsonRule
-     * @param type
-     * @throws FilterException
-     */
-    void doFilter(JsonRule jsonRule, EnumBuilderType type) throws FilterException;
+public enum EnumBuilderType {
+    SQL,    // SqlBuilder
+    MONGODB // MongodbBuilder
 }

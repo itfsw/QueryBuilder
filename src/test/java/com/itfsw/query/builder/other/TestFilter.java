@@ -19,6 +19,7 @@ package com.itfsw.query.builder.other;
 import com.itfsw.query.builder.exception.FilterException;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.model.JsonRule;
+import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
 
 /**
  * ---------------------------------------------------------------------------
@@ -30,7 +31,7 @@ import com.itfsw.query.builder.support.model.JsonRule;
  */
 public class TestFilter implements IRuleFilter {
     @Override
-    public void doFilter(JsonRule jsonRule) throws FilterException {
+    public void doFilter(JsonRule jsonRule, EnumBuilderType type) throws FilterException {
 
     }
 }
