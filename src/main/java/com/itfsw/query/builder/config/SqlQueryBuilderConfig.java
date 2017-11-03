@@ -14,36 +14,36 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.other;
+package com.itfsw.query.builder.config;
 
-import java.io.*;
+import com.itfsw.query.builder.support.model.enums.EnumDBType;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/2 18:02
+ * @time:2017/11/3 20:43
  * ---------------------------------------------------------------------------
  */
-public class FileHelper {
+public class SqlQueryBuilderConfig {
+    private EnumDBType dbType = EnumDBType.MYSQL;   // 数据库类型
 
     /**
-     * 读取字符串
-     * @param file
-     * @return
-     * @throws IOException
+     * Getter method for property <tt>dbType</tt>.
+     * @return property value of dbType
+     * @author hewei
      */
-    public static String getStringFrom(String file) throws IOException {
-        try (InputStream inputStream = FileHelper.class.getClassLoader().getResourceAsStream(file);
-             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-             BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
-            StringBuffer sb = new StringBuffer();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                sb.append(line);
-            }
-            return sb.toString();
-        }
+    public EnumDBType getDbType() {
+        return dbType;
+    }
+
+    /**
+     * Setter method for property <tt>dbType</tt>.
+     * @param dbType value to be assigned to property dbType
+     * @author hewei
+     */
+    public void setDbType(EnumDBType dbType) {
+        this.dbType = dbType;
     }
 }

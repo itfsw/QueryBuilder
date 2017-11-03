@@ -54,7 +54,7 @@ public class DatetimeConvertFilterTest {
         String json = FileHelper.getStringFrom("tasks/type-datetime-default.json");
         SqlQueryResult result = builder.build(json);
 
-        Assert.assertEquals("datetime = ? AND date = ? AND time = ?", result.getQuery());
+        Assert.assertEquals("`datetime` = ? AND `date` = ? AND `time` = ?", result.getQuery());
 
         Assert.assertTrue(result.getParams().get(0) instanceof java.sql.Date);
         Assert.assertEquals("2017-11-03 14:25:12", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(result.getParams().get(0)));
@@ -65,7 +65,7 @@ public class DatetimeConvertFilterTest {
         Assert.assertTrue(result.getParams().get(2) instanceof java.sql.Time);
         Assert.assertEquals("1970-01-01 14:30:00", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(result.getParams().get(2)));
 
-        Assert.assertEquals("datetime = '2017-11-03 14:25:12' AND date = '2017-11-15 00:00:00' AND time = '14:30:00'", result.getQuery(true));
+        Assert.assertEquals("`datetime` = '2017-11-03 14:25:12' AND `date` = '2017-11-15 00:00:00' AND `time` = '14:30:00'", result.getQuery(true));
     }
 
     /**
@@ -113,7 +113,7 @@ public class DatetimeConvertFilterTest {
         String json = FileHelper.getStringFrom("tasks/type-datetime-custom.json");
         SqlQueryResult result = builder.build(json);
 
-        Assert.assertEquals("datetime = ? AND date = ? AND time = ?", result.getQuery());
+        Assert.assertEquals("`datetime` = ? AND `date` = ? AND `time` = ?", result.getQuery());
 
         Assert.assertTrue(result.getParams().get(0) instanceof java.sql.Date);
         Assert.assertEquals("2017-11-03 14:25:12", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(result.getParams().get(0)));
@@ -124,6 +124,6 @@ public class DatetimeConvertFilterTest {
         Assert.assertTrue(result.getParams().get(2) instanceof java.sql.Time);
         Assert.assertEquals("1970-01-01 14:30:00", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(result.getParams().get(2)));
 
-        Assert.assertEquals("datetime = '2017-11-03 14:25:12' AND date = '2017-11-15 00:00:00' AND time = '14:30:00'", result.getQuery(true));
+        Assert.assertEquals("`datetime` = '2017-11-03 14:25:12' AND `date` = '2017-11-15 00:00:00' AND `time` = '14:30:00'", result.getQuery(true));
     }
 }

@@ -16,7 +16,9 @@
 
 package com.itfsw.query.builder;
 
+import com.itfsw.query.builder.config.SqlQueryBuilderConfig;
 import com.itfsw.query.builder.support.builder.SqlBuilder;
+import com.itfsw.query.builder.support.filter.SqlInjectionAttackFilter;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
 import com.itfsw.query.builder.support.parser.IRuleParser;
 import com.itfsw.query.builder.support.parser.sql.*;
@@ -33,12 +35,18 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
+    private SqlQueryBuilderConfig config;   // 配置
 
     /**
      * 构造函数
+     * @param config
      */
-    public SqlQueryBuilderFactory() {
+    public SqlQueryBuilderFactory(SqlQueryBuilderConfig config) {
         super();
+        this.config = config;
+
+        // ------------------------ filter ---------------------------
+        filters.add(new SqlInjectionAttackFilter(config.getDbType()));    // sql 注入
 
         // ---------------------- rule parser ----------------------------
         parsers.add(new EqualRuleParser());
@@ -61,7 +69,13 @@ public class SqlQueryBuilderFactory extends AbstractQueryBuilderFactory {
         parsers.add(new IsNotEmptyRuleParser());
         parsers.add(new IsNullRuleParser());
         parsers.add(new IsNotNullRuleParser());
+    }
 
+    /**
+     * 构造函数
+     */
+    public SqlQueryBuilderFactory() {
+        this(new SqlQueryBuilderConfig());
     }
 
     /**

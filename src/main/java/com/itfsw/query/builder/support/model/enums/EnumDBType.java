@@ -14,36 +14,16 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.other;
-
-import java.io.*;
+package com.itfsw.query.builder.support.model.enums;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/2 18:02
+ * @time:2017/11/3 17:01
  * ---------------------------------------------------------------------------
  */
-public class FileHelper {
-
-    /**
-     * 读取字符串
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    public static String getStringFrom(String file) throws IOException {
-        try (InputStream inputStream = FileHelper.class.getClassLoader().getResourceAsStream(file);
-             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-             BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
-            StringBuffer sb = new StringBuffer();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                sb.append(line);
-            }
-            return sb.toString();
-        }
-    }
+public enum EnumDBType {
+    DB2, DERBY, H2, HSQL, INFORMIX, MS_SQL, MYSQL, ORACLE, POSTGRE_SQL, SYBASE, HANA
 }
