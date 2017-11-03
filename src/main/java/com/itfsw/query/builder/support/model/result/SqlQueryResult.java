@@ -53,6 +53,29 @@ public class SqlQueryResult extends AbstractResult {
     }
 
     /**
+     * 获取查询语句
+     * @param withParams
+     * @return
+     */
+    public String getQuery(boolean withParams){
+        if (withParams){
+            StringBuffer sql = new StringBuffer(query);
+            for (Object param : params) {
+                int index = sql.indexOf("?");
+                StringBuffer str = new StringBuffer(param.toString());
+                if (!(param instanceof Number)) {
+                    str.insert(0, "'");
+                    str.append("'");
+                }
+                sql.replace(index, index + 1, str.toString());
+            }
+            return sql.toString();
+        } else {
+            return getQuery();
+        }
+    }
+
+    /**
      * Getter method for property <tt>params</tt>.
      * @return property value of params
      * @author hewei
@@ -67,15 +90,6 @@ public class SqlQueryResult extends AbstractResult {
      */
     @Override
     public String toString() {
-        StringBuffer sql = new StringBuffer(query);
-        for (Object param : params) {
-            int index = sql.indexOf("?");
-            String str = param.toString();
-            if (!(param instanceof Number)) {
-                str = "'" + str + "'";
-            }
-            sql.replace(index, index + 1, str);
-        }
-        return sql.toString();
+       return getQuery(true);
     }
 }

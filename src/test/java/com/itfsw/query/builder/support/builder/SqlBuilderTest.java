@@ -51,7 +51,8 @@ public class SqlBuilderTest {
         SqlQueryResult result = builder.build(json);
 
         Assert.assertEquals("username = ?", result.getQuery());
-        Assert.assertEquals("xiaoxiao", result.getParams().get(0));
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals("username = 'Mistic'", result.getQuery(true));
     }
 
     /**
@@ -63,7 +64,8 @@ public class SqlBuilderTest {
         SqlQueryResult result = builder.build(json);
 
         Assert.assertEquals("username != ?", result.getQuery());
-        Assert.assertEquals("xiaoxiao", result.getParams().get(0));
+        Assert.assertEquals("Mistic", result.getParams().get(0));
+        Assert.assertEquals("username != 'Mistic'", result.getQuery(true));
     }
 
     /**
@@ -78,6 +80,7 @@ public class SqlBuilderTest {
         Assert.assertEquals(1, result.getParams().get(0));
         Assert.assertEquals(5, result.getParams().get(1));
         Assert.assertEquals(10, result.getParams().get(2));
+        Assert.assertEquals("age IN(1, 5, 10)", result.getQuery(true));
     }
 
     /**
@@ -92,6 +95,7 @@ public class SqlBuilderTest {
         Assert.assertEquals(1, result.getParams().get(0));
         Assert.assertEquals(5, result.getParams().get(1));
         Assert.assertEquals(10, result.getParams().get(2));
+        Assert.assertEquals("age NOT IN(1, 5, 10)", result.getQuery(true));
     }
 
     /**
@@ -104,6 +108,7 @@ public class SqlBuilderTest {
 
         Assert.assertEquals("age < ?", result.getQuery());
         Assert.assertEquals(50, result.getParams().get(0));
+        Assert.assertEquals("age < 50", result.getQuery(true));
     }
 
     /**
@@ -116,6 +121,7 @@ public class SqlBuilderTest {
 
         Assert.assertEquals("age <= ?", result.getQuery());
         Assert.assertEquals(50, result.getParams().get(0));
+        Assert.assertEquals("age <= 50", result.getQuery(true));
     }
 
     /**
@@ -128,6 +134,7 @@ public class SqlBuilderTest {
 
         Assert.assertEquals("age > ?", result.getQuery());
         Assert.assertEquals(50, result.getParams().get(0));
+        Assert.assertEquals("age > 50", result.getQuery(true));
     }
 
     /**
@@ -140,6 +147,7 @@ public class SqlBuilderTest {
 
         Assert.assertEquals("age >= ?", result.getQuery());
         Assert.assertEquals(50, result.getParams().get(0));
+        Assert.assertEquals("age >= 50", result.getQuery(true));
     }
 
     /**
@@ -153,6 +161,7 @@ public class SqlBuilderTest {
         Assert.assertEquals("age BETWEEN ? AND ?", result.getQuery());
         Assert.assertEquals(5, result.getParams().get(0));
         Assert.assertEquals(10, result.getParams().get(1));
+        Assert.assertEquals("age BETWEEN 5 AND 10", result.getQuery(true));
     }
 
     /**
@@ -166,6 +175,7 @@ public class SqlBuilderTest {
         Assert.assertEquals("age NOT BETWEEN ? AND ?", result.getQuery());
         Assert.assertEquals(5, result.getParams().get(0));
         Assert.assertEquals(10, result.getParams().get(1));
+        Assert.assertEquals("age NOT BETWEEN 5 AND 10", result.getQuery(true));
     }
 
     /**
@@ -178,5 +188,6 @@ public class SqlBuilderTest {
 
         Assert.assertEquals("username LIKE(?)", result.getQuery());
         Assert.assertEquals("Mistic%", result.getParams().get(0));
+        Assert.assertEquals("username LIKE('Mistic%')", result.getQuery(true));
     }
 }

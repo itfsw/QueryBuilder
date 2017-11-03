@@ -52,8 +52,8 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
-                "{\"username\":\"xiaoxiao\"}"
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":\"Mistic\"}"
         );
     }
 
@@ -66,8 +66,8 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
-                "{\"username\":{\"$ne\":\"xiaoxiao\"}}"
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$ne\":\"Mistic\"}}"
         );
     }
 
@@ -80,7 +80,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$in\":[1,5,10]}}"
         );
     }
@@ -94,7 +94,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$nin\":[1,5,10]}}"
         );
     }
@@ -108,7 +108,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$lt\":50}}"
         );
     }
@@ -122,7 +122,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$lte\":50}}"
         );
     }
@@ -136,7 +136,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$gt\":50}}"
         );
     }
@@ -150,7 +150,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$gte\":50}}"
         );
     }
@@ -164,7 +164,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$gte\":5,\"$lte\":10}}"
         );
     }
@@ -178,7 +178,7 @@ public class MongodbBuilderTest {
         MongodbQueryResult result = builder.build(json);
 
         Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                StringUtils.trimAllWhitespace(result.toString()),
                 "{\"age\":{\"$lt\":5,\"$gt\":10}}"
         );
     }
@@ -192,10 +192,9 @@ public class MongodbBuilderTest {
         String json = FileHelper.getStringFrom("tasks/operator-begins-with.json");
         MongodbQueryResult result = builder.build(json);
 
-        System.out.println(result.getQuery());
-//        Assert.assertEquals(
-//                StringUtils.trimAllWhitespace(result.getQuery().toString()),
-//                "{\"username\":{\"$regex\":\"^Mistic\"}}"
-//        );
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$regex\":\"^Mistic\"}}"
+        );
     }
 }
