@@ -46,19 +46,6 @@ public class SqlBuilderTest {
      * equal 操作
      */
     @Test
-    public void testOperatorBetween() throws IOException {
-        String json = FileHelper.getStringFrom("tasks/operator-between.json");
-        SqlQueryResult result = builder.build(json);
-
-        Assert.assertEquals("age BETWEEN ? AND ?", result.getQuery());
-        Assert.assertEquals(5, result.getParams().get(0));
-        Assert.assertEquals(10, result.getParams().get(1));
-    }
-
-    /**
-     * equal 操作
-     */
-    @Test
     public void testOperatorEqual() throws IOException {
         String json = FileHelper.getStringFrom("tasks/operator-equal.json");
         SqlQueryResult result = builder.build(json);
@@ -153,5 +140,43 @@ public class SqlBuilderTest {
 
         Assert.assertEquals("age >= ?", result.getQuery());
         Assert.assertEquals(50, result.getParams().get(0));
+    }
+
+    /**
+     * equal 操作
+     */
+    @Test
+    public void testOperatorBetween() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-between.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("age BETWEEN ? AND ?", result.getQuery());
+        Assert.assertEquals(5, result.getParams().get(0));
+        Assert.assertEquals(10, result.getParams().get(1));
+    }
+
+    /**
+     * not between 操作
+     */
+    @Test
+    public void testOperatorNotBetween() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-between.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("age NOT BETWEEN ? AND ?", result.getQuery());
+        Assert.assertEquals(5, result.getParams().get(0));
+        Assert.assertEquals(10, result.getParams().get(1));
+    }
+
+    /**
+     * begins with 操作
+     */
+    @Test
+    public void testOperatorBeginsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-begins-with.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username LIKE(?)", result.getQuery());
+        Assert.assertEquals("Mistic%", result.getParams().get(0));
     }
 }

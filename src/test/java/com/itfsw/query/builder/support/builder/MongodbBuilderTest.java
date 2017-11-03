@@ -47,20 +47,6 @@ public class MongodbBuilderTest {
      * equal 操作
      */
     @Test
-    public void testOperatorBetween() throws IOException {
-        String json = FileHelper.getStringFrom("tasks/operator-between.json");
-        MongodbQueryResult result = builder.build(json);
-
-        Assert.assertEquals(
-                StringUtils.trimAllWhitespace(result.getQuery().toString()),
-                "{\"age\":{\"$gte\":5,\"$lte\":10}}"
-        );
-    }
-
-    /**
-     * equal 操作
-     */
-    @Test
     public void testOperatorEqual() throws IOException {
         String json = FileHelper.getStringFrom("tasks/operator-equal.json");
         MongodbQueryResult result = builder.build(json);
@@ -167,5 +153,49 @@ public class MongodbBuilderTest {
                 StringUtils.trimAllWhitespace(result.getQuery().toString()),
                 "{\"age\":{\"$gte\":50}}"
         );
+    }
+
+    /**
+     * between 操作
+     */
+    @Test
+    public void testOperatorBetween() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-between.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$gte\":5,\"$lte\":10}}"
+        );
+    }
+
+    /**
+     * not between 操作
+     */
+    @Test
+    public void testOperatorNotBetween() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-between.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+                "{\"age\":{\"$lt\":5,\"$gt\":10}}"
+        );
+    }
+
+
+    /**
+     * begins with 操作
+     */
+    @Test
+    public void testOperatorBeginsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-begins-with.json");
+        MongodbQueryResult result = builder.build(json);
+
+        System.out.println(result.getQuery());
+//        Assert.assertEquals(
+//                StringUtils.trimAllWhitespace(result.getQuery().toString()),
+//                "{\"username\":{\"$regex\":\"^Mistic\"}}"
+//        );
     }
 }
