@@ -1,0 +1,15 @@
+{
+  "condition": "AND",
+  "rules": [
+    {
+      "id": "name",
+      "field": "username",
+      "type": "string",
+      "input": "text",
+      "operator": "ends_with",
+      "value": "Mistic"
+    }
+  ],
+  "not": false,
+  "valid": true
+}

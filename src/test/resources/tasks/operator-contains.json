@@ -1,0 +1,15 @@
+{
+  "condition": "AND",
+  "rules": [
+    {
+      "id": "name",
+      "field": "username",
+      "type": "string",
+      "input": "text",
+      "operator": "contains",
+      "value": "Mistic"
+    }
+  ],
+  "not": false,
+  "valid": true
+}

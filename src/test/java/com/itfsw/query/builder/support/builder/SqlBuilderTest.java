@@ -190,4 +190,69 @@ public class SqlBuilderTest {
         Assert.assertEquals("Mistic%", result.getParams().get(0));
         Assert.assertEquals("username LIKE('Mistic%')", result.getQuery(true));
     }
+
+    /**
+     * not begins with 操作
+     */
+    @Test
+    public void testOperatorNotBeginsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-begins-with.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username NOT LIKE(?)", result.getQuery());
+        Assert.assertEquals("Mistic%", result.getParams().get(0));
+        Assert.assertEquals("username NOT LIKE('Mistic%')", result.getQuery(true));
+    }
+
+    /**
+     * contains 操作
+     */
+    @Test
+    public void testOperatorContains() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-contains.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username LIKE(?)", result.getQuery());
+        Assert.assertEquals("%Mistic%", result.getParams().get(0));
+        Assert.assertEquals("username LIKE('%Mistic%')", result.getQuery(true));
+    }
+
+    /**
+     * not contains 操作
+     */
+    @Test
+    public void testOperatorNotContains() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-contains.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username NOT LIKE(?)", result.getQuery());
+        Assert.assertEquals("%Mistic%", result.getParams().get(0));
+        Assert.assertEquals("username NOT LIKE('%Mistic%')", result.getQuery(true));
+    }
+
+    /**
+     * ends with 操作
+     */
+    @Test
+    public void testOperatorEndsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-ends-with.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username LIKE(?)", result.getQuery());
+        Assert.assertEquals("%Mistic", result.getParams().get(0));
+        Assert.assertEquals("username LIKE('%Mistic')", result.getQuery(true));
+    }
+
+    /**
+     * not ends with 操作
+     */
+    @Test
+    public void testOperatorNotEndsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-ends-with.json");
+        SqlQueryResult result = builder.build(json);
+
+        Assert.assertEquals("username NOT LIKE(?)", result.getQuery());
+        Assert.assertEquals("%Mistic", result.getParams().get(0));
+        Assert.assertEquals("username NOT LIKE('%Mistic')", result.getQuery(true));
+    }
 }

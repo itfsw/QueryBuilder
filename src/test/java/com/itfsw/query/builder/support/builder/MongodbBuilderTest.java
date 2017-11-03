@@ -197,4 +197,74 @@ public class MongodbBuilderTest {
                 "{\"username\":{\"$regex\":\"^Mistic\"}}"
         );
     }
+
+    /**
+     * not begins with 操作
+     */
+    @Test
+    public void testOperatorNotBeginsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-begins-with.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$regex\":\"^(?!Mistic)\"}}"
+        );
+    }
+
+    /**
+     * contains 操作
+     */
+    @Test
+    public void testOperatorContains() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-contains.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$regex\":\"Mistic\"}}"
+        );
+    }
+
+    /**
+     * not contains 操作
+     */
+    @Test
+    public void testOperatorNotContains() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-contains.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$regex\":\"^((?!Mistic).)*$\",\"$options\":\"s\"}}"
+        );
+    }
+
+    /**
+     * ends with 操作
+     */
+    @Test
+    public void testOperatorEndsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-ends-with.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$regex\":\"Mistic$\"}}"
+        );
+    }
+
+    /**
+     * not ends with 操作
+     */
+    @Test
+    public void testOperatorNotEndsWith() throws IOException {
+        String json = FileHelper.getStringFrom("tasks/operator-not-ends-with.json");
+        MongodbQueryResult result = builder.build(json);
+
+        Assert.assertEquals(
+                StringUtils.trimAllWhitespace(result.toString()),
+                "{\"username\":{\"$regex\":\"(?<!Mistic)$\"}}"
+        );
+    }
 }

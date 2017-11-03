@@ -67,9 +67,12 @@ public class MongodbBuilder extends AbstractBuilder {
         // 移除外层
         Set<String> keys = result.keySet();
         if (keys.size() == 1){
-            Object item = result.get(keys.iterator().next());
-            if (item instanceof BasicDBList && ((BasicDBList) item).size() == 1){
-                result = (DBObject) ((BasicDBList) item).get(0);
+            String key = keys.iterator().next();
+            if ("$and".equals(key) || "$or".equals(key)){
+                Object item = result.get(key);
+                if (((BasicDBList) item).size() == 1){
+                    result = (DBObject) ((BasicDBList) item).get(0);
+                }
             }
         }
 
