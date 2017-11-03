@@ -16,6 +16,10 @@
 
 package com.itfsw.query.builder;
 
+import com.itfsw.query.builder.exception.FilterAddException;
+import com.itfsw.query.builder.exception.ParserAddException;
+import com.itfsw.query.builder.other.Test2Filter;
+import com.itfsw.query.builder.other.Test2Parser;
 import com.itfsw.query.builder.other.TestFilter;
 import com.itfsw.query.builder.other.TestParser;
 import com.itfsw.query.builder.support.filter.ValidateFilter;
@@ -99,6 +103,60 @@ public class AbstractQueryBuilderFactoryTest {
         factory.addParserAt(testParser, EqualRuleParser.class);
         Assert.assertEquals(-1, getIndexOfClass(factory.getParsers(), EqualRuleParser.class));
         Assert.assertEquals(index, getIndexOfClass(factory.getParsers(), testParser.getClass()));
+    }
+
+    /**
+     * 测试替换没有加入的Filter
+     */
+    @Test(expected = FilterAddException.class)
+    public void testAddFilterBeforeUnknownClass(){
+        AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
+        factory.addFilterBefore(testFilter, Test2Filter.class);
+    }
+
+    /**
+     * 测试替换没有加入的Filter
+     */
+    @Test(expected = FilterAddException.class)
+    public void testAddFilterAtUnknownClass(){
+        AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
+        factory.addFilterAt(testFilter, Test2Filter.class);
+    }
+
+    /**
+     * 测试替换没有加入的Filter
+     */
+    @Test(expected = FilterAddException.class)
+    public void testAddFilterAfterUnknownClass(){
+        AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
+        factory.addFilterAfter(testFilter, Test2Filter.class);
+    }
+
+    /**
+     * 测试替换没有加入的Parser
+     */
+    @Test(expected = ParserAddException.class)
+    public void addParserBeforeUnknownClass() throws Exception {
+        AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
+        factory.addParserBefore(testParser, Test2Parser.class);
+    }
+
+    /**
+     * 测试替换没有加入的Parser
+     */
+    @Test(expected = ParserAddException.class)
+    public void addParserAtUnknownClass() throws Exception {
+        AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
+        factory.addParserAt(testParser, Test2Parser.class);
+    }
+
+    /**
+     * 测试替换没有加入的Parser
+     */
+    @Test(expected = ParserAddException.class)
+    public void addParserAfterUnknownClass() throws Exception {
+        AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
+        factory.addParserAfter(testParser, Test2Parser.class);
     }
 
     /**

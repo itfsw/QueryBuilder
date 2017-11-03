@@ -14,18 +14,27 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.exception;
+package com.itfsw.query.builder.other;
+
+import com.itfsw.query.builder.support.model.IRule;
+import com.itfsw.query.builder.support.parser.IRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/1 11:34
+ * @time:2017/11/2 17:49
  * ---------------------------------------------------------------------------
  */
-public class FilterException extends QueryBuilderException {
-    public FilterException(String message) {
-        super(message);
+public class Test2Parser implements IRuleParser {
+    @Override
+    public boolean canParse(IRule rule) {
+        return false;
+    }
+
+    @Override
+    public Object parse(IRule rule) {
+        return null;
     }
 }

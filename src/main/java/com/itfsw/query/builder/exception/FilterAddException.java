@@ -21,11 +21,15 @@ package com.itfsw.query.builder.exception;
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/1 11:34
+ * @time:2017/11/3 11:28
  * ---------------------------------------------------------------------------
  */
-public class FilterException extends QueryBuilderException {
-    public FilterException(String message) {
+public class FilterAddException extends QueryBuilderException {
+    /**
+     * 构造函数
+     * @param message
+     */
+    public FilterAddException(String message) {
         super(message);
     }
 }

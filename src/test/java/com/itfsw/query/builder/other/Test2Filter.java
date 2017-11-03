@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.exception;
+package com.itfsw.query.builder.other;
+
+import com.itfsw.query.builder.exception.FilterException;
+import com.itfsw.query.builder.support.filter.IRuleFilter;
+import com.itfsw.query.builder.support.model.JsonRule;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/1 11:34
+ * @time:2017/11/2 17:32
  * ---------------------------------------------------------------------------
  */
-public class FilterException extends QueryBuilderException {
-    public FilterException(String message) {
-        super(message);
+public class Test2Filter implements IRuleFilter {
+    @Override
+    public void doFilter(JsonRule jsonRule) throws FilterException {
+
     }
 }

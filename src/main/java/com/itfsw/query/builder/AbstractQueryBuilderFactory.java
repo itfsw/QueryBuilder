@@ -16,6 +16,8 @@
 
 package com.itfsw.query.builder;
 
+import com.itfsw.query.builder.exception.FilterAddException;
+import com.itfsw.query.builder.exception.ParserAddException;
 import com.itfsw.query.builder.support.builder.AbstractBuilder;
 import com.itfsw.query.builder.support.filter.DatetimeConvertFilter;
 import com.itfsw.query.builder.support.filter.DefaultValueConvertFilter;
@@ -72,7 +74,10 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addFilterBefore(IRuleFilter filter, Class<? extends IRuleFilter> beforeFilter) {
         int index = getIndexOfClass(filters, beforeFilter);
-        filters.add(index == -1 ? 0 : index, filter);
+        if (index == -1) {
+            throw new FilterAddException("filter " + beforeFilter.getSimpleName() + " has not been added");
+        }
+        filters.add(index, filter);
     }
 
     /**
@@ -82,7 +87,10 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addFilterAfter(IRuleFilter filter, Class<? extends IRuleFilter> afterFilter) {
         int index = getIndexOfClass(filters, afterFilter);
-        filters.add(index == -1 ? filters.size() : index + 1, filter);
+        if (index == -1) {
+            throw new FilterAddException("filter " + afterFilter.getSimpleName() + " has not been added");
+        }
+        filters.add(index + 1, filter);
     }
 
     /**
@@ -92,12 +100,11 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addFilterAt(IRuleFilter filter, Class<? extends IRuleFilter> atFilter) {
         int index = getIndexOfClass(filters, atFilter);
-        if (index >= 0) {
-            filters.remove(index);
-            filters.add(index, filter);
-        } else {
-            filters.add(filter);
+        if (index == -1) {
+            throw new FilterAddException("filter " + atFilter.getSimpleName() + " has not been added");
         }
+        filters.remove(index);
+        filters.add(index, filter);
     }
 
     /**
@@ -115,7 +122,10 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addParserBefore(IRuleParser parser, Class<? extends IRuleParser> beforeParser) {
         int index = getIndexOfClass(parsers, beforeParser);
-        parsers.add(index == -1 ? 0 : index, parser);
+        if (index == -1) {
+            throw new ParserAddException("parser " + beforeParser.getSimpleName() + " has not been added");
+        }
+        parsers.add(index, parser);
     }
 
     /**
@@ -125,7 +135,10 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addParserAfter(IRuleParser parser, Class<? extends IRuleParser> afterParser) {
         int index = getIndexOfClass(parsers, afterParser);
-        parsers.add(index == -1 ? parsers.size() : index + 1, parser);
+        if (index == -1) {
+            throw new ParserAddException("parser " + afterParser.getSimpleName() + " has not been added");
+        }
+        parsers.add(index + 1, parser);
     }
 
     /**
@@ -135,12 +148,11 @@ public abstract class AbstractQueryBuilderFactory {
      */
     public void addParserAt(IRuleParser parser, Class<? extends IRuleParser> atParser) {
         int index = getIndexOfClass(parsers, atParser);
-        if (index >= 0) {
-            parsers.remove(index);
-            parsers.add(index, parser);
-        } else {
-            parsers.add(parser);
+        if (index == -1) {
+            throw new ParserAddException("parser " + atParser.getSimpleName() + " has not been added");
         }
+        parsers.remove(index);
+        parsers.add(index, parser);
     }
 
 

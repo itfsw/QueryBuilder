@@ -24,7 +24,7 @@ package com.itfsw.query.builder.exception;
  * @time:2017/10/31 14:06
  * ---------------------------------------------------------------------------
  */
-public class ParserNotFoundException extends RuntimeException {
+public class ParserNotFoundException extends QueryBuilderException {
     /**
      * 构造函数
      * @param message
