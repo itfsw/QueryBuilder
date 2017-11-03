@@ -1,0 +1,30 @@
+{
+  "condition": "AND",
+  "rules": [
+    {
+      "id": "price",
+      "field": "price",
+      "type": "string",
+      "input": "number",
+      "operator": "equal",
+      "value": 10.04,
+      "data": {
+        "class": "com.example.PriceTag"
+      }
+    },
+    {
+      "id": "age",
+      "field": "age",
+      "type": "string",
+      "input": "text",
+      "operator": "in",
+      "value": [
+        10,
+        50,
+        60
+      ]
+    }
+  ],
+  "not": false,
+  "valid": true
+}
