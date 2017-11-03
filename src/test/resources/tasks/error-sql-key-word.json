@@ -1,0 +1,15 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "name",
+      "field": "select",
+      "type": "string",
+      "input": "text",
+      "operator": "equal",
+      "value": "Mistic"
+    }
+  ],
+  "not": false,
+  "valid": true
+}
