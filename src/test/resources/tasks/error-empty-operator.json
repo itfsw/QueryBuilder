@@ -1,0 +1,14 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "name",
+      "field": "username",
+      "type": "string",
+      "input": "text",
+      "value": "Mistic"
+    }
+  ],
+  "not": false,
+  "valid": true
+}

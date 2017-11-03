@@ -1,0 +1,19 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "age",
+      "field": "age",
+      "type": "integer",
+      "input": "text",
+      "operator": "between",
+      "value": [
+        "5",
+        "10",
+        "1356"
+      ]
+    }
+  ],
+  "not": false,
+  "valid": true
+}

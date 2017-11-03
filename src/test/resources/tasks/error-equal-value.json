@@ -1,0 +1,18 @@
+{
+  "condition": "OR",
+  "rules": [
+    {
+      "id": "name",
+      "field": "username",
+      "type": "string",
+      "input": "text",
+      "operator": "equal",
+      "value": [
+        "Mistic",
+        "小明"
+      ]
+    }
+  ],
+  "not": false,
+  "valid": true
+}
