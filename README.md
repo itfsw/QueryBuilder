@@ -15,3 +15,51 @@ Maven引用：
   <version>1.0.0</version>
 </dependency>
 ```
+---------------------------------------
+#### 基础使用
+```java
+public class Test {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    public void test() throws IOException {
+        String json = "{\"condition\":\"OR\",\"rules\":[{\"id\":\"name\",\"field\":\"username\",\"type\":\"string\",\"input\":\"text\",\"operator\":\"equal\",\"value\":\"Mistic\"}],\"not\":false,\"valid\":true}";
+
+        // ----------------------------------------- SQL -----------------------------------------
+        // get SqlBuilder
+        SqlQueryBuilderFactory sqlQueryBuilderFactory = new SqlQueryBuilderFactory();
+        SqlBuilder sqlBuilder = sqlQueryBuilderFactory.builder();
+
+        // build query
+        SqlQueryResult sqlQueryResult = sqlBuilder.build(json);
+
+        // execute
+        jdbcTemplate.query(new StringBuffer("SELECT * FROM `user` WHERE ").append(sqlQueryResult.getQuery()).toString(), sqlQueryResult.getParams().toArray(), rs -> {
+            System.out.println(rs.getString("username"));
+        });
+
+        // ----------------------------------------- Mongodb -----------------------------------------
+        // get MongodbBuilder
+        MongodbQueryBuilderFactory mongodbQueryBuilderFactory = new MongodbQueryBuilderFactory();
+        MongodbBuilder mongodbBuilder = mongodbQueryBuilderFactory.builder();
+
+        // build query
+        MongodbQueryResult mongodbQueryResult = mongodbBuilder.build(json);
+
+        // execute
+        DBCursor cursor = mongoTemplate.getCollection("user").find(mongodbQueryResult.getQuery());
+        while (cursor.hasNext()){
+            System.out.println(cursor.curr().get("username"));
+        }
+    }
+}
+```
+#### 进阶使用
+项目提供了自定义RuleFilter和RuleParser功能。其中RuleFilter进行对rule的验证和数据过滤等工作，而RuleParser则可以进行自定义规则的解析。
+自定义RuleFilter和RuleParser使用Factory相应的addXXX、addXXXBefore、addXXXAt、addXXXAfter进行替换添加。
+
+* 自定义RuleFilter  
+自定义类实现[IRuleFilter](src/main/java/com/itfsw/query/builder/support/filter/IRuleFilter.java)接口；
+
