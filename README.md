@@ -60,6 +60,17 @@ public class Test {
 项目提供了自定义RuleFilter和RuleParser功能。其中RuleFilter进行对rule的验证和数据过滤等工作，而RuleParser则可以进行自定义规则的解析。
 自定义RuleFilter和RuleParser使用Factory相应的addXXX、addXXXBefore、addXXXAt、addXXXAfter进行替换添加。
 
-* 自定义RuleFilter  
-自定义类实现[IRuleFilter](src/main/java/com/itfsw/query/builder/support/filter/IRuleFilter.java)接口；
+--------------------------------------------------------------------------------------------------
+##### 1.自定义RuleFilter  
+自定义类实现[IRuleFilter](src/main/java/com/itfsw/query/builder/support/filter/IRuleFilter.java)接口  
+系统自带：
+* [ValidateFilter](src/main/java/com/itfsw/query/builder/support/filter/ValidateFilter.java)：提供基础的Rule验证，如一些必要条件和数据验证；
+* [DefaultValueConvertFilter](src/main/java/com/itfsw/query/builder/support/filter/DefaultValueConvertFilter.java)：一些基础数据类型的转换；
+* [DatetimeConvertFilter](src/main/java/com/itfsw/query/builder/support/filter/DatetimeConvertFilter.java)：日期类型的数据转换，建议用户替换默认配置（"yyyy-MM-dd HH:mm:ss"）；
+* [SqlInjectionAttackFilter](src/main/java/com/itfsw/query/builder/support/filter/SqlInjectionAttackFilter.java)：基础sql注入拦截；
 
+##### 2.自定义RuleParser
+根据数据库的不同，分别实现[AbstractMongodbRuleParser](src/main/java/com/itfsw/query/builder/support/parser/AbstractMongodbRuleParser.java)或者[AbstractSqlRuleParser](src/main/java/com/itfsw/query/builder/support/parser/AbstractSqlRuleParser.java)  
+
+系统自带：
+>operator("equal","not_equal","in","not_in","less","less_or_equal","greater","greater_or_equal","between","not_between","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty","is_null","is_not_null")对应的Sql和Mongodb实现。
