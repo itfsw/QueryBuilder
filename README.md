@@ -51,7 +51,7 @@ public class Test {
         // execute
         DBCursor cursor = mongoTemplate.getCollection("user").find(mongodbQueryResult.getQuery());
         while (cursor.hasNext()){
-            System.out.println(cursor.curr().get("username"));
+            System.out.println(cursor.next().get("username"));
         }
     }
 }
