@@ -12,7 +12,7 @@ Maven引用：
 <dependency>
   <groupId>com.itfsw</groupId>
   <artifactId>QueryBuilder</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 ---------------------------------------
@@ -57,7 +57,7 @@ public class Test {
 }
 ```
 #### Advanced
-The project provides custom RuleFilter and RuleParser features. In the RuleFilter, the validation of rule and data filtering are performed, while RuleParser can be used to resolve the custom rules.
+The project provides custom RuleFilter, RuleParser, and GroupParser features. In the RuleFilter, the validation of rule and data filtering are performed, while RuleParser and GroupParser can be used to resolve the custom rules.
 Custom RuleFilter and RuleParser can be replaced with factory corresponding addXXX, AddXXXBefore, AddXXXAt, and AddXXXAfter.
 
 --------------------------------------------------------------------------------------------------
@@ -73,4 +73,10 @@ Provide：
 Depending on the database，Custom RuleParser Class must be implement[AbstractMongodbRuleParser](src/main/java/com/itfsw/query/builder/support/parser/AbstractMongodbRuleParser.java) or [AbstractSqlRuleParser](src/main/java/com/itfsw/query/builder/support/parser/AbstractSqlRuleParser.java)  
 
 Provide：
->operator("equal","not_equal","in","not_in","less","less_or_equal","greater","greater_or_equal","between","not_between","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty","is_null","is_not_null")。
+>operator("equal","not_equal","in","not_in","less","less_or_equal","greater","greater_or_equal","between","not_between","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty","is_null","is_not_null")。  
+
+##### 3.Custom GroupParser
+Custom RuleFilter Class must be implement[IGroupParser](src/main/java/com/itfsw/query/builder/support/parser/IGroupParser.java)   
+
+Provide：
+>default implements has provide "AND,OR,NOT"

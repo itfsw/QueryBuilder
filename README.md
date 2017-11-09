@@ -12,7 +12,7 @@ Maven引用：
 <dependency>
   <groupId>com.itfsw</groupId>
   <artifactId>QueryBuilder</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 ---------------------------------------
@@ -57,7 +57,7 @@ public class Test {
 }
 ```
 #### 进阶使用
-项目提供了自定义RuleFilter和RuleParser功能。其中RuleFilter进行对rule的验证和数据过滤等工作，而RuleParser则可以进行自定义规则的解析。
+项目提供了自定义RuleFilter、RuleParser、GroupParser功能。其中RuleFilter进行对rule的验证和数据过滤等工作，而GroupParser、RuleParser则可以进行自定义规则的解析。
 自定义RuleFilter和RuleParser使用Factory相应的addXXX、addXXXBefore、addXXXAt、addXXXAfter进行替换添加。
 
 --------------------------------------------------------------------------------------------------
@@ -73,4 +73,10 @@ public class Test {
 根据数据库的不同，分别实现[AbstractMongodbRuleParser](src/main/java/com/itfsw/query/builder/support/parser/AbstractMongodbRuleParser.java)或者[AbstractSqlRuleParser](src/main/java/com/itfsw/query/builder/support/parser/AbstractSqlRuleParser.java)  
 
 系统自带：
->operator("equal","not_equal","in","not_in","less","less_or_equal","greater","greater_or_equal","between","not_between","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty","is_null","is_not_null")对应的Sql和Mongodb实现。
+>operator("equal","not_equal","in","not_in","less","less_or_equal","greater","greater_or_equal","between","not_between","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty","is_null","is_not_null")对应的Sql和Mongodb实现。  
+
+##### 3.自定义GroupParser
+自定义实现实现[IGroupParser](src/main/java/com/itfsw/query/builder/support/parser/IGroupParser.java)  
+
+系统自带
+>实现了AND、OR以及NOT操作
