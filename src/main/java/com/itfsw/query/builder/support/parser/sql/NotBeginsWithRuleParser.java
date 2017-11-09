@@ -20,6 +20,7 @@ import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.model.sql.Operation;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
@@ -30,7 +31,7 @@ import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
  * ---------------------------------------------------------------------------
  */
 public class NotBeginsWithRuleParser extends AbstractSqlRuleParser {
-    public Operation parse(IRule rule) {
+    public Operation parse(IRule rule, JsonRuleParser parser) {
         return new Operation(new StringBuffer(rule.getField()).append(" NOT LIKE(?)"), rule.getValue() + "%");
     }
 

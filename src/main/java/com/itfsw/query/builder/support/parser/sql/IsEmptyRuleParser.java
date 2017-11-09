@@ -20,6 +20,7 @@ import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.model.sql.Operation;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
@@ -34,7 +35,7 @@ public class IsEmptyRuleParser extends AbstractSqlRuleParser {
         return EnumOperator.IS_EMPTY.equals(rule.getOperator());
     }
 
-    public Operation parse(IRule rule) {
+    public Operation parse(IRule rule, JsonRuleParser parser) {
         Operation operation = new Operation(new StringBuffer(rule.getField()).append(" = ''"), rule.getValue());
         operation.setHasValue(false);
         return operation;

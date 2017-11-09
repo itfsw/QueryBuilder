@@ -18,6 +18,7 @@ package com.itfsw.query.builder.other;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -36,7 +37,7 @@ public class CustomMongodbParser extends AbstractMongodbRuleParser {
     }
 
     @Override
-    public DBObject parse(IRule rule) {
+    public DBObject parse(IRule rule, JsonRuleParser parser) {
         BasicDBObject operate = new BasicDBObject("$ne", rule.getValue());
         return new BasicDBObject(rule.getField(), operate);
     }

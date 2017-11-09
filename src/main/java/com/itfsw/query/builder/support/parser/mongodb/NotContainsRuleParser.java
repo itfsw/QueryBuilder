@@ -19,6 +19,7 @@ package com.itfsw.query.builder.support.parser.mongodb;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 import com.mongodb.BasicDBObject;
 
 import java.util.regex.Pattern;
@@ -36,7 +37,7 @@ public class NotContainsRuleParser extends AbstractMongodbRuleParser {
         return EnumOperator.NOT_CONTAINS.equals(rule.getOperator());
     }
 
-    public BasicDBObject parse(IRule rule) {
+    public BasicDBObject parse(IRule rule, JsonRuleParser parser) {
         BasicDBObject operate = new BasicDBObject();
         operate.append("$regex", Pattern.compile("^((?!" + rule.getValue() + ").)*$"));
         operate.append("$options", "s");

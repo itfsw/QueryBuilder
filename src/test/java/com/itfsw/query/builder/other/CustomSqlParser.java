@@ -19,6 +19,7 @@ package com.itfsw.query.builder.other;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.sql.Operation;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
@@ -35,7 +36,7 @@ public class CustomSqlParser extends AbstractSqlRuleParser {
     }
 
     @Override
-    public Operation parse(IRule rule) {
+    public Operation parse(IRule rule, JsonRuleParser parser) {
         return new Operation(new StringBuffer(rule.getField()).append(" <> ?"), rule.getValue());
     }
 }

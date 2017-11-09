@@ -38,7 +38,8 @@ public abstract class AbstractMongodbRuleParser implements IRuleParser {
     /**
      * 解析
      * @param rule
+     * @param parser
      * @return
      */
-    public abstract DBObject parse(IRule rule);
+    public abstract DBObject parse(IRule rule, JsonRuleParser parser);
 }

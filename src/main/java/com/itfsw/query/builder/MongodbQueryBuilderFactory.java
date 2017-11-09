@@ -40,27 +40,30 @@ public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
     public MongodbQueryBuilderFactory() {
         super();
 
+        // ---------------------- group parser ----------------------------
+        groupParser = new DefaultGroupParser();
+
         // ---------------------- rule parser ----------------------------
-        parsers.add(new EqualRuleParser());
-        parsers.add(new NotEqualRuleParser());
-        parsers.add(new INRuleParser());
-        parsers.add(new NotInRuleParser());
-        parsers.add(new LessRuleParser());
-        parsers.add(new LessOrEqualRuleParser());
-        parsers.add(new GreaterRuleParser());
-        parsers.add(new GreaterOrEqualRuleParser());
-        parsers.add(new BetweenRuleParser());
-        parsers.add(new NotBetweenRuleParser());
-        parsers.add(new BeginsWithRuleParser());
-        parsers.add(new NotBeginsWithRuleParser());
-        parsers.add(new ContainsRuleParser());
-        parsers.add(new NotContainsRuleParser());
-        parsers.add(new EndsWithRuleParser());
-        parsers.add(new NotEndsWithRuleParser());
-        parsers.add(new IsEmptyRuleParser());
-        parsers.add(new IsNotEmptyRuleParser());
-        parsers.add(new IsNullRuleParser());
-        parsers.add(new IsNotNullRuleParser());
+        ruleParsers.add(new EqualRuleParser());
+        ruleParsers.add(new NotEqualRuleParser());
+        ruleParsers.add(new INRuleParser());
+        ruleParsers.add(new NotInRuleParser());
+        ruleParsers.add(new LessRuleParser());
+        ruleParsers.add(new LessOrEqualRuleParser());
+        ruleParsers.add(new GreaterRuleParser());
+        ruleParsers.add(new GreaterOrEqualRuleParser());
+        ruleParsers.add(new BetweenRuleParser());
+        ruleParsers.add(new NotBetweenRuleParser());
+        ruleParsers.add(new BeginsWithRuleParser());
+        ruleParsers.add(new NotBeginsWithRuleParser());
+        ruleParsers.add(new ContainsRuleParser());
+        ruleParsers.add(new NotContainsRuleParser());
+        ruleParsers.add(new EndsWithRuleParser());
+        ruleParsers.add(new NotEndsWithRuleParser());
+        ruleParsers.add(new IsEmptyRuleParser());
+        ruleParsers.add(new IsNotEmptyRuleParser());
+        ruleParsers.add(new IsNullRuleParser());
+        ruleParsers.add(new IsNotNullRuleParser());
 
     }
 
@@ -69,12 +72,12 @@ public class MongodbQueryBuilderFactory extends AbstractQueryBuilderFactory {
      * @return
      */
     public MongodbBuilder builder() {
-        List<AbstractMongodbRuleParser> mongodbRuleParsers = new ArrayList<>();
-        for (IRuleParser parser : parsers) {
+        List<IRuleParser> mongodbRuleParsers = new ArrayList<>();
+        for (IRuleParser parser : ruleParsers) {
             if (parser instanceof AbstractMongodbRuleParser) {
-                mongodbRuleParsers.add((AbstractMongodbRuleParser) parser);
+                mongodbRuleParsers.add(parser);
             }
         }
-        return new MongodbBuilder(filters, mongodbRuleParsers);
+        return new MongodbBuilder(groupParser, mongodbRuleParsers, filters);
     }
 }

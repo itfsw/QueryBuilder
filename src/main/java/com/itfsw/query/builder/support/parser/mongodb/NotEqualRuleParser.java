@@ -19,6 +19,7 @@ package com.itfsw.query.builder.support.parser.mongodb;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 import com.mongodb.BasicDBObject;
 
 /**
@@ -34,7 +35,7 @@ public class NotEqualRuleParser extends AbstractMongodbRuleParser {
         return EnumOperator.NOT_EQUAL.equals(rule.getOperator());
     }
 
-    public BasicDBObject parse(IRule rule) {
+    public BasicDBObject parse(IRule rule, JsonRuleParser parser) {
         BasicDBObject operate = new BasicDBObject("$ne", rule.getValue());
         return new BasicDBObject(rule.getField(), operate);
     }

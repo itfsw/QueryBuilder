@@ -19,6 +19,7 @@ package com.itfsw.query.builder.support.parser.mongodb;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -37,7 +38,7 @@ public class NotBeginsWithRuleParser extends AbstractMongodbRuleParser {
         return EnumOperator.NOT_BEGINS_WITH.equals(rule.getOperator());
     }
 
-    public DBObject parse(IRule rule) {
+    public DBObject parse(IRule rule, JsonRuleParser parser) {
         BasicDBObject operate = new BasicDBObject("$regex", Pattern.compile("^(?!" + rule.getValue() + ")"));
         return new BasicDBObject(rule.getField(), operate);
     }

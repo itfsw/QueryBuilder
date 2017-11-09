@@ -19,6 +19,7 @@ package com.itfsw.query.builder.support.parser.mongodb;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -35,7 +36,7 @@ public class IsNullRuleParser extends AbstractMongodbRuleParser {
         return EnumOperator.IS_NULL.equals(rule.getOperator());
     }
 
-    public DBObject parse(IRule rule) {
+    public DBObject parse(IRule rule, JsonRuleParser parser) {
         return new BasicDBObject(rule.getField(), null);
     }
 }

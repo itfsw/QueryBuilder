@@ -76,33 +76,33 @@ public class AbstractQueryBuilderFactoryTest {
     @Test
     public void addParser() throws Exception {
         AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParser(testParser);
-        Assert.assertEquals(factory.getParsers().get(factory.getParsers().size() - 1), testParser);
+        factory.addRuleParser(testParser);
+        Assert.assertEquals(factory.getRuleParsers().get(factory.getRuleParsers().size() - 1), testParser);
     }
 
     @Test
     public void addParserBefore() throws Exception {
         AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParserBefore(testParser, EqualRuleParser.class);
-        Assert.assertEquals(getIndexOfClass(factory.getParsers(), testParser.getClass()) + 1, getIndexOfClass(factory.getParsers(), EqualRuleParser.class));
+        factory.addRuleParserBefore(testParser, EqualRuleParser.class);
+        Assert.assertEquals(getIndexOfClass(factory.getRuleParsers(), testParser.getClass()) + 1, getIndexOfClass(factory.getRuleParsers(), EqualRuleParser.class));
     }
 
     @Test
     public void addParserAfter() throws Exception {
         AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParserAfter(testParser, EqualRuleParser.class);
-        Assert.assertEquals(getIndexOfClass(factory.getParsers(), testParser.getClass()) - 1, getIndexOfClass(factory.getParsers(), EqualRuleParser.class));
+        factory.addRuleParserAfter(testParser, EqualRuleParser.class);
+        Assert.assertEquals(getIndexOfClass(factory.getRuleParsers(), testParser.getClass()) - 1, getIndexOfClass(factory.getRuleParsers(), EqualRuleParser.class));
     }
 
     @Test
     public void addParserAt() throws Exception {
         AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
 
-        int index = getIndexOfClass(factory.getParsers(), EqualRuleParser.class);
+        int index = getIndexOfClass(factory.getRuleParsers(), EqualRuleParser.class);
 
-        factory.addParserAt(testParser, EqualRuleParser.class);
-        Assert.assertEquals(-1, getIndexOfClass(factory.getParsers(), EqualRuleParser.class));
-        Assert.assertEquals(index, getIndexOfClass(factory.getParsers(), testParser.getClass()));
+        factory.addRuleParserAt(testParser, EqualRuleParser.class);
+        Assert.assertEquals(-1, getIndexOfClass(factory.getRuleParsers(), EqualRuleParser.class));
+        Assert.assertEquals(index, getIndexOfClass(factory.getRuleParsers(), testParser.getClass()));
     }
 
     /**
@@ -138,7 +138,7 @@ public class AbstractQueryBuilderFactoryTest {
     @Test(expected = ParserAddException.class)
     public void addParserBeforeUnknownClass() throws Exception {
         AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParserBefore(testParser, Test2Parser.class);
+        factory.addRuleParserBefore(testParser, Test2Parser.class);
     }
 
     /**
@@ -147,7 +147,7 @@ public class AbstractQueryBuilderFactoryTest {
     @Test(expected = ParserAddException.class)
     public void addParserAtUnknownClass() throws Exception {
         AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParserAt(testParser, Test2Parser.class);
+        factory.addRuleParserAt(testParser, Test2Parser.class);
     }
 
     /**
@@ -156,7 +156,7 @@ public class AbstractQueryBuilderFactoryTest {
     @Test(expected = ParserAddException.class)
     public void addParserAfterUnknownClass() throws Exception {
         AbstractQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParserAfter(testParser, Test2Parser.class);
+        factory.addRuleParserAfter(testParser, Test2Parser.class);
     }
 
     /**

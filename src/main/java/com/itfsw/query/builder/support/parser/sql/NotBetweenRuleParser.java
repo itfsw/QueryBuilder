@@ -20,6 +20,7 @@ import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.model.sql.Operation;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
@@ -34,7 +35,7 @@ public class NotBetweenRuleParser extends AbstractSqlRuleParser {
         return EnumOperator.NOT_BETWEEN.equals(rule.getOperator());
     }
 
-    public Operation parse(IRule rule) {
+    public Operation parse(IRule rule, JsonRuleParser parser) {
         return new Operation(new StringBuffer(rule.getField()).append(" NOT BETWEEN ? AND ?"), rule.getValue());
     }
 }

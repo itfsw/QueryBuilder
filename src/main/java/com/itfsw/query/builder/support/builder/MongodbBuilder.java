@@ -18,15 +18,10 @@ package com.itfsw.query.builder.support.builder;
 
 import com.itfsw.query.builder.exception.ParserNotFoundException;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
-import com.itfsw.query.builder.support.model.IGroup;
-import com.itfsw.query.builder.support.model.IRule;
-import com.itfsw.query.builder.support.model.JsonRule;
 import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
-import com.itfsw.query.builder.support.model.enums.EnumCondition;
 import com.itfsw.query.builder.support.model.result.MongodbQueryResult;
-import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
+import com.itfsw.query.builder.support.parser.IGroupParser;
+import com.itfsw.query.builder.support.parser.IRuleParser;
 import com.mongodb.DBObject;
 
 import java.io.IOException;
@@ -41,16 +36,15 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public class MongodbBuilder extends AbstractBuilder {
-    private List<AbstractMongodbRuleParser> parsers;   // rule parser
 
     /**
      * 构造函数
-     * @param filters
-     * @param parsers
+     * @param groupParser
+     * @param ruleParsers
+     * @param ruleFilters
      */
-    public MongodbBuilder(List<IRuleFilter> filters, List<AbstractMongodbRuleParser> parsers) {
-        this.filters = filters;
-        this.parsers = parsers;
+    public MongodbBuilder(IGroupParser groupParser, List<IRuleParser> ruleParsers, List<IRuleFilter> ruleFilters) {
+        super(groupParser, ruleParsers, ruleFilters);
     }
 
     /**
@@ -62,60 +56,17 @@ public class MongodbBuilder extends AbstractBuilder {
      */
     @Override
     public MongodbQueryResult build(String query) throws IOException, ParserNotFoundException {
-        DBObject result = (DBObject) super.build(query);
+        DBObject result = (DBObject) super.parse(query);
         return new MongodbQueryResult(query, result);
     }
 
+
     /**
-     * group
-     * @param group
+     * builder type
      * @return
      */
     @Override
-    protected Object parseGroup(IGroup group) {
-        // rules
-        BasicDBList operates = new BasicDBList();
-        for (JsonRule rule : group.getRules()) {
-            operates.add(parse(rule));
-        }
-
-        // AND or OR
-        BasicDBObject andOrObj = new BasicDBObject();
-        andOrObj.append(EnumCondition.AND.equals(group.getCondition()) ? "$and" : "$or", operates);
-
-        // Not
-        if (group.getNot() != null && group.getNot()) {
-            BasicDBList list = new BasicDBList();
-            list.add(andOrObj);
-            return new BasicDBObject("$nor", list);
-        }
-        return andOrObj;
-    }
-
-    /**
-     * rule
-     * @param rule
-     * @return
-     */
-    @Override
-    protected Object parseRule(IRule rule) {
-        for (AbstractMongodbRuleParser parser : parsers) {
-            if (parser.canParse(rule)) {
-                return parser.parse(rule);
-            }
-        }
-
-        throw new ParserNotFoundException("Can't found rule parser for:" + rule);
-    }
-
-    /**
-     * 执行过滤
-     * @param rule
-     */
-    @Override
-    protected void doFilter(JsonRule rule) {
-        for (IRuleFilter filter : filters) {
-            filter.doFilter(rule, EnumBuilderType.MONGODB);
-        }
+    protected EnumBuilderType getBuilderType() {
+        return EnumBuilderType.MONGODB;
     }
 }

@@ -58,7 +58,7 @@ public class ParserNotFoundExceptionTest {
     @Test
     public void testSqlParserNotFoundAndAdd() throws IOException {
         SqlQueryBuilderFactory factory = new SqlQueryBuilderFactory();
-        factory.addParser(new CustomSqlParser());
+        factory.addRuleParser(new CustomSqlParser());
         SqlBuilder builder = factory.builder();
 
         String json = FileHelper.getStringFrom("tasks/custom-operator.json");
@@ -86,7 +86,7 @@ public class ParserNotFoundExceptionTest {
     @Test
     public void testMongodbParserNotFoundAndAdd() throws IOException {
         MongodbQueryBuilderFactory factory = new MongodbQueryBuilderFactory();
-        factory.addParser(new CustomMongodbParser());
+        factory.addRuleParser(new CustomMongodbParser());
         MongodbBuilder builder = factory.builder();
 
         String json = FileHelper.getStringFrom("tasks/custom-operator.json");

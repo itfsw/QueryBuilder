@@ -37,7 +37,8 @@ public interface IRuleParser {
     /**
      * 解析
      * @param rule
+     * @param parser
      * @return
      */
-    Object parse(IRule rule);
+    Object parse(IRule rule, JsonRuleParser parser);
 }

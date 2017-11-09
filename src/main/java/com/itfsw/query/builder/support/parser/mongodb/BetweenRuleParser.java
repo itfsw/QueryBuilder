@@ -19,6 +19,7 @@ package com.itfsw.query.builder.support.parser.mongodb;
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -38,7 +39,7 @@ public class BetweenRuleParser extends AbstractMongodbRuleParser {
         return EnumOperator.BETWEEN.equals(rule.getOperator());
     }
 
-    public DBObject parse(IRule rule) {
+    public DBObject parse(IRule rule, JsonRuleParser parser) {
         List<Object> values = (List<Object>) rule.getValue();
         BasicDBObject operate = new BasicDBObject();
         operate.append("$gte", values.get(0));

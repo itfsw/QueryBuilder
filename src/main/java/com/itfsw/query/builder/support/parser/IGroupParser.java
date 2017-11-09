@@ -14,30 +14,24 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support.parser.mongodb;
+package com.itfsw.query.builder.support.parser;
 
-import com.itfsw.query.builder.support.model.IRule;
-import com.itfsw.query.builder.support.model.enums.EnumOperator;
-import com.itfsw.query.builder.support.parser.AbstractMongodbRuleParser;
-import com.itfsw.query.builder.support.parser.JsonRuleParser;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
+import com.itfsw.query.builder.support.model.IGroup;
 
 /**
  * ---------------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/11/1 16:12
+ * @time:2017/11/9 11:03
  * ---------------------------------------------------------------------------
  */
-public class NotInRuleParser extends AbstractMongodbRuleParser {
-    public boolean canParse(IRule rule) {
-        return EnumOperator.NOT_IN.equals(rule.getOperator());
-    }
-
-    public DBObject parse(IRule rule, JsonRuleParser parser) {
-        BasicDBObject operate = new BasicDBObject("$nin", rule.getValue());
-        return new BasicDBObject(rule.getField(), operate);
-    }
+public interface IGroupParser {
+    /**
+     * 解析
+     * @param group
+     * @param parser
+     * @return
+     */
+    Object parse(IGroup group, JsonRuleParser parser);
 }

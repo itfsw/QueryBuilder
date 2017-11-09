@@ -14,75 +14,63 @@
  * limitations under the License.
  */
 
-package com.itfsw.query.builder.support.builder;
+package com.itfsw.query.builder.support.parser;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itfsw.query.builder.exception.ParserNotFoundException;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.model.JsonRule;
 import com.itfsw.query.builder.support.model.enums.EnumBuilderType;
-import com.itfsw.query.builder.support.parser.IGroupParser;
-import com.itfsw.query.builder.support.parser.IRuleParser;
-import com.itfsw.query.builder.support.parser.JsonRuleParser;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
  * ---------------------------------------------------------------------------
- * 构造类
+ * Json rule 解析
  * ---------------------------------------------------------------------------
  * @author: hewei
- * @time:2017/10/30 15:44
+ * @time:2017/11/9 11:20
  * ---------------------------------------------------------------------------
  */
-public abstract class AbstractBuilder {
-    private static ObjectMapper mapper; // object mapper
+public class JsonRuleParser {
+    private EnumBuilderType builderType;    // builder type
     private IGroupParser groupParser;   // group parser
     private List<IRuleParser> ruleParsers;  // rule ruleParsers
-    private List<IRuleFilter> ruleFilters;  // rule filters
-
-    static {
-        // object mapper
-        mapper = new ObjectMapper();
-
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
+    private List<IRuleFilter> ruleFilters;  // rule filter
 
     /**
      * 构造函数
      * @param groupParser
      * @param ruleParsers
-     * @param ruleFilters
      */
-    public AbstractBuilder(IGroupParser groupParser, List<IRuleParser> ruleParsers, List<IRuleFilter> ruleFilters) {
+    public JsonRuleParser(EnumBuilderType builderType, IGroupParser groupParser, List<IRuleParser> ruleParsers, List<IRuleFilter> ruleFilters) {
+        this.builderType = builderType;
         this.groupParser = groupParser;
         this.ruleParsers = ruleParsers;
         this.ruleFilters = ruleFilters;
     }
 
     /**
-     * 构建
-     * @param query
+     * 解析
+     * @param jsonRule
      * @return
      */
-    protected Object parse(String query) throws IOException {
-        JsonRule jsonRule = mapper.readValue(query, JsonRule.class);
-        // json rule parse
-        return new JsonRuleParser(getBuilderType(), groupParser, ruleParsers, ruleFilters).parse(jsonRule);
+    public Object parse(JsonRule jsonRule) {
+        // filter
+        for (IRuleFilter ruleFilter : ruleFilters) {
+            ruleFilter.doFilter(jsonRule, builderType);
+        }
+
+        // parse
+        if (jsonRule.isGroup()) {
+            return groupParser.parse(jsonRule, this);
+        } else {
+            for (IRuleParser ruleParser : ruleParsers) {
+                if (ruleParser.canParse(jsonRule)) {
+                    return ruleParser.parse(jsonRule, this);
+                }
+            }
+
+            throw new ParserNotFoundException("Can't found rule parser for:" + jsonRule);
+        }
     }
-
-    /**
-     * 执行构建
-     * @param query
-     * @return
-     */
-    public abstract Object build(String query) throws IOException, ParserNotFoundException;
-
-    /**
-     * get builder type
-     * @return
-     */
-    protected abstract EnumBuilderType getBuilderType();
 }

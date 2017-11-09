@@ -38,7 +38,8 @@ public abstract class AbstractSqlRuleParser implements IRuleParser{
     /**
      * 解析
      * @param rule
+     * @param parser
      * @return
      */
-    public abstract Operation parse(IRule rule);
+    public abstract Operation parse(IRule rule, JsonRuleParser parser);
 }

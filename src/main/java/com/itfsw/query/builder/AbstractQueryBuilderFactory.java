@@ -23,6 +23,7 @@ import com.itfsw.query.builder.support.filter.DatetimeConvertFilter;
 import com.itfsw.query.builder.support.filter.DefaultValueConvertFilter;
 import com.itfsw.query.builder.support.filter.IRuleFilter;
 import com.itfsw.query.builder.support.filter.ValidateFilter;
+import com.itfsw.query.builder.support.parser.IGroupParser;
 import com.itfsw.query.builder.support.parser.IRuleParser;
 
 import java.util.ArrayList;
@@ -37,15 +38,16 @@ import java.util.List;
  * ---------------------------------------------------------------------------
  */
 public abstract class AbstractQueryBuilderFactory {
+    protected IGroupParser groupParser; // group parser
     protected List<IRuleFilter> filters;    // filters
-    protected List<IRuleParser> parsers;   // rule parser
+    protected List<IRuleParser> ruleParsers;   // rule parser
 
     /**
      * 构造函数
      */
     public AbstractQueryBuilderFactory() {
         this.filters = new ArrayList<>();
-        this.parsers = new ArrayList<>();
+        this.ruleParsers = new ArrayList<>();
 
         // -------------------------- filter -----------------------------
         filters.add(new ValidateFilter());
@@ -111,8 +113,8 @@ public abstract class AbstractQueryBuilderFactory {
      * add parser
      * @param parser
      */
-    public void addParser(IRuleParser parser) {
-        this.parsers.add(parser);
+    public void addRuleParser(IRuleParser parser) {
+        this.ruleParsers.add(parser);
     }
 
     /**
@@ -120,12 +122,12 @@ public abstract class AbstractQueryBuilderFactory {
      * @param parser
      * @param beforeParser
      */
-    public void addParserBefore(IRuleParser parser, Class<? extends IRuleParser> beforeParser) {
-        int index = getIndexOfClass(parsers, beforeParser);
+    public void addRuleParserBefore(IRuleParser parser, Class<? extends IRuleParser> beforeParser) {
+        int index = getIndexOfClass(ruleParsers, beforeParser);
         if (index == -1) {
             throw new ParserAddException("parser " + beforeParser.getSimpleName() + " has not been added");
         }
-        parsers.add(index, parser);
+        ruleParsers.add(index, parser);
     }
 
     /**
@@ -133,12 +135,12 @@ public abstract class AbstractQueryBuilderFactory {
      * @param parser
      * @param afterParser
      */
-    public void addParserAfter(IRuleParser parser, Class<? extends IRuleParser> afterParser) {
-        int index = getIndexOfClass(parsers, afterParser);
+    public void addRuleParserAfter(IRuleParser parser, Class<? extends IRuleParser> afterParser) {
+        int index = getIndexOfClass(ruleParsers, afterParser);
         if (index == -1) {
             throw new ParserAddException("parser " + afterParser.getSimpleName() + " has not been added");
         }
-        parsers.add(index + 1, parser);
+        ruleParsers.add(index + 1, parser);
     }
 
     /**
@@ -146,13 +148,13 @@ public abstract class AbstractQueryBuilderFactory {
      * @param parser
      * @param atParser
      */
-    public void addParserAt(IRuleParser parser, Class<? extends IRuleParser> atParser) {
-        int index = getIndexOfClass(parsers, atParser);
+    public void addRuleParserAt(IRuleParser parser, Class<? extends IRuleParser> atParser) {
+        int index = getIndexOfClass(ruleParsers, atParser);
         if (index == -1) {
             throw new ParserAddException("parser " + atParser.getSimpleName() + " has not been added");
         }
-        parsers.remove(index);
-        parsers.add(index, parser);
+        ruleParsers.remove(index);
+        ruleParsers.add(index, parser);
     }
 
 
@@ -166,12 +168,30 @@ public abstract class AbstractQueryBuilderFactory {
     }
 
     /**
-     * Getter method for property <tt>parsers</tt>.
-     * @return property value of parsers
+     * Getter method for property <tt>ruleParsers</tt>.
+     * @return property value of ruleParsers
      * @author hewei
      */
-    public List<IRuleParser> getParsers() {
-        return parsers;
+    public List<IRuleParser> getRuleParsers() {
+        return ruleParsers;
+    }
+
+    /**
+     * Getter method for property <tt>groupParser</tt>.
+     * @return property value of groupParser
+     * @author hewei
+     */
+    public IGroupParser getGroupParser() {
+        return groupParser;
+    }
+
+    /**
+     * Setter method for property <tt>groupParser</tt>.
+     * @param groupParser value to be assigned to property groupParser
+     * @author hewei
+     */
+    public void setGroupParser(IGroupParser groupParser) {
+        this.groupParser = groupParser;
     }
 
     /**

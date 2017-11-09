@@ -18,6 +18,7 @@ package com.itfsw.query.builder.other;
 
 import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.parser.IRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 
 /**
  * ---------------------------------------------------------------------------
@@ -34,7 +35,7 @@ public class Test2Parser implements IRuleParser {
     }
 
     @Override
-    public Object parse(IRule rule) {
+    public Object parse(IRule rule, JsonRuleParser parser) {
         return null;
     }
 }

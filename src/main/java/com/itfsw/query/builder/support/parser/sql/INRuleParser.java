@@ -20,6 +20,7 @@ import com.itfsw.query.builder.support.model.IRule;
 import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.model.sql.Operation;
 import com.itfsw.query.builder.support.parser.AbstractSqlRuleParser;
+import com.itfsw.query.builder.support.parser.JsonRuleParser;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class INRuleParser extends AbstractSqlRuleParser {
         return EnumOperator.IN.equals(rule.getOperator());
     }
 
-    public Operation parse(IRule rule) {
+    public Operation parse(IRule rule, JsonRuleParser parser) {
         StringBuffer operate = new StringBuffer(rule.getField());
         operate.append(" IN(");
 
