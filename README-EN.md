@@ -1,10 +1,10 @@
+### Document  
+[中文](README.md)&nbsp;&nbsp;|&nbsp;&nbsp;[English](README-EN.md)  
+
 # QueryBuilder
 An Java Backend for [jQuery QueryBuilder](https://github.com/mistic100/jQuery-QueryBuilder)。
     
 [![jQuery QueryBuilder](screenshot.png)](http://querybuilder.js.org/index.html)
-
-### Document  
-[中文](README.md)&nbsp;&nbsp;|&nbsp;&nbsp;[English](README-EN.md)  
 
 ---------------------------------------
 Maven引用：  
