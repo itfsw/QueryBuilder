@@ -42,7 +42,7 @@ public class SqlInjectionAttackFilter implements IRuleFilter {
     private HashSet<String> keywords = new HashSet<>();
     private char beginningDelimiter;
     private char endingDelimiter;
-
+    private EnumDBType dbType;
 
     /**
      * 构造函数
@@ -50,6 +50,7 @@ public class SqlInjectionAttackFilter implements IRuleFilter {
      */
     public SqlInjectionAttackFilter(EnumDBType dbType) {
         String file;
+        this.dbType = dbType;
         if (EnumDBType.MYSQL.equals(dbType)) {
             this.beginningDelimiter = '`';
             this.endingDelimiter = '`';
@@ -84,15 +85,18 @@ public class SqlInjectionAttackFilter implements IRuleFilter {
     public void doFilter(JsonRule jsonRule, EnumBuilderType type) throws FilterException {
         if (!jsonRule.isGroup()) {
             IRule rule = jsonRule.toRule();
-
             String field = rule.getField();
-            // field too long, ORACLE's max length is 30
-            if (field.length() > 30) {
+            if ((EnumDBType.MYSQL.equals(this.dbType) && field.length() > 64) || 
+                (EnumDBType.ORACLE.equals(this.dbType) && field.length() > 30) || 
+                (EnumDBType.MS_SQL.equals(this.dbType) && field.length() > 128)) {
+                // field too long, MYSQL's max length is 64, ORACLE's max length is 30 and MS_SQL's max length is 128
                 throw new FilterException("rule's field is too long for:" + jsonRule);
-            } else if (!Pattern.matches("^[A-Za-z0-9_]+$", field)) {
+            }
+            if (!Pattern.matches("^[A-Za-z0-9_]+$", field)) {
                 // can not use Special word
                 throw new FilterException("rule's field can only use [A-Za-z0-9_] for:" + jsonRule);
-            } else if (keywords.contains(field.toUpperCase())) {
+            }
+            if (keywords.contains(field.toUpperCase())) {
                 // keyword
                 StringBuffer sb = new StringBuffer(field);
                 sb.insert(0, beginningDelimiter);
