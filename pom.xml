@@ -3,7 +3,7 @@
 
     <groupId>com.itfsw</groupId>
     <artifactId>QueryBuilder</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -174,7 +174,7 @@
         <connection>scm:git:https://github.com/itfsw/QueryBuilder.git</connection>
         <developerConnection>scm:git:https://github.com/itfsw/QueryBuilder.git</developerConnection>
         <url>https://github.com/itfsw/QueryBuilder</url>
-        <tag>HEAD</tag>
+        <tag>V1.0.4</tag>
     </scm>
 
     <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++distribution++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
